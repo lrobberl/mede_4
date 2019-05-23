@@ -1,0 +1,37 @@
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+  </div>
+
+  <mat-paginator (page)="pageChangeEvent($event)"
+                 [length]=giorni.length
+                 [pageSize]=1
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 style="align-content: center">
+  </mat-paginator>
+
+  <mat-card style="text-align: center" content="align: center">
+    <mat-card-title>
+      <h3> Fermate Pedibus - PRESENZE </h3>
+    </mat-card-title>
+    <mat-card-subtitle style="text-align: center" >
+      <h3> {{giornoSelezionato.data | date}} </h3>
+    </mat-card-subtitle>
+
+    <mat-radio-group aria-label="Seleziona una linea">
+      <mat-radio-button value="0" checked="checked" (change)="cambiaLinea($event)">Rossa</mat-radio-button>
+      <mat-radio-button value="1" (change)="cambiaLinea($event)">Blu</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-card-content style="text-align: center">
+      <mat-list>
+        <mat-list-item *ngFor="let fermata of lineaSelezionata.fermate">
+          <mat-icon svgIcon="bus-direction"></mat-icon>
+          <h4 mat-line>{{fermata.orario}} {{fermata.nome}}</h4>
+          <p mat-line> {{fermata.persone.sort()}} </p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
