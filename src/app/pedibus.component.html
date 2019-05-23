@@ -20,8 +20,8 @@
     </mat-card-subtitle>
 
     <mat-radio-group aria-label="Seleziona una linea">
-      <mat-radio-button value="0" checked="checked" (change)="cambiaLinea($event)">Rossa</mat-radio-button>
-      <mat-radio-button value="1" (change)="cambiaLinea($event)">Blu</mat-radio-button>
+      <mat-radio-button value="0" checked="checked" (change)="cambiaLinea($event)">Rossa &nbsp;&nbsp;</mat-radio-button>
+      <mat-radio-button value="1" (change)="cambiaLinea($event)">Blu  </mat-radio-button>
     </mat-radio-group>
 
     <mat-card-content style="text-align: center">
@@ -29,7 +29,9 @@
         <mat-list-item *ngFor="let fermata of lineaSelezionata.fermate">
           <mat-icon svgIcon="bus-direction"></mat-icon>
           <h4>{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</h4>
-          <label *ngFor="let persona of getPersone(fermata.persone)" (click)="segnaPresente($event, persona)"><div>{{persona.nome}}&nbsp;&nbsp;</div></label>
+          <label *ngFor="let persona of getPersone(fermata.persone)" (click)="segnaPresente($event, persona)">
+            <div *ngIf="persona.presente === true"><b>{{persona.nome}}&nbsp;&nbsp;</b></div>
+            <div *ngIf="persona.presente === false">{{persona.nome}}&nbsp;&nbsp;</div></label>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
