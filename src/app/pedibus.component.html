@@ -28,8 +28,8 @@
       <mat-list>
         <mat-list-item *ngFor="let fermata of lineaSelezionata.fermate">
           <mat-icon svgIcon="bus-direction"></mat-icon>
-          <h4 mat-line>{{fermata.orario}} {{fermata.nome}}</h4>
-          <p mat-line> {{fermata.persone.sort()}} </p>
+          <h4>{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</h4>
+          <label *ngFor="let persona of getPersone(fermata.persone)" (click)="segnaPresente($event, persona)"><div>{{persona.nome}}&nbsp;&nbsp;</div></label>
         </mat-list-item>
       </mat-list>
     </mat-card-content>

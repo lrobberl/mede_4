@@ -9,7 +9,7 @@ export interface Linea {
 export interface Fermata {
   nome: string;
   orario: string;
-  persone: string[];
+  persone: Persona[];
 }
 
 export interface Giorno {
@@ -44,17 +44,40 @@ export class PedibusComponent implements OnInit {
             {
               nome: 'Sabotino',
               orario: '7:20',
-              persone: ['Zebedeo', 'Gesualdo', 'Peppina']
+              persone: [
+                {
+                  nome: 'Zebedeo',
+                  presente: false
+                },
+                {
+                  nome: 'Gesualdo',
+                  presente: false
+                },
+                {
+                  nome: 'Anita',
+                  presente: false
+                }
+              ]
             },
             {
               nome: 'Corso Einaudi',
               orario: '7:35',
-              persone: ['Martin']
+              persone: [
+                {
+                  nome: 'Martin',
+                  presente: false
+                }
+              ]
             },
             {
               nome: 'Politecnico',
               orario: '7:55',
-              persone: ['Miguel']
+              persone: [
+                {
+                  nome: 'Miguel',
+                  presente: false
+                }
+              ]
             },
           ]
         },
@@ -64,7 +87,12 @@ export class PedibusComponent implements OnInit {
             {
               nome: 'Piazza Vittorio',
               orario: '7:20',
-              persone: ['Peppina']
+              persone: [
+                {
+                  nome: 'Peppina',
+                  presente: false
+                }
+              ]
             },
             {
               nome: 'Piazza San Carlo',
@@ -74,7 +102,12 @@ export class PedibusComponent implements OnInit {
             {
               nome: 'Politecnico',
               orario: '7:55',
-              persone: ['Mike']
+              persone: [
+                {
+                  nome: 'Michelangelo',
+                  presente: false
+                }
+              ]
             },
           ]
         }
@@ -89,7 +122,12 @@ export class PedibusComponent implements OnInit {
             {
               nome: 'Sabotino',
               orario: '7:20',
-              persone: ['Lucio']
+              persone: [
+                {
+                  nome: 'Lucio',
+                  presente: false
+                }
+              ]
             },
             {
               nome: 'Corso Einaudi',
@@ -99,7 +137,12 @@ export class PedibusComponent implements OnInit {
             {
               nome: 'Politecnico',
               orario: '7:55',
-              persone: ['Gaia']
+              persone: [
+                {
+                  nome: 'Gaia',
+                  presente: false
+                }
+              ]
             },
           ]
         },
@@ -109,17 +152,32 @@ export class PedibusComponent implements OnInit {
             {
               nome: 'Piazza Vittorio',
               orario: '7:20',
-              persone: ['Ahmed']
+              persone: [
+                {
+                  nome: 'Ahmed',
+                  presente: false
+                }
+              ]
             },
             {
               nome: 'Piazza San Carlo',
               orario: '7:35',
-              persone: ['Mohamed']
+              persone: [
+                {
+                  nome: 'Mohamed',
+                  presente: false
+                }
+              ]
             },
             {
               nome: 'Politecnico',
               orario: '7:55',
-              persone: ['El khabir']
+              persone: [
+                {
+                  nome: 'El Khabir',
+                  presente: false
+                }
+              ]
             },
           ]
         }
@@ -139,7 +197,12 @@ export class PedibusComponent implements OnInit {
             {
               nome: 'Corso Einaudi',
               orario: '7:35',
-              persone: ['Monica']
+              persone: [
+                {
+                  nome: 'Monica',
+                  presente: false
+                }
+              ]
             },
             {
               nome: 'Politecnico',
@@ -154,7 +217,12 @@ export class PedibusComponent implements OnInit {
             {
               nome: 'Piazza Vittorio',
               orario: '7:20',
-              persone: ['Zac']
+              persone: [
+                {
+                  nome: 'Zac',
+                  presente: false
+                }
+              ]
             },
             {
               nome: 'Piazza San Carlo',
@@ -164,7 +232,12 @@ export class PedibusComponent implements OnInit {
             {
               nome: 'Politecnico',
               orario: '7:55',
-              persone: ['Mike']
+              persone: [
+                {
+                  nome: 'Mike',
+                  presente: false
+                }
+              ]
             },
           ]
         }
@@ -204,5 +277,13 @@ export class PedibusComponent implements OnInit {
 
   pageChangeEvent($event: PageEvent) {
     ($event.pageIndex - $event.previousPageIndex > 0) ? this.nextDay() : this.previousDay();
+  }
+
+  segnaPresente($event: MouseEvent, persona: Persona) {
+    persona.presente = (persona.presente === true) ? false : true;
+  }
+
+  getPersone(persone: Persona[]) {
+    return persone.sort((a, b) => (a.nome > b.nome) ? 1 : -1 );
   }
 }
