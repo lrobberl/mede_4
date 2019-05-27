@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatRadioChange, PageEvent} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material';
 
 export interface Linea {
   nome: string;
@@ -249,6 +251,7 @@ export class PedibusComponent implements OnInit {
     this.curGiorno = 0;
     this.curLinea = 0;
     this.title = 'Esercitazione - #4';
+
   }
 
   ngOnInit(): void {
@@ -287,3 +290,6 @@ export class PedibusComponent implements OnInit {
     return persone.sort((a, b) => (a.nome > b.nome) ? 1 : -1 );
   }
 }
+
+
+

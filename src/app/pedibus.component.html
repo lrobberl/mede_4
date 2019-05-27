@@ -16,7 +16,7 @@
       <h3> Fermate Pedibus - PRESENZE </h3>
     </mat-card-title>
     <mat-card-subtitle style="text-align: center" >
-      <h3> {{giornoSelezionato.data | date}} </h3>
+      <h3> {{giornoSelezionato.data | date:'dd-MM-yyyy'}} </h3>
     </mat-card-subtitle>
 
     <mat-radio-group aria-label="Seleziona una linea">
@@ -27,11 +27,12 @@
     <mat-card-content style="text-align: center">
       <mat-list>
         <mat-list-item *ngFor="let fermata of lineaSelezionata.fermate">
-          <mat-icon svgIcon="bus-direction"></mat-icon>
-          <h4>{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</h4>
-          <label *ngFor="let persona of getPersone(fermata.persone)" (click)="segnaPresente($event, persona)">
-            <div *ngIf="persona.presente === true"><b>{{persona.nome}}&nbsp;&nbsp;</b></div>
-            <div *ngIf="persona.presente === false">{{persona.nome}}&nbsp;&nbsp;</div></label>
+          <mat-icon>trip_origin</mat-icon>
+          <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span *ngFor="let persona of getPersone(fermata.persone); last as isLast"
+                (click)="segnaPresente($event, persona)">
+          <span [class.selected] = persona.presente>{{persona.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
+          </span>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
