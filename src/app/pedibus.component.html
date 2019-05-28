@@ -1,16 +1,11 @@
-<main-nav></main-nav>
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  </div>
+<main-nav>
+<!--<div style="text-align:center">-->
+<!--  <h1>-->
+<!--    Welcome to {{ title }}!-->
+<!--  </h1>-->
+<!--  </div>-->
 
-  <mat-paginator (page)="pageChangeEvent($event)"
-                 [length]=giorni.length
-                 [pageSize]=1
-                 [pageSizeOptions]="[5, 10, 25, 100]"
-                 style="align-content: center">
-  </mat-paginator>
+
 
   <mat-card style="text-align: center" content="align: center">
     <mat-card-title>
@@ -37,5 +32,12 @@
         </mat-list-item>
       </mat-list>
     </mat-card-content>
-  </mat-card>
 
+    <mat-paginator (page)="pageChangeEvent($event)"
+                   [length]=giorni.length
+                   [pageSize]=1
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   style="align-content: center">
+    </mat-paginator>
+  </mat-card>
+</main-nav>
