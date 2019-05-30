@@ -8,11 +8,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PedibusComponent} from './pedibus.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import {httpService} from './pedibus.HttpService';
+import {HttpClientModule} from '@angular/common/http';
+import {PedibusAttendanceComponent} from './pedibus.attendance.component';
 
 
 @NgModule({
   declarations: [
     PedibusComponent,
+    PedibusAttendanceComponent,
     MainNavComponent
   ],
   imports: [
@@ -27,9 +31,10 @@ import { LayoutModule } from '@angular/cdk/layout';
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
-    MatSidenavModule
+    MatSidenavModule,
+    HttpClientModule
   ],
-  providers: [],
-  bootstrap: [PedibusComponent]
+  providers: [httpService],
+  bootstrap: [PedibusComponent, PedibusAttendanceComponent]
 })
 export class AppModule { }

@@ -250,7 +250,7 @@ export class PedibusComponent implements OnInit {
   constructor() {
     this.curGiorno = 0;
     this.curLinea = 0;
-    this.title = 'Esercitazione - #4';
+    this.title = 'Esercitazione - #5';
 
   }
 
