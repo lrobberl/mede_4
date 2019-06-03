@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div>
+    <form [formGroup]="registrationForm">
+      firstName: <input type="text" formControlName="firstName"><br>
+      lastName: <input type="text" formControlName="lastName"><br>
+      password: <input type="text" formControlName="password"><br>
+      password2: <input type="text" formControlName="password2"><br>
+      <span *ngIf="registrationForm.controls.firstName.errors?.required"> Name is required. </span><br>
+      <span *ngIf="registrationForm.controls.lastName.errors?.required"> LastName is required. </span>
+    </form>
+  </div>
+</body>
+</html>

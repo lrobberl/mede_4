@@ -2,31 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
-import { HttpService } from './pedibus.HttpService';
+import { HttpService } from './pedibusHTTP.service';
 
-export interface Linea {
-  nome: string;
-  fermate: Fermata[];
-}
-
-export interface Fermata {
-  nome: string;
-  orario: string;
-  persone: Persona[];
-}
-
-export interface Giorno {
-  data: Date;
-  linee: Linea[];
-}
-
-export interface Persona {
-  nome: string;
-  presente: boolean;
-}
 
 @Component({
-  selector: 'app-pedibus',
+  selector: 'app-pedibus-attendance',
   templateUrl: './pedibus.component.html',
   styleUrls: ['./pedibus.component.css']
 })
@@ -36,18 +16,17 @@ export class PedibusAttendanceComponent implements OnInit {
   data$;
   item$;
 
-  constructor(private service: HttpService) {
+  constructor(private httpService: HttpService) {
   }
 
   ngOnInit() {
     const date = new Date();
-    this.data$ = this.service.getCorsa('rossa', date.getDay().toString() + date.getMonth().toString() + date.getFullYear().toString());
+    this.data$ = this.httpService.getCorsa('rossa', date.getDay().toString() + date.getMonth().toString() + date.getFullYear().toString());
   }
-/*
-  getCorsa() {
-    this.data$ = this.service.getCorsa();
+
+  getCorsa(linea: string, data: string) {
+    this.data$ = this.httpService.getCorsa(linea, data);
   }
-*/
 
 
 
