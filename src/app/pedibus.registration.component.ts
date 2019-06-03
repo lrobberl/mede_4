@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, Validatio
 import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import {first} from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 function passwordValidator(control: FormGroup): ValidationErrors | null {
   const password = control.get('password');
@@ -22,23 +24,55 @@ function passwordValidator(control: FormGroup): ValidationErrors | null {
 
 export class PedibusRegistrationComponent implements OnInit {
 
+  registrationForm: FormGroup;
+  submitted: boolean;
+  // error: string;
+
   constructor(private fb: FormBuilder) {
   }
 
-  registrationForm = this.fb.group({
-    firstName: [Validators.required],
-    lastName: ['required', [Validators.required]],
-    email: [Validators.required],
-    password: [Validators.required],
-    password2: [Validators.required],
-    // todo: accettazione pricacy manca
-  }, {
-    validators: passwordValidator,
-    // updateOn: 'blur'
-  });
-
   ngOnInit(): void {
+    this.registrationForm = this.fb.group({
+      firstName: [Validators.required, Validators.maxLength(30), Validators.minLength(2)],
+      lastName: ['required', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+      email: [Validators.required, Validators.email, Validators.maxLength(30), Validators.minLength(2)],
+      password: [Validators.required, Validators.pattern('/^[a-zA-Z0-9\\_\\*\\-\\+\\!\\?\\,\\:\\;\\.\\xE0\\xE8\\xE9\\xF9\\xF2\\' +
+        'xEC\x27]{6,12}/'), Validators.maxLength(30)],
+      password2: [Validators.required, Validators.pattern('/^[a-zA-Z0-9\\_\\*\\-\\+\\!\\?\\,\\:\\;\\.\\xE0\\xE8\\xE9\\xF9\\xF2\\' +
+        'xEC\x27]{6,12}/'), Validators.maxLength(30)],
+      // todo: accettazione pricacy mancante
+    }, {
+      validator: passwordValidator
+      // updateOn: 'blur'
+    });
+
+    this.submitted = false;
   }
+
+  onSubmit() {
+
+
+    /*
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registrationForm.invalid) {
+      return;
+    }
+
+    this.userService.register(this.registrationForm.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate(['/login'], { queryParams: { registered: true }});
+        },
+        error => {
+          this.error = error;
+        });
+     */
+  }
+
+  get f() { return this.registrationForm.controls; }
 }
 
 
