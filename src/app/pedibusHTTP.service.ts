@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of, pipe } from 'rxjs';
 import { map, retry, catchError, tap, first } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Linea} from './pedibus.attendance.component';
+
+export interface Linea {
+  Nome: string;
+  fermate: Fermata[];
+}
 
 export interface Bambino {
   id: string;
   nome: string;
   presente: boolean;
 }
-
 
 export interface Corsa {
   fermate: Fermata[];
@@ -42,7 +45,6 @@ const httpOptions = {
   })
 };
 
-
 @Injectable()
 export class HttpService {
   constructor(private http: HttpClient) {
@@ -61,12 +63,26 @@ export class HttpService {
   getLines(): Observable<Linea[]> {
     console.log('httpService.getLines:');
     return this.http.get<Linea[]>(REST_URL + 'lines').pipe(
+      // todo tenere fermate? Il server non le passa
       map(arr => arr.map(x => ({Nome: x.Nome, fermate: x.fermate}) as Linea)),
-      retry(3),
-      catchError(error => of(null))
+
     );
   }
 
+  cambiaStato(bambino: Bambino) {
+    console.log('httpService.cambiaStato:');
+    const httpoptions = { headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+
+    return this.http.put(REST_URL + 'stato/${bambino.id}', httpoptions).pipe(
+      catchError(err => {
+        console.error(err);
+        return of(null);
+      })
+    );
+  }
 
 
 /*
@@ -78,7 +94,6 @@ export class HttpService {
       catchError(error => of(null))
     );
   }
-
   addItem(item): Observable<Data> {
 
     console.log('httpService.addItem: ' + JSON.stringify(item));
