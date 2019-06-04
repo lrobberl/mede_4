@@ -75,7 +75,7 @@ export class HttpService {
       })
     };
 
-    return this.http.put(REST_URL + 'stato/${bambino.id}', httpoptions).pipe(
+    return this.http.put(REST_URL + 'stato/' + bambino.id.toString(), httpoptions).pipe(
       catchError(err => {
         console.error(err);
         return of(null);
