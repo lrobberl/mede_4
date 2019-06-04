@@ -3,6 +3,25 @@ import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 
+// @ts-ignore
+
+
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnInit {
+  public title: string;
+
+  ngOnInit(): void {
+    this.title = 'Angular Router'
+  }
+
+  /*
+
 export interface Linea {
   nome: string;
   fermate: Fermata[];
@@ -24,15 +43,7 @@ export interface Persona {
   presente: boolean;
 }
 
-@Component({
-  selector: 'app-pedibus',
-  templateUrl: './pedibus.component.html',
-  styleUrls: ['./pedibus.component.css']
-})
-
-export class PedibusComponent implements OnInit {
-  public title: string;
-  curGiorno: number;
+curGiorno: number;
   curLinea: number;
   giornoSelezionato: Giorno;
   lineaSelezionata: Linea;
@@ -289,6 +300,7 @@ export class PedibusComponent implements OnInit {
   getPersone(persone: Persona[]) {
     return persone.sort((a, b) => (a.nome > b.nome) ? 1 : -1 );
   }
+   */
 }
 
 

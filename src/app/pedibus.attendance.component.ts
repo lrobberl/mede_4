@@ -3,8 +3,8 @@ import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import {Bambino, Corsa, HttpService} from './pedibusHTTP.service';
-import {Fermata, Persona} from './pedibus.component';
 import {Observable} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 export interface Linea {
   Nome: string;
@@ -48,7 +48,8 @@ export class PedibusAttendanceComponent implements OnInit {
   item$;
 
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {

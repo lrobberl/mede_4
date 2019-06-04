@@ -1,33 +1,37 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { MatListModule } from '@angular/material/list';
 // tslint:disable-next-line:max-line-length
 import {MatCardModule, MatIconModule, MatPaginatorModule, MatRadioModule, MatToolbarModule, MatButtonModule, MatSidenavModule} from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {PedibusComponent} from './pedibus.component';
+import {AppComponent} from './app.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import {HttpService} from './pedibusHTTP.service';
 import {HttpClientModule} from '@angular/common/http';
 import {PedibusAttendanceComponent} from './pedibus.attendance.component';
-import {PedibusRegistrationComponent} from './pedibus.registration.component';
+import {PedibusRegisterComponent} from './pedibus.register.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {RouterModule, Routes} from '@angular/router';
 
+const appRoutes: Routes = [
+  { path: 'register', component: PedibusRegisterComponent },
+  { path: 'attendance', component: PedibusAttendanceComponent},
+  // { path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
   declarations: [
-    PedibusComponent,
+    AppComponent,
     PedibusAttendanceComponent,
     MainNavComponent,
-    PedibusRegistrationComponent
+    PedibusRegisterComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     MatListModule,
     MatTabsModule,
     MatIconModule,
@@ -39,9 +43,10 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatButtonModule,
     MatSidenavModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forRoot(appRoutes, { enableTracing: true })
   ],
   providers: [HttpService],
-  bootstrap: [PedibusAttendanceComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

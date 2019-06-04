@@ -1,10 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
-import {MatRadioChange, PageEvent} from '@angular/material';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
-import {first} from 'rxjs/operators';
-import { Router } from '@angular/router';
+
 
 function passwordValidator(control: FormGroup): ValidationErrors | null {
   const password = control.get('password');
@@ -17,12 +13,12 @@ function passwordValidator(control: FormGroup): ValidationErrors | null {
 }
 
 @Component({
-  selector: 'app-pedibus-registration',
-  templateUrl: './pedibus.registration.component.html',
-  styleUrls: ['./pedibus.registration.component.css']
+  selector: 'app-pedibus-register',
+  templateUrl: './pedibus.register.component.html',
+  styleUrls: ['./pedibus.register.component.css']
 })
 
-export class PedibusRegistrationComponent implements OnInit {
+export class PedibusRegisterComponent implements OnInit {
 
   registrationForm: FormGroup;
   submitted: boolean;
@@ -42,7 +38,7 @@ export class PedibusRegistrationComponent implements OnInit {
         'xEC\x27]{6,12}/'), Validators.maxLength(30)],
       // todo: accettazione pricacy mancante
     }, {
-      validator: passwordValidator
+      validator: passwordValidator,
       // updateOn: 'blur'
     });
 
