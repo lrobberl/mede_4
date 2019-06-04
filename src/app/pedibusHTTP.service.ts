@@ -64,8 +64,7 @@ export class HttpService {
     console.log('httpService.getLines:');
     return this.http.get<Linea[]>(REST_URL + 'lines').pipe(
       // todo tenere fermate? Il server non le passa
-      map(arr => arr.map(x => ({Nome: x.Nome, fermate: x.fermate}) as Linea)),
-
+      map(arr => arr.map(x => ({Nome: x.Nome, fermate: x.fermate}) as Linea))
     );
   }
 

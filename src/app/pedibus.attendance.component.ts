@@ -13,17 +13,17 @@ import {Observable} from 'rxjs';
 
 export class PedibusAttendanceComponent implements OnInit {
   title = 'Esercitazione - #5';
-  data$: Observable<Data>;
+  data: Data;
   selectedDate: string;
-  linee$: Observable<Linea[]>;
+  linee: Linea[];
 
   constructor(private httpService: HttpService) {
   }
 
   ngOnInit() {
-    this.linee$ = this.httpService.getLines();
+    this.httpService.getLines().subscribe(x => {this.linee = x; });
     this.setCurrentDate();
-    this.data$ = this.httpService.getCorsa('Rossa', this.selectedDate);
+    this.httpService.getCorsa('Rossa', this.selectedDate).subscribe(x => {this.data = x; });
   }
 
   setCurrentDate() {
@@ -35,17 +35,26 @@ export class PedibusAttendanceComponent implements OnInit {
   }
   getCorsa(linea: string, data: string) {
     this.selectedDate = data;
-    this.data$ = this.httpService.getCorsa(linea, data);
+    this.httpService.getCorsa(linea, data).subscribe(x => {this.data = x; });
   }
 
   cambiaLinea($event: MatRadioChange) {
-    this.data$ = this.httpService.getCorsa(this.linee$[$event.value], this.selectedDate);
+    this.httpService.getCorsa(this.linee[$event.value].Nome, this.selectedDate).subscribe(x => {this.data = x; });
   }
 
   segnaPresente($event: MouseEvent, bambino: Bambino) {
     bambino.presente = (bambino.presente === true) ? false : true;
-    // todo: dove va inserita la .subscrive()? Nel componente o nel servizio? E cosa ci inseriamo dentro?
-    this.httpService.cambiaStato(bambino).subscribe();
+    // todo: dove va inserita la .subscribe()? Nel componente o nel servizio? E cosa ci inseriamo dentro?
+    this.httpService.cambiaStato(bambino).subscribe((response) => {
+        // do something with the response
+        console.log('Response is: ', response);
+      },
+      (error) => {
+        // catch the error
+        console.error('An error occurred, ', error);
+      }
+
+    );
   }
 
 
