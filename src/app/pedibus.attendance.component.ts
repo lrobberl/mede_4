@@ -2,37 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
-import {Bambino, Corsa, HttpService} from './pedibusHTTP.service';
+import {Linea, Fermata, Data, Bambino, Corsa, HttpService} from './pedibusHTTP.service';
 import {Observable} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
-
-export interface Linea {
-  Nome: string;
-  fermate: Fermata[];
-}
-
-export interface Bambino {
-  id: bigint;
-  nome: string;
-  presente: boolean;
-}
-
-export interface Corsa {
-  fermate: Fermata[];
-  nomeVerso: string;
-}
-
-export interface Fermata {
-  nome: string;
-  orario: string;
-  bambini: Bambino[];
-}
-
-export interface Data {
-  date: Date;
-  linea: string;
-  corse: Corsa[];
-}
 
 @Component({
   selector: 'app-pedibus-attendance',
@@ -45,27 +16,36 @@ export class PedibusAttendanceComponent implements OnInit {
   data$: Observable<Data>;
   selectedDate: string;
   linee$: Observable<Linea[]>;
-  item$;
 
-
-  constructor(private httpService: HttpService,
-              private route: ActivatedRoute) {
+  constructor(private httpService: HttpService) {
   }
 
   ngOnInit() {
     this.linee$ = this.httpService.getLines();
-    const date = new Date();
-    this.selectedDate = date.getDay().toString() + date.getMonth().toString() + date.getFullYear().toString();
+    this.setCurrentDate();
     this.data$ = this.httpService.getCorsa('Rossa', this.selectedDate);
   }
 
+  setCurrentDate() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear();
+    this.selectedDate = dd + mm + yyyy;
+  }
   getCorsa(linea: string, data: string) {
     this.selectedDate = data;
     this.data$ = this.httpService.getCorsa(linea, data);
   }
 
-  segnaPresente($event: MouseEvent, persona: Bambino) {
-    persona.presente = (persona.presente === true) ? false : true;
+  cambiaLinea($event: MatRadioChange) {
+    this.data$ = this.httpService.getCorsa(this.linee$[$event.value], this.selectedDate);
+  }
+
+  segnaPresente($event: MouseEvent, bambino: Bambino) {
+    bambino.presente = (bambino.presente === true) ? false : true;
+    // todo: dove va inserita la .subscrive()? Nel componente o nel servizio? E cosa ci inseriamo dentro?
+    this.httpService.cambiaStato(bambino).subscribe();
   }
 
 

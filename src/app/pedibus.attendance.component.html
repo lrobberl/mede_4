@@ -9,19 +9,19 @@
     </mat-card-subtitle>
 
     <mat-radio-group aria-label="Seleziona una linea">
-      <mat-radio-button *ngFor="let linea of (linee$ | async)" (change)="getCorsa(linea.Nome, selectedDate)">{{linea.Nome}} &nbsp;&nbsp;</mat-radio-button>
+      <mat-radio-button *ngFor="let linea of (linee$ | async)" (change)="cambiaLinea($event)">{{linea.Nome}} &nbsp;&nbsp;</mat-radio-button>
     </mat-radio-group>
 
     <mat-tab-group dynamicHeight>
       <mat-tab label="Andata">
-          <mat-card-content style="text-align: center">
+          <mat-card-content >
             <mat-list>
               <mat-list-item *ngFor="let fermata of (data$ | async)?.corse[0].fermate">
                 <mat-icon>trip_origin</mat-icon>
                 <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span *ngFor="let persona of fermata.bambini; last as isLast"
-                      (click)="segnaPresente($event, persona)">
-          <span [class.selected] = persona.presente>{{persona.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
+                <span *ngFor="let bambino of fermata.bambini; last as isLast"
+                      (click)="segnaPresente($event, bambino)">
+          <span [class.selected] = bambino.presente>{{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
           </span>
               </mat-list-item>
             </mat-list>
@@ -35,9 +35,9 @@
               <mat-list-item *ngFor="let fermata of (data$ | async)?.corse[1].fermate">
                 <mat-icon>trip_origin</mat-icon>
                 <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span *ngFor="let persona of fermata.bambini; last as isLast"
-                      (click)="segnaPresente($event, persona)">
-          <span [class.selected] = persona.presente>{{persona.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
+                <span *ngFor="let bambino of fermata.bambini; last as isLast"
+                      (click)="segnaPresente($event, bambino)">
+          <span [class.selected] = bambino.presente>{{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
           </span>
               </mat-list-item>
             </mat-list>
