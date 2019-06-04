@@ -13,17 +13,17 @@
     </mat-radio-group>
 
     <mat-card-content style="text-align: center">
-      <mat-list>
-        <mat-list-item *ngFor="let fermata of lineaSelezionata.fermate">
-          <mat-icon>trip_origin</mat-icon>
-          <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span *ngFor="let persona of getPersone(fermata.persone); last as isLast"
-                (click)="segnaPresente($event, persona)">
+    <mat-list>
+      <mat-list-item *ngFor="let fermata of lineaSelezionata.fermate">
+        <mat-icon>trip_origin</mat-icon>
+        <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span *ngFor="let persona of getPersone(fermata.persone); last as isLast"
+              (click)="segnaPresente($event, persona)">
           <span [class.selected] = persona.presente>{{persona.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
           </span>
-        </mat-list-item>
-      </mat-list>
-    </mat-card-content>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
 
     <mat-paginator (page)="pageChangeEvent($event)"
                    [length]=giorni.length

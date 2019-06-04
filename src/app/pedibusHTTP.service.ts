@@ -2,25 +2,28 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of, pipe } from 'rxjs';
 import { map, retry, catchError, tap, first } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Linea} from './pedibus.attendance.component';
 
 export interface Bambino {
-  id: bigint;
+  id: string;
   nome: string;
   presente: boolean;
 }
 
+
 export interface Corsa {
   fermate: Fermata[];
-  nomeVerso: string;
+  nomeverso: string;
 }
 
 export interface Fermata {
+  id: string;
   nome: string;
   orario: string;
   bambini: Bambino[];
 }
 
-interface Data {
+export interface Data {
   date: Date;
   linea: string;
   corse: Corsa[];
@@ -48,15 +51,25 @@ export class HttpService {
   // Get di una singola corsa dal server
   getCorsa(linea: string, data: string): Observable<Data> {
     console.log('httpService.getCorsa:');
-    return this.http.get<Data>(REST_URL + '/corsa/' + linea + '/' + data).pipe(
+    return this.http.get<Data>(REST_URL + 'corsa/' + linea + '/' + data).pipe(
       map(x => ({date: x.date, linea: x.linea, corse: x.corse}) as Data),
       retry(3),
       catchError(error => of(null))
     );
   }
 
-/*
+  getLines(): Observable<Linea[]> {
+    console.log('httpService.getLines:');
+    return this.http.get<Linea[]>(REST_URL + 'lines').pipe(
+      map(arr => arr.map(x => ({Nome: x.Nome, fermate: x.fermate}) as Linea)),
+      retry(3),
+      catchError(error => of(null))
+    );
+  }
 
+
+
+/*
   getAll(): Observable<Data[]> {
     console.log('httpService.getAll:');
     return this.http.get<Data[]>(REST_URL + 'people/').pipe(
@@ -82,5 +95,6 @@ export class HttpService {
     // .subscribe( x => { console.log('Post: ' + JSON.stringify(x)); } );
   }
 */
+
 
 }
