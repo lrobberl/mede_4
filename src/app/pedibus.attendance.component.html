@@ -9,6 +9,7 @@
     </mat-card-subtitle>
 
     <mat-radio-group aria-label="Seleziona una linea">
+      <!-- todo: non funziona il cambio linea tramite il radio-button -->
       <mat-radio-button *ngFor="let linea of (linee$ | async)" (change)="cambiaLinea($event)">{{linea.Nome}} &nbsp;&nbsp;</mat-radio-button>
     </mat-radio-group>
 
