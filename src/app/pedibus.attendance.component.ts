@@ -3,7 +3,6 @@ import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import {Linea, Fermata, Data, Bambino, Corsa, HttpService} from './pedibusHTTP.service';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-pedibus-attendance',
@@ -14,7 +13,7 @@ import {Observable} from 'rxjs';
 export class PedibusAttendanceComponent implements OnInit {
   title = 'Esercitazione - #5';
   data: Data;
-  selectedDate: string;
+  selectedLine: string;
   linee: Linea[];
 
   constructor(private httpService: HttpService) {
@@ -22,30 +21,26 @@ export class PedibusAttendanceComponent implements OnInit {
 
   ngOnInit() {
     this.httpService.getLines().subscribe(x => {this.linee = x; });
-    this.setCurrentDate();
-    this.httpService.getCorsa('Rossa', this.selectedDate).subscribe(x => {this.data = x; });
+    this.setCurrentLine('Rossa');
+    this.httpService.getCorsa(this.selectedLine, this.formatDate(new Date())).subscribe(x => {this.data = x; });
+  }
+  setCurrentLine(linea: string) {
+    this.selectedLine = linea;
   }
 
-  setCurrentDate() {
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    const yyyy = today.getFullYear();
-    this.selectedDate = dd + mm + yyyy;
-  }
   getCorsa(linea: string, data: string) {
-    this.selectedDate = data;
+    // this.selectedDate = data;
     this.httpService.getCorsa(linea, data).subscribe(x => {this.data = x; });
   }
 
   cambiaLinea($event: MatRadioChange) {
-    this.httpService.getCorsa(this.linee[$event.value].Nome, this.selectedDate).subscribe(x => {this.data = x; });
+    this.httpService.getCorsa(this.linee[$event.value].Nome, this.formatDate(this.data.date)).subscribe(x => {this.data = x; });
   }
 
-  segnaPresente($event: MouseEvent, bambino: Bambino) {
+  segnaPresente($event: MouseEvent, bambino: Bambino, verso: string, feramata: Fermata) {
     bambino.presente = (bambino.presente === true) ? false : true;
     // todo: dove va inserita la .subscribe()? Nel componente o nel servizio? E cosa ci inseriamo dentro?
-    this.httpService.cambiaStato(bambino).subscribe((response) => {
+    this.httpService.cambiaStato(bambino, this.selectedLine, this.data.date, verso, feramata).subscribe((response) => {
         // do something with the response
         console.log('Response is: ', response);
       },
@@ -57,7 +52,30 @@ export class PedibusAttendanceComponent implements OnInit {
     );
   }
 
+  nextDay() {
+    // andare avanti di un giorno
+    const newDate = this.data.date;
+    newDate.setDate(newDate.getDate() + 1);
+    this.getCorsa(this.formatDate(newDate), this.selectedLine);
+  }
 
+  previousDay() {
+    // andare indietro di un giorno
+    const newDate = this.data.date;
+    newDate.setDate(newDate.getDate() - 1);
+    this.getCorsa(this.formatDate(newDate), this.selectedLine);
+  }
+
+  cambiaGiorno($event: PageEvent) {
+    ($event.pageIndex - $event.previousPageIndex > 0) ? this.nextDay() : this.previousDay();
+  }
+
+  private formatDate(today: Date) {
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear();
+    return dd + mm + yyyy;
+  }
   /*getAll() {
     this.data$ = this.service.getAll();
   }
@@ -68,8 +86,6 @@ export class PedibusAttendanceComponent implements OnInit {
     // .subscribe( () => this.getAll() ) // remove async pipe from code
     ;
   }*/
-
-
 
 }
 

@@ -68,14 +68,24 @@ export class HttpService {
     );
   }
 
-  cambiaStato(bambino: Bambino) {
+  cambiaStato(bambino: Bambino, line: string, date: Date, direction: string, stop: Fermata) {
     console.log('httpService.cambiaStato:');
     const httpoptions = { headers: new HttpHeaders({
         'Content-Type':  'application/json',
       })
     };
 
-    return this.http.put(REST_URL + 'stato/' + bambino.id.toString(), httpoptions).pipe(
+    const bodyObj = {
+      linea: line,
+      orario: stop.orario,
+      data: date,
+      fermata: stop.nome,
+      verso: direction
+    };
+
+    const body = JSON.stringify(bodyObj);
+
+    return this.http.put(REST_URL + 'stato/' + bambino.id.toString(), body, httpoptions).pipe(
       catchError(err => {
         console.error(err);
         return of(null);

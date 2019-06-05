@@ -21,7 +21,7 @@
                 <mat-icon>trip_origin</mat-icon>
                 <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span *ngFor="let bambino of fermata.bambini; last as isLast"
-                      (click)="segnaPresente($event, bambino)">
+                      (click)="segnaPresente($event, bambino, 'Andata', fermata)">
           <span [class.selected] = bambino.presente>{{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
           </span>
               </mat-list-item>
@@ -37,7 +37,7 @@
                 <mat-icon>trip_origin</mat-icon>
                 <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span *ngFor="let bambino of fermata.bambini; last as isLast"
-                      (click)="segnaPresente($event, bambino)">
+                      (click)="segnaPresente($event, bambino, 'Ritorno', fermata)">
           <span [class.selected] = bambino.presente>{{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
           </span>
               </mat-list-item>
@@ -47,6 +47,13 @@
         </div>
       </mat-tab>
     </mat-tab-group>
+
+    <mat-paginator (page)="cambiaGiorno($event)"
+                   [length]= 1
+                   [pageSize]=1
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   style="align-content: center">
+    </mat-paginator>
 
   </mat-card>
 </main-nav>
