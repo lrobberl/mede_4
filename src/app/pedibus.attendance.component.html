@@ -9,8 +9,9 @@
     </mat-card-subtitle>
 
     <mat-radio-group aria-label="Seleziona una linea">
-      <!-- todo: non funziona il cambio linea tramite il radio-button -->
-      <mat-radio-button *ngFor="let linea of linee" (change)="cambiaLinea($event)">{{linea.Nome}} &nbsp;&nbsp;</mat-radio-button>
+      <!-- todo: non funziona il cambio linea tramite il radio-button [(ngModel)]="radioSelected"-->
+      <mat-radio-button *ngFor="let linea of linee; i as index"
+                        (change)="cambiaLinea($event)" [value]="linea.Nome" [checked]="linea.Nome === 'Rossa'">{{linea.Nome}} &nbsp;&nbsp;</mat-radio-button>
     </mat-radio-group>
 
     <mat-tab-group dynamicHeight>
@@ -49,7 +50,7 @@
     </mat-tab-group>
 
     <mat-paginator (page)="cambiaGiorno($event)"
-                   [length]= 1
+                   [length]= 365
                    [pageSize]=1
                    [pageSizeOptions]="[5, 10, 25, 100]"
                    style="align-content: center">

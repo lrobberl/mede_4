@@ -13,7 +13,7 @@ import {HttpService} from './pedibusHTTP.service';
 import {HttpClientModule} from '@angular/common/http';
 import {PedibusAttendanceComponent} from './pedibus.attendance.component';
 import {PedibusRegisterComponent} from './pedibus.register.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 
 const appRoutes: Routes = [
@@ -44,7 +44,8 @@ const appRoutes: Routes = [
     MatSidenavModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true })
+    RouterModule.forRoot(appRoutes, {enableTracing: true}),
+    FormsModule
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

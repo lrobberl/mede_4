@@ -3,6 +3,7 @@ import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import {Linea, Fermata, Data, Bambino, Corsa, HttpService} from './pedibusHTTP.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-pedibus-attendance',
@@ -13,8 +14,10 @@ import {Linea, Fermata, Data, Bambino, Corsa, HttpService} from './pedibusHTTP.s
 export class PedibusAttendanceComponent implements OnInit {
   title = 'Esercitazione - #5';
   data: Data;
+  prova$: Observable<Data>;
   selectedLine: string;
   linee: Linea[];
+  radioSelected = 'Rossa';
 
   constructor(private httpService: HttpService) {
   }
@@ -23,6 +26,7 @@ export class PedibusAttendanceComponent implements OnInit {
     this.httpService.getLines().subscribe(x => {this.linee = x; });
     this.setCurrentLine('Rossa');
     this.httpService.getCorsa(this.selectedLine, this.formatDate(new Date())).subscribe(x => {this.data = x; });
+    // this.prova$ = this.httpService.getCorsa(this.selectedLine, this.formatDate(new Date()));
   }
   setCurrentLine(linea: string) {
     this.selectedLine = linea;
@@ -34,7 +38,7 @@ export class PedibusAttendanceComponent implements OnInit {
   }
 
   cambiaLinea($event: MatRadioChange) {
-    this.httpService.getCorsa(this.linee[$event.value].Nome, this.formatDate(this.data.date)).subscribe(x => {this.data = x; });
+    this.httpService.getCorsa($event.value, this.formatDate(this.data.date)).subscribe(x => {this.data = x; });
   }
 
   segnaPresente($event: MouseEvent, bambino: Bambino, verso: string, feramata: Fermata) {
@@ -54,16 +58,14 @@ export class PedibusAttendanceComponent implements OnInit {
 
   nextDay() {
     // andare avanti di un giorno
-    const newDate = this.data.date;
-    newDate.setDate(newDate.getDate() + 1);
-    this.getCorsa(this.formatDate(newDate), this.selectedLine);
+    const followingDay = new Date(this.data.date.getTime() + 86400000); // + 1 day in ms
+    this.getCorsa(this.selectedLine, this.formatDate(followingDay));
   }
 
   previousDay() {
     // andare indietro di un giorno
-    const newDate = this.data.date;
-    newDate.setDate(newDate.getDate() - 1);
-    this.getCorsa(this.formatDate(newDate), this.selectedLine);
+    const followingDay = new Date(this.data.date.getTime() - 86400000); // + 1 day in ms
+    this.getCorsa(this.selectedLine, this.formatDate(followingDay));
   }
 
   cambiaGiorno($event: PageEvent) {

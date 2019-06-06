@@ -54,7 +54,7 @@ export class HttpService {
   getCorsa(linea: string, data: string): Observable<Data> {
     console.log('httpService.getCorsa:');
     return this.http.get<Data>(REST_URL + 'corsa/' + linea + '/' + data).pipe(
-      map(x => ({date: x.date, linea: x.linea, corse: x.corse}) as Data),
+      map(x => ({date: new Date(x.date), linea: x.linea, corse: x.corse}) as Data),
       retry(3),
       catchError(error => of(null))
     );
@@ -72,6 +72,10 @@ export class HttpService {
     console.log('httpService.cambiaStato:');
     const httpoptions = { headers: new HttpHeaders({
         'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Authorization, X-Requested-With, Content-Type, Accept, Origin',
+        'Access-Control-Allow-Methods': 'PUT, GET, POST, DELETE, OPTIONS',
+        'Access-Control-Max-Age': '1728000'
       })
     };
 

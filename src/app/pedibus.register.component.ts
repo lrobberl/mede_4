@@ -42,11 +42,13 @@ export class PedibusRegisterComponent implements OnInit {
       // updateOn: 'blur'
     });
 
+
     this.submitted = false;
   }
 
-  onSubmit() {
 
+
+  onSubmit() {
 
     /*
     this.submitted = true;
