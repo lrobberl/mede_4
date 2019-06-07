@@ -1,0 +1,8 @@
+.input-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-form-container > * {
+  width: 100%;
+}

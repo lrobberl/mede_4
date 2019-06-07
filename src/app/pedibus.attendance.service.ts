@@ -31,12 +31,7 @@ export interface Data {
   linea: string;
   corse: Corsa[];
 }
-/*
-const DATA: Data[] = [
-  { id: 1, name: 'Luke' },
-  { id: 2, name: 'Obiwan' }
-];
-*/
+
 const REST_URL = 'http://localhost:8080/';
 
 const httpOptions = {
@@ -46,13 +41,13 @@ const httpOptions = {
 };
 
 @Injectable()
-export class HttpService {
+export class AttendanceService {
   constructor(private http: HttpClient) {
   }
 
   // Get di una singola corsa dal server
   getCorsa(linea: string, data: string): Observable<Data> {
-    console.log('httpService.getCorsa:');
+    console.log('AttendanceService.getCorsa:');
     return this.http.get<Data>(REST_URL + 'corsa/' + linea + '/' + data).pipe(
       map(x => ({date: new Date(x.date), linea: x.linea, corse: x.corse}) as Data),
       retry(3),
@@ -61,7 +56,7 @@ export class HttpService {
   }
 
   getLines(): Observable<Linea[]> {
-    console.log('httpService.getLines:');
+    console.log('AttendanceService.getLines:');
     return this.http.get<Linea[]>(REST_URL + 'lines').pipe(
       // todo tenere fermate? Il server non le passa
       map(arr => arr.map(x => ({Nome: x.Nome, fermate: x.fermate}) as Linea))
@@ -69,7 +64,7 @@ export class HttpService {
   }
 
   cambiaStato(bambino: Bambino, line: string, date: Date, direction: string, stop: Fermata) {
-    console.log('httpService.cambiaStato:');
+    console.log('AttendanceService.cambiaStato:');
     const httpoptions = { headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -96,7 +91,7 @@ export class HttpService {
       })
     );
   }
-
+}
 
 /*
   getAll(): Observable<Data[]> {
@@ -123,6 +118,3 @@ export class HttpService {
     // .subscribe( x => { console.log('Post: ' + JSON.stringify(x)); } );
   }
 */
-
-
-}

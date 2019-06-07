@@ -1,6 +1,89 @@
 
 
-<h2>Register</h2>
+<h2>Register Page</h2>
+
+<form>
+  <mat-card>
+  <mat-list role="list">
+    <mat-list-item role="listitem">
+      <div class="input-form-container">
+        <mat-form-field>
+          <label>
+            <input matInput placeholder="Enter your first name" [formControl]="firstName" required>
+          </label>
+          <mat-error *ngIf="firstName.invalid">{{getErrorMessage('firsName')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-list-item><br><br> <!-- todo: da separare col CSS e togliere i <br> -->
+
+    <mat-list-item role="listitem">
+      <div class="input-form-container">
+        <mat-form-field>
+          <label>
+            <input matInput placeholder="Enter your last name" [formControl]="lastName" required>
+          </label>
+          <mat-error *ngIf="lastName.invalid">{{getErrorMessage('lastName')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-list-item><br><br> <!-- todo: da separare col CSS e togliere i <br> -->
+
+    <mat-list-item role="listitem">
+      <div class="input-form-container">
+        <mat-form-field>
+          <label>
+            <input matInput placeholder="Enter your email" [formControl]="email" required>
+          </label>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage('email')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-list-item><br><br> <!-- todo: da separare col CSS e togliere i <br> -->
+
+    <mat-list-item role="listitem">
+    <div class="input-form-container">
+      <mat-form-field>
+        <label>
+          <input matInput placeholder="Enter your password" [type]="hidepass1 ? 'password' : 'text'" [formControl]="password" required>
+        </label>
+        <button mat-icon-button matSuffix (click)="hidepass1 = !hidepass1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidepass1">
+          <mat-icon>{{hidepass1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="password.invalid">{{getErrorMessage('password')}}</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-list-item><br><br>  <!-- todo: da separare col CSS e togliere i <br> -->
+
+  <mat-list-item role="listitem">
+    <div class="input-form-container">
+      <mat-form-field>
+        <label>
+          <input matInput placeholder="Confirm your password" [type]="hidepass2 ? 'password' : 'text'" [formControl]="password2" required>
+        </label>
+        <button mat-icon-button matSuffix (click)="hidepass2 = !hidepass2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidepass2">
+          <mat-icon>{{hidepass2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="password2.invalid">{{getErrorMessage('password2')}}</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-list-item> <br><br>  <!-- todo: da separare col CSS e togliere i <br> -->
+
+  <mat-error *ngIf="checkPasswords()"> Password mismatch</mat-error>
+
+  </mat-list>
+
+  <mat-card-footer>
+    <div class="form-group">
+      <button [disabled]="checkForInputs() == false" class="btn btn-primary" (click)="onSubmit()">
+        Register
+      </button>
+    </div>
+  </mat-card-footer>
+</mat-card>
+</form>
+
+<!--
+
+<a routerLink="/login" class="btn btn-link">Cancel</a>
+
 <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label>First Name</label>
@@ -16,20 +99,18 @@
       <div *ngIf="f.lastName.errors.required">Last Name is required</div>
     </div>
   </div>
-  <div class="form-group">
-    <label>Email</label>
-    <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-      <div *ngIf="f.email.errors.required">Email is required</div>
-    </div>
-  </div>
-  <div class="form-group">
+
+
+
+  <div class="input-form-container">
     <label>Password</label>
-    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-      <div *ngIf="f.password.errors.required">Password is required</div>
-      <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-    </div>
+    <mat-form-field>
+      <input matInput placeholder="Enter your password" [type]="hidepass1 ? 'password' : 'text'" formControlName="password">
+      <button mat-icon-button matSuffix (click)="hidepass1 = !hidepass1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidepass1">
+        <mat-icon>{{hidepass1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="f.password.invalid">{{getErrorMessage('password')}}</mat-error>
+    </mat-form-field>
   </div>
   <div class="form-group">
     <label>Password2</label>
@@ -46,11 +127,28 @@
     <a routerLink="/login" class="btn btn-link">Cancel</a>
   </div>
 </form>
-
+-->
 
 
 <!--
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+      <div *ngIf="f.email.errors.required">Email is required</div>
+    </div>
+   </div>
 <div>
+<div class="form-group">
+    <label>Password</label>
+    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+      <div *ngIf="f.password.errors.required">Password is required</div>
+      <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+    </div>
+  </div>
+
     <form [formGroup]="registrationForm">
       firstName: <input type="text" formControlName="firstName"><br>
       lastName: <input type="text" formControlName="lastName"><br>

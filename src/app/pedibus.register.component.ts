@@ -1,16 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
+import {UserService} from './pedibus.user.service';
+import {Router} from '@angular/router';
 
-
-function passwordValidator(control: FormGroup): ValidationErrors | null {
-  const password = control.get('password');
-  const password2 = control.get('password2');
-
-  const ret = password === password2 ? null : { passwordNotMatching: true};
-  if (ret) { console.log(`${password.value} === ${password2.value}`, 'Le password fornite non coincidono'); }
-
-  return ret;
-}
 
 @Component({
   selector: 'app-pedibus-register',
@@ -18,13 +10,87 @@ function passwordValidator(control: FormGroup): ValidationErrors | null {
   styleUrls: ['./pedibus.register.component.css']
 })
 
-export class PedibusRegisterComponent implements OnInit {
+export class PedibusRegisterComponent {
 
-  registrationForm: FormGroup;
-  submitted: boolean;
-  // error: string;
+  // submitted: boolean;
+  hidepass1 = true;
+  hidepass2 = true;
+  error: string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private userService: UserService, private router: Router) {
+  }
+
+  email = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('',
+    [Validators.required,
+                   Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
+
+  password2 = new FormControl('',
+    [Validators.required,
+                   Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
+
+  firstName = new FormControl('', [
+                Validators.required,
+                Validators.pattern('^[a-zA-Z]{2,40}$')]);
+
+  lastName = new FormControl('', [
+                Validators.required,
+                Validators.pattern('^[a-zA-Z]{2,40}$')]);
+
+  getErrorMessage(campo: string) {
+    if (campo === 'email') {
+      return this.email.hasError('required') ? 'You must enter a value' :
+        this.email.hasError('email') ? 'Not a valid email' :
+          '';
+    } else if (campo === 'password') {
+      return this.password.hasError('required') ? 'You must enter a value' :
+        this.password.hasError('pattern') ? 'Not a valid password' :
+          '';
+    } else if (campo === 'password2') {
+      return this.password2.hasError('required') ? 'You must enter a value' :
+        this.password2.hasError('pattern') ? 'Not a valid password' :
+          '';
+    } else if (campo === 'firstName') {
+      return this.firstName.hasError('required') ? 'You must enter a value' :
+        this.firstName.hasError('pattern') ? 'Not a valid first name' :
+          '';
+    } else if (campo === 'lastName') {
+      return this.lastName.hasError('required') ? 'You must enter a value' :
+        this.lastName.hasError('pattern') ? 'Not a valid last name' :
+          '';
+    }
+  }
+
+  checkPasswords() {
+    return !(this.password.value === this.password2.value);
+  }
+
+  onSubmit() {
+    //this.submitted = true;
+
+    this.userService.register(this.firstName.value, this.lastName.value, this.email.value, this.password.value, this.password2.value)
+      .subscribe(
+        data => {
+          this.router.navigate(['/login'], { queryParams: { registered: true }});
+        },
+        error => {
+          this.error = error;
+        });
+  }
+
+  checkForInputs() {
+    if (this.firstName.invalid || this.lastName.invalid || this.email.invalid || this.password.invalid || this.password2.invalid
+        || this.checkPasswords()) {
+      return false;
+    }
+    return true;
+  }
+}
+
+
+
+/*
+    constructor(private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -41,37 +107,16 @@ export class PedibusRegisterComponent implements OnInit {
       validator: passwordValidator,
       // updateOn: 'blur'
     });
-
-
-    this.submitted = false;
+     this.submitted = false;
   }
 
+  function passwordValidator(control: FormGroup): ValidationErrors | null {
+  const password = control.get('password');
+  const password2 = control.get('password2');
 
+  const ret = password === password2 ? null : { passwordNotMatching: true};
+  if (ret) { console.log(`${password.value} === ${password2.value}`, 'Le password fornite non coincidono'); }
 
-  onSubmit() {
-
-    /*
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.registrationForm.invalid) {
-      return;
-    }
-
-    this.userService.register(this.registrationForm.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.router.navigate(['/login'], { queryParams: { registered: true }});
-        },
-        error => {
-          this.error = error;
-        });
-     */
-  }
-
-  get f() { return this.registrationForm.controls; }
+  return ret;
 }
-
-
-
+   */

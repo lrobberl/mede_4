@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
-import {Linea, Fermata, Data, Bambino, Corsa, HttpService} from './pedibusHTTP.service';
+import {Linea, Fermata, Data, Bambino, Corsa, AttendanceService} from './pedibus.attendance.service';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -19,13 +19,13 @@ export class PedibusAttendanceComponent implements OnInit {
   linee: Linea[];
   radioSelected = 'Rossa';
 
-  constructor(private httpService: HttpService) {
+  constructor(private attendanceService: AttendanceService) {
   }
 
   ngOnInit() {
-    this.httpService.getLines().subscribe(x => {this.linee = x; });
+    this.attendanceService.getLines().subscribe(x => {this.linee = x; });
     this.setCurrentLine('Rossa');
-    this.httpService.getCorsa(this.selectedLine, this.formatDate(new Date())).subscribe(x => {this.data = x; });
+    this.attendanceService.getCorsa(this.selectedLine, this.formatDate(new Date())).subscribe(x => {this.data = x; });
     // this.prova$ = this.httpService.getCorsa(this.selectedLine, this.formatDate(new Date()));
   }
   setCurrentLine(linea: string) {
@@ -34,17 +34,17 @@ export class PedibusAttendanceComponent implements OnInit {
 
   getCorsa(linea: string, data: string) {
     // this.selectedDate = data;
-    this.httpService.getCorsa(linea, data).subscribe(x => {this.data = x; });
+    this.attendanceService.getCorsa(linea, data).subscribe(x => {this.data = x; });
   }
 
   cambiaLinea($event: MatRadioChange) {
-    this.httpService.getCorsa($event.value, this.formatDate(this.data.date)).subscribe(x => {this.data = x; });
+    this.attendanceService.getCorsa($event.value, this.formatDate(this.data.date)).subscribe(x => {this.data = x; });
   }
 
   segnaPresente($event: MouseEvent, bambino: Bambino, verso: string, feramata: Fermata) {
     bambino.presente = (bambino.presente === true) ? false : true;
-    // todo: dove va inserita la .subscribe()? Nel componente o nel servizio? E cosa ci inseriamo dentro?
-    this.httpService.cambiaStato(bambino, this.selectedLine, this.data.date, verso, feramata).subscribe((response) => {
+
+    this.attendanceService.cambiaStato(bambino, this.selectedLine, this.data.date, verso, feramata).subscribe((response) => {
         // do something with the response
         console.log('Response is: ', response);
       },
