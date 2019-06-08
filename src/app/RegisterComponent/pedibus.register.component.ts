@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {UserService} from './pedibus.user.service';
+import {UserService} from '../pedibus.user.service';
 import {Router} from '@angular/router';
 
 
@@ -12,7 +12,6 @@ import {Router} from '@angular/router';
 
 export class PedibusRegisterComponent {
 
-  // submitted: boolean;
   hidepass1 = true;
   hidepass2 = true;
   error: string;
@@ -23,11 +22,11 @@ export class PedibusRegisterComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('',
     [Validators.required,
-                   Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
+                   Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
 
   password2 = new FormControl('',
     [Validators.required,
-                   Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
+                   Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
 
   firstName = new FormControl('', [
                 Validators.required,
@@ -66,8 +65,6 @@ export class PedibusRegisterComponent {
   }
 
   onSubmit() {
-    //this.submitted = true;
-
     this.userService.register(this.firstName.value, this.lastName.value, this.email.value, this.password.value, this.password2.value)
       .subscribe(
         data => {

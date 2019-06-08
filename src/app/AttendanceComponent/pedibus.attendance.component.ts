@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
-import {Linea, Fermata, Data, Bambino, Corsa, AttendanceService} from './pedibus.attendance.service';
+import {Linea, Fermata, Data, Bambino, Corsa, AttendanceService} from '../pedibus.attendance.service';
 import {Observable} from 'rxjs';
 
 @Component({

@@ -45,4 +45,31 @@ export class UserService {
       })
     );
   }
+
+  login(mail: string, pass: string) {
+    console.log('UserService.login:');
+
+    const httpoptions = { headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Authorization, X-Requested-With, Content-Type, Accept, Origin',
+        'Access-Control-Allow-Methods': 'PUT, GET, POST, DELETE, OPTIONS',
+        'Access-Control-Max-Age': '1728000'
+      })
+    };
+
+    const bodyObj = {
+      email: mail,
+      password: pass,
+    };
+
+    const body = JSON.stringify(bodyObj);
+
+    return this.http.post(REST_URL + 'login', body, httpoptions).pipe(
+      catchError(err => {
+        console.error(err);
+        return of(null);
+      })
+    );
+  }
 }

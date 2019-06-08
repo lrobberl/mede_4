@@ -19,8 +19,9 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import {AttendanceService} from './pedibus.attendance.service';
 import {HttpClientModule} from '@angular/common/http';
-import {PedibusAttendanceComponent} from './pedibus.attendance.component';
-import {PedibusRegisterComponent} from './pedibus.register.component';
+import {PedibusAttendanceComponent} from './AttendanceComponent/pedibus.attendance.component';
+import {PedibusRegisterComponent} from './RegisterComponent/pedibus.register.component';
+import {PedibusLoginComponent} from './LoginComponent/pedibus.login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import {UserService} from './pedibus.user.service';
@@ -28,6 +29,7 @@ import {UserService} from './pedibus.user.service';
 const appRoutes: Routes = [
   { path: 'register', component: PedibusRegisterComponent },
   { path: 'attendance', component: PedibusAttendanceComponent},
+  { path: 'login', component: PedibusLoginComponent},
   // { path: 'login', component: PedibusAttendanceComponent},
   // { path: '**', component: PageNotFoundComponent }
 ];
@@ -37,7 +39,8 @@ const appRoutes: Routes = [
     AppComponent,
     PedibusAttendanceComponent,
     MainNavComponent,
-    PedibusRegisterComponent
+    PedibusRegisterComponent,
+    PedibusLoginComponent
   ],
   imports: [
     BrowserModule,
