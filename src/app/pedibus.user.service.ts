@@ -67,7 +67,7 @@ export class UserService {
     };
 
     const bodyObj = {
-      email: mail,
+      username: mail,
       password: pass,
     };
 
