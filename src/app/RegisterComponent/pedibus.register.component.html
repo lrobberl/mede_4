@@ -7,7 +7,7 @@
       <div class="input-form-container">
         <mat-form-field>
           <label>
-            <input matInput placeholder="Enter your first name" [formControl]="firstName" required>
+            <input matInput placeholder="Enter your first name" [formControl]="firstName">
           </label>
           <mat-error *ngIf="firstName.invalid">{{getErrorMessage('firsName')}}</mat-error>
         </mat-form-field>
@@ -18,7 +18,7 @@
       <div class="input-form-container">
         <mat-form-field>
           <label>
-            <input matInput placeholder="Enter your last name" [formControl]="lastName" required>
+            <input matInput placeholder="Enter your last name" [formControl]="lastName">
           </label>
           <mat-error *ngIf="lastName.invalid">{{getErrorMessage('lastName')}}</mat-error>
         </mat-form-field>
@@ -29,9 +29,10 @@
       <div class="input-form-container">
         <mat-form-field>
           <label>
-            <input matInput placeholder="Enter your email" [formControl]="email" required>
+            <input #emailField matInput placeholder="Enter your email" [formControl]="email" (blur)="isEmailPresent(emailField.value)">
           </label>
           <mat-error *ngIf="email.invalid">{{getErrorMessage('email')}}</mat-error>
+          <mat-error *ngIf="emailAlreadyPresent"> L'email inserita è già presente nel sistema</mat-error>
         </mat-form-field>
       </div>
     </mat-list-item><br><br> <!-- todo: da separare col CSS e togliere i <br> -->
@@ -40,7 +41,7 @@
     <div class="input-form-container">
       <mat-form-field>
         <label>
-          <input matInput placeholder="Enter your password" [type]="hidepass1 ? 'password' : 'text'" [formControl]="password" required>
+          <input matInput placeholder="Enter your password" [type]="hidepass1 ? 'password' : 'text'" [formControl]="password">
         </label>
         <button mat-icon-button matSuffix (click)="hidepass1 = !hidepass1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidepass1">
           <mat-icon>{{hidepass1 ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -54,7 +55,7 @@
     <div class="input-form-container">
       <mat-form-field>
         <label>
-          <input matInput placeholder="Confirm your password" [type]="hidepass2 ? 'password' : 'text'" [formControl]="password2" required>
+          <input matInput placeholder="Confirm your password" [type]="hidepass2 ? 'password' : 'text'" [formControl]="password2">
         </label>
         <button mat-icon-button matSuffix (click)="hidepass2 = !hidepass2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidepass2">
           <mat-icon>{{hidepass2 ? 'visibility_off' : 'visibility'}}</mat-icon>

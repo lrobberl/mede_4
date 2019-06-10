@@ -1,9 +1,11 @@
-<h1>Angular Router</h1>
+<h1>Pedibus - Home Page</h1>
 <nav>
   <a routerLink="/attendance" routerLinkActive="active">Corse</a><br>
   <a routerLink="/register" routerLinkActive="active">Registrazione</a><br>
   <a routerLink="/login" routerLinkActive="active">Login</a>
 </nav>
+
+<div *ngIf="isLoggedIn()"> {{user.username}} </div>
 <router-outlet></router-outlet>
 
 

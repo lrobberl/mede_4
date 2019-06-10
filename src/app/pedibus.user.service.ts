@@ -2,14 +2,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
+import {Data} from './pedibus.attendance.service';
 
 const REST_URL = 'http://localhost:8080/';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-  })
-};
 
 export interface User {
   name: string;
@@ -19,16 +14,29 @@ export interface User {
   pass2: string;
 }
 
+export interface TokenData {
+  token: string;
+  expiresAt: string;
+}
+
+export interface LoginData {
+  username: string;
+  password: string;
+}
+
 @Injectable()
 export class UserService {
   user: User;
+
   constructor(private http: HttpClient) {
   }
 
   register(firstName: string, lastName: string, mail: string, password: string, password2: string): Observable<User> {
     console.log('UserService.register:');
 
-    const httpoptions = { headers: new HttpHeaders({
+    // tslint:disable-next-line:no-shadowed-variable
+    const httpOptions = {
+      headers: new HttpHeaders({
         'Content-Type':  'application/json',
       })
     };
@@ -42,7 +50,7 @@ export class UserService {
   };
     const body = JSON.stringify(this.user);
 
-    return this.http.post<User>(REST_URL + 'register', body, httpoptions).pipe(
+    return this.http.post<User>(REST_URL + 'register', body, httpOptions).pipe(
       catchError(err => {
         console.error(err);
         return of(null);
@@ -50,15 +58,11 @@ export class UserService {
     );
   }
 
-  login(mail: string, pass: string) {
+  login(mail: string, pass: string): Observable<TokenData> {
     console.log('UserService.login:');
 
-    const httpoptions = { headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Authorization, X-Requested-With, Content-Type, Accept, Origin',
-        'Access-Control-Allow-Methods': 'PUT, GET, POST, DELETE, OPTIONS',
-        'Access-Control-Max-Age': '1728000'
+    const httpOptions = { headers: new HttpHeaders({
+        'Content-Type':  'application/json'
       })
     };
 
@@ -69,7 +73,18 @@ export class UserService {
 
     const body = JSON.stringify(bodyObj);
 
-    return this.http.post(REST_URL + 'login', body, httpoptions).pipe(
+    return this.http.post<LoginData>(REST_URL + 'login', body, httpOptions).pipe(
+      catchError(err => {
+        console.error(err);
+        return of(null);
+      })
+    );
+  }
+
+  checkEmailPresent(email: string): Observable<string> {
+    console.log('UserService.checkEmailPresent:');
+    return this.http.get(REST_URL + 'users/' + email).pipe(
+      map(x => ({emailPresent: x.toString()})),
       catchError(err => {
         console.error(err);
         return of(null);

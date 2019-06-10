@@ -25,6 +25,7 @@ import {PedibusLoginComponent} from './LoginComponent/pedibus.login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import {UserService} from './pedibus.user.service';
+import {AuthInterceptor} from './pedibus.authInterceptor.service';
 
 const appRoutes: Routes = [
   { path: 'register', component: PedibusRegisterComponent },
@@ -62,7 +63,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [UserService, AttendanceService],
+  providers: [UserService, AttendanceService, AuthInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

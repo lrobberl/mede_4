@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-import {UserService} from '../pedibus.user.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {TokenData, UserService} from '../pedibus.user.service';
 import {Router} from '@angular/router';
+import * as moment from 'moment';
 
 
 @Component({
@@ -37,8 +38,8 @@ export class PedibusLoginComponent {
 
     onSubmit() {
     this.userService.login(this.email.value, this.password.value)
-      .subscribe(
-        data => {
+      .subscribe(data => {
+          this.setSession(data),
           this.router.navigate(['/login'], { queryParams: { registered: true }});
         },
         error => {
@@ -47,9 +48,40 @@ export class PedibusLoginComponent {
   }
 
   checkForInputs() {
-    if (this.email.invalid || this.password.invalid) {
-      return false;
-    }
-    return true;
+    return !(this.email.invalid || this.password.invalid);
+  }
+
+  private setSession(tokenData: TokenData) {
+    const expiresAt = moment().add(tokenData.expiresAt, 'second');
+    localStorage.setItem('id_token', tokenData.token);
+    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()) );
+  }
+
+  logout() {
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+  }
+
+  public isLoggedIn() {
+    return moment().isBefore(this.getExpiration());
+  }
+
+  isLoggedOut() {
+    return !this.isLoggedIn();
+  }
+
+  private getExpiration() {
+    const expiration = localStorage.getItem('expires_at');
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
   }
 }
+
+/*
+loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('',
+    [Validators.required,
+      Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]),
+  });
+ */

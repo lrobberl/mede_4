@@ -3,10 +3,6 @@ import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 
-// @ts-ignore
-
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,6 +15,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.title = 'Angular Router'
   }
+
+  isLoggedIn() { // todo: come faccio da questo componente a vedere se l'utente è loggato? Vorrei fare il check qua perchè è il
+                  // compoenente più esterno
+  }
+
 
   /*
 

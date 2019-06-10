@@ -15,6 +15,7 @@ export class PedibusRegisterComponent {
   hidepass1 = true;
   hidepass2 = true;
   error: string;
+  emailAlreadyPresent = false;
 
   constructor(private userService: UserService, private router: Router) {
   }
@@ -81,6 +82,14 @@ export class PedibusRegisterComponent {
       return false;
     }
     return true;
+  }
+
+  isEmailPresent(email: string) {
+    if (!this.email.invalid) {
+      let result = '';
+      this.userService.checkEmailPresent(email).subscribe(res => { result = res; });
+      this.emailAlreadyPresent = (result === 'true');
+    }
   }
 }
 
