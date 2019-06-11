@@ -1,8 +1,9 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
 import {Data} from './pedibus.attendance.service';
+import {xit} from 'selenium-webdriver/testing';
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -15,8 +16,7 @@ export interface User {
 }
 
 export interface TokenData {
-  token: string;
-  expiresAt: string;
+  id_token: string;
 }
 
 export interface LoginData {
@@ -58,7 +58,7 @@ export class UserService {
     );
   }
 
-  login(mail: string, pass: string): Observable<TokenData> {
+  login(mail: string, pass: string): Observable<string> {
     console.log('UserService.login:');
 
     const httpOptions = { headers: new HttpHeaders({
@@ -73,7 +73,10 @@ export class UserService {
 
     const body = JSON.stringify(bodyObj);
 
-    return this.http.post<LoginData>(REST_URL + 'login', body, httpOptions).pipe(
+    return this.http.post<TokenData>(REST_URL + 'login', body, httpOptions).pipe(
+      map(x => {
+        return x.id_token;
+      }),
       catchError(err => {
         console.error(err);
         return of(null);

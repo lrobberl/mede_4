@@ -38,9 +38,9 @@ export class PedibusLoginComponent {
 
     onSubmit() {
     this.userService.login(this.email.value, this.password.value)
-      .subscribe(data => {
-          this.setSession(data),
-          this.router.navigate(['/login'], { queryParams: { registered: true }});
+      .subscribe(token => {
+          localStorage.setItem('id_token', token);
+          // this.router.navigate(['/myPage'], { queryParams: { registered: true }});
         },
         error => {
           this.error = error;
@@ -49,12 +49,6 @@ export class PedibusLoginComponent {
 
   checkForInputs() {
     return !(this.email.invalid || this.password.invalid);
-  }
-
-  private setSession(tokenData: TokenData) {
-    const expiresAt = moment().add(tokenData.expiresAt, 'second');
-    localStorage.setItem('id_token', tokenData.token);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()) );
   }
 
   logout() {

@@ -1,15 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import {Linea, Fermata, Data, Bambino, Corsa, AttendanceService} from '../pedibus.attendance.service';
 import {Observable} from 'rxjs';
+import {AuthInterceptor} from "../pedibus.authInterceptor.service";
 
 @Component({
   selector: 'app-pedibus-attendance',
   templateUrl: './pedibus.attendance.component.html',
   styleUrls: ['./pedibus.attendance.component.css']
 })
+
+
+
 
 export class PedibusAttendanceComponent implements OnInit {
   title = 'Esercitazione - #5';
@@ -19,7 +23,7 @@ export class PedibusAttendanceComponent implements OnInit {
   linee: Linea[];
   radioSelected = 'Rossa';
 
-  constructor(private attendanceService: AttendanceService) {
+  constructor(private attendanceService: AttendanceService, private authInterceptor: AuthInterceptor) {
   }
 
   ngOnInit() {
