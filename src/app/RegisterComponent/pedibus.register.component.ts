@@ -17,7 +17,7 @@ export class PedibusRegisterComponent {
   error: string;
   emailAlreadyPresent = false;
 
-  constructor(private userService: UserService, private router: Router, private fb: FormBuilder) {
+  constructor(private userService: UserService, private router: Router) {
   }
 
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -36,20 +36,6 @@ export class PedibusRegisterComponent {
   lastName = new FormControl('', [
                 Validators.required,
                 Validators.pattern('^[a-zA-Z]{2,40}$')]);
-
-  registrationForm = this.fb.group({
-    firstName: [Validators.required, Validators.maxLength(30), Validators.minLength(2)],
-    lastName: ['required', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
-    email: [Validators.required, Validators.email, Validators.maxLength(30), Validators.minLength(2)],
-    password: [Validators.required, Validators.pattern('/^[a-zA-Z0-9\\_\\*\\-\\+\\!\\?\\,\\:\\;\\.\\xE0\\xE8\\xE9\\xF9\\xF2\\' +
-      'xEC\x27]{6,12}/'), Validators.maxLength(30)],
-    password2: [Validators.required, Validators.pattern('/^[a-zA-Z0-9\\_\\*\\-\\+\\!\\?\\,\\:\\;\\.\\xE0\\xE8\\xE9\\xF9\\xF2\\' +
-      'xEC\x27]{6,12}/'), Validators.maxLength(30)],
-    // todo: accettazione pricacy mancante
-  }, {
-    // updateOn: 'blur'
-  });
-
 
   getErrorMessage(campo: string) {
     if (campo === 'email') {

@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   public title: string;
 
   ngOnInit(): void {
-    this.title = 'Angular Router'
+    this.title = 'PEDIBUS - Home Page'
   }
 
   isLoggedIn() { // todo: come faccio da questo componente a vedere se l'utente è loggato? Vorrei fare il check qua perchè è il

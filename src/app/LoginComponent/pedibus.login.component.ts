@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {TokenData, UserService} from '../pedibus.user.service';
+import {UserService} from '../pedibus.user.service';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 

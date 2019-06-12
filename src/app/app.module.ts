@@ -63,8 +63,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [UserService, AttendanceService, //{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
-    ],
+  providers: [UserService, AttendanceService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
