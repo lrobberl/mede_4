@@ -40,7 +40,7 @@ export class PedibusLoginComponent {
     this.userService.login(this.email.value, this.password.value)
       .subscribe(token => {
           localStorage.setItem('id_token', token);
-          // this.router.navigate(['/myPage'], { queryParams: { registered: true }});
+          this.router.navigate(['/attendance'], { queryParams: { logged: true }});
         },
         error => {
           this.error = error;
