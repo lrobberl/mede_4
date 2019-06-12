@@ -18,7 +18,7 @@ import {AppComponent} from './app.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import {AttendanceService} from './pedibus.attendance.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PedibusAttendanceComponent} from './AttendanceComponent/pedibus.attendance.component';
 import {PedibusRegisterComponent} from './RegisterComponent/pedibus.register.component';
 import {PedibusLoginComponent} from './LoginComponent/pedibus.login.component';
@@ -63,7 +63,8 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [UserService, AttendanceService, AuthInterceptor],
+  providers: [UserService, AttendanceService, //{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
