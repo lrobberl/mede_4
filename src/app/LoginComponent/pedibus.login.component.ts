@@ -50,25 +50,6 @@ export class PedibusLoginComponent {
   checkForInputs() {
     return !(this.email.invalid || this.password.invalid);
   }
-
-  logout() {
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
-  }
-
-  public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
-  }
-
-  isLoggedOut() {
-    return !this.isLoggedIn();
-  }
-
-  private getExpiration() {
-    const expiration = localStorage.getItem('expires_at');
-    const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
-  }
 }
 
 /*

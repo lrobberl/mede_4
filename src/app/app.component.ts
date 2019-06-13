@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {MatRadioChange, PageEvent} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import * as moment from './LoginComponent/pedibus.login.component';
+import {HttpClient} from '@angular/common/http';
+import {User, UserService} from './pedibus.user.service';
 
 @Component({
   selector: 'app-root',
@@ -12,296 +15,28 @@ import {MatIconRegistry} from '@angular/material';
 export class AppComponent implements OnInit {
   public title: string;
 
+  constructor(private userService: UserService) {
+  }
+
   ngOnInit(): void {
-    this.title = 'PEDIBUS - Home Page'
-  }
-
-  isLoggedIn() { // todo: come faccio da questo componente a vedere se l'utente è loggato? Vorrei fare il check qua perchè è il
-                  // compoenente più esterno
-  }
-
-
-  /*
-
-export interface Linea {
-  nome: string;
-  fermate: Fermata[];
-}
-
-export interface Fermata {
-  nome: string;
-  orario: string;
-  persone: Persona[];
-}
-
-export interface Giorno {
-  data: Date;
-  linee: Linea[];
-}
-
-export interface Persona {
-  nome: string;
-  presente: boolean;
-}
-
-curGiorno: number;
-  curLinea: number;
-  giornoSelezionato: Giorno;
-  lineaSelezionata: Linea;
-  giorni: Giorno[] = [
-    {
-      data: new Date(2019, 2, 13),
-      linee: [
-        {
-          nome: 'rossa',
-          fermate: [
-            {
-              nome: 'Sabotino',
-              orario: '7:20',
-              persone: [
-                {
-                  nome: 'Zebedeo',
-                  presente: false
-                },
-                {
-                  nome: 'Gesualdo',
-                  presente: false
-                },
-                {
-                  nome: 'Anita',
-                  presente: false
-                }
-              ]
-            },
-            {
-              nome: 'Corso Einaudi',
-              orario: '7:35',
-              persone: [
-                {
-                  nome: 'Martin',
-                  presente: false
-                }
-              ]
-            },
-            {
-              nome: 'Politecnico',
-              orario: '7:55',
-              persone: [
-                {
-                  nome: 'Miguel',
-                  presente: false
-                }
-              ]
-            },
-          ]
-        },
-        {
-          nome: 'blu',
-          fermate: [
-            {
-              nome: 'Piazza Vittorio',
-              orario: '7:20',
-              persone: [
-                {
-                  nome: 'Peppina',
-                  presente: false
-                }
-              ]
-            },
-            {
-              nome: 'Piazza San Carlo',
-              orario: '7:35',
-              persone: []
-            },
-            {
-              nome: 'Politecnico',
-              orario: '7:55',
-              persone: [
-                {
-                  nome: 'Michelangelo',
-                  presente: false
-                }
-              ]
-            },
-          ]
-        }
-      ]
-    },
-    {
-      data: new Date(2019, 2, 15),
-      linee: [
-        {
-          nome: 'rossa',
-          fermate: [
-            {
-              nome: 'Sabotino',
-              orario: '7:20',
-              persone: [
-                {
-                  nome: 'Lucio',
-                  presente: false
-                }
-              ]
-            },
-            {
-              nome: 'Corso Einaudi',
-              orario: '7:35',
-              persone: []
-            },
-            {
-              nome: 'Politecnico',
-              orario: '7:55',
-              persone: [
-                {
-                  nome: 'Gaia',
-                  presente: false
-                }
-              ]
-            },
-          ]
-        },
-        {
-          nome: 'blu',
-          fermate: [
-            {
-              nome: 'Piazza Vittorio',
-              orario: '7:20',
-              persone: [
-                {
-                  nome: 'Ahmed',
-                  presente: false
-                }
-              ]
-            },
-            {
-              nome: 'Piazza San Carlo',
-              orario: '7:35',
-              persone: [
-                {
-                  nome: 'Mohamed',
-                  presente: false
-                }
-              ]
-            },
-            {
-              nome: 'Politecnico',
-              orario: '7:55',
-              persone: [
-                {
-                  nome: 'El Khabir',
-                  presente: false
-                }
-              ]
-            },
-          ]
-        }
-      ]
-    },
-    {
-      data: new Date(2019, 2, 17),
-      linee: [
-        {
-          nome: 'rossa',
-          fermate: [
-            {
-              nome: 'Sabotino',
-              orario: '7:20',
-              persone: []
-            },
-            {
-              nome: 'Corso Einaudi',
-              orario: '7:35',
-              persone: [
-                {
-                  nome: 'Monica',
-                  presente: false
-                }
-              ]
-            },
-            {
-              nome: 'Politecnico',
-              orario: '7:55',
-              persone: []
-            },
-          ]
-        },
-        {
-          nome: 'blu',
-          fermate: [
-            {
-              nome: 'Piazza Vittorio',
-              orario: '7:20',
-              persone: [
-                {
-                  nome: 'Zac',
-                  presente: false
-                }
-              ]
-            },
-            {
-              nome: 'Piazza San Carlo',
-              orario: '7:35',
-              persone: []
-            },
-            {
-              nome: 'Politecnico',
-              orario: '7:55',
-              persone: [
-                {
-                  nome: 'Mike',
-                  presente: false
-                }
-              ]
-            },
-          ]
-        }
-      ]
+    this.title = 'PEDIBUS - Home Page';
+    if (localStorage.getItem('user') === null) {
+      localStorage.setItem('user', 'Not logged');
     }
-  ];
-
-  constructor() {
-    this.curGiorno = 0;
-    this.curLinea = 0;
-    this.title = 'Esercitazione - #5';
-
   }
 
-  ngOnInit(): void {
-    this.curGiorno = 0;
-    this.curLinea = 0;
-    this.giornoSelezionato = this.giorni[this.curGiorno];
-    this.lineaSelezionata = this.giorni[this.curGiorno].linee[this.curLinea];
+  logout() {
+    this.userService.logout();
   }
 
-  nextDay() {
-    this.curGiorno = (this.curGiorno === this.giorni.length - 1) ? this.curGiorno : this.curGiorno + 1;
-    this.giornoSelezionato = this.giorni[this.curGiorno];
-    this.lineaSelezionata = this.giorni[this.curGiorno].linee[this.curLinea];
+  isLoggedIn() {
+    return this.userService.isLoggedIn();
   }
 
-  previousDay() {
-    this.curGiorno = (this.curGiorno === 0) ? this.curGiorno : this.curGiorno - 1;
-    this.giornoSelezionato = this.giorni[this.curGiorno];
-    this.lineaSelezionata = this.giorni[this.curGiorno].linee[this.curLinea];
+  getUserLoggedIn() {
+    return localStorage.getItem('user');
   }
 
-  cambiaLinea($event: MatRadioChange) {
-    this.curLinea = $event.value;
-    this.lineaSelezionata = this.giorni[this.curGiorno].linee[this.curLinea];
-  }
-
-  pageChangeEvent($event: PageEvent) {
-    ($event.pageIndex - $event.previousPageIndex > 0) ? this.nextDay() : this.previousDay();
-  }
-
-  segnaPresente($event: MouseEvent, persona: Persona) {
-    persona.presente = (persona.presente === true) ? false : true;
-  }
-
-  getPersone(persone: Persona[]) {
-    return persone.sort((a, b) => (a.nome > b.nome) ? 1 : -1 );
-  }
-   */
 }
 
 

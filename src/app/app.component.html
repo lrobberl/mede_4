@@ -5,9 +5,17 @@
   <a routerLink="/login" routerLinkActive="active">Login</a>
 </nav>
 
-<!--<div *ngIf="isLoggedIn()"> {{user.username}} </div>-->
-<router-outlet></router-outlet>
+<!-- todo: Aggiungere css per metterlo in alto a sinistra -->
+<div class="top-right"> {{getUserLoggedIn()}} </div>
 
+<div class="form-group">
+  <button [disabled]="isLoggedIn() == false" class="btn btn-primary" (click)="logout()">
+    Logout
+  </button>
+</div>
+
+
+<router-outlet></router-outlet>
 
 <!-- <main-nav>
   <mat-card style="text-align: center" content="align: center">

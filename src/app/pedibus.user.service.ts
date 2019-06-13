@@ -1,9 +1,10 @@
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
 import {Data} from './pedibus.attendance.service';
 import {xit} from 'selenium-webdriver/testing';
+import * as moment from './LoginComponent/pedibus.login.component';
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -27,6 +28,7 @@ export interface LoginData {
 @Injectable()
 export class UserService {
   user: User;
+  userLogged: string;
 
   constructor(private http: HttpClient) {
   }
@@ -73,25 +75,41 @@ export class UserService {
 
     const body = JSON.stringify(bodyObj);
 
+    localStorage.setItem('user', mail);
+
     return this.http.post<TokenData>(REST_URL + 'login', body, httpOptions).pipe(
       map(x => {
         return x.id_token;
       }),
       catchError(err => {
         console.error(err);
+        localStorage.setItem('user', 'Not logged');
         return of(null);
       })
     );
   }
 
-  checkEmailPresent(email: string): Observable<string> {
+  logout() {
+    localStorage.removeItem('id_token');
+    localStorage.setItem('user', 'Not logged');
+  }
+
+  checkEmailPresent(email: string): Observable<HttpResponse<string>> {
     console.log('UserService.checkEmailPresent:');
-    return this.http.get(REST_URL + 'users/' + email).pipe(
-      map(x => ({emailPresent: x.toString()})),
+    return this.http.get(REST_URL + 'presence/' + email).pipe(
       catchError(err => {
         console.error(err);
         return of(null);
       })
     );
   }
+  // todo: inserire anche il controllo sulla validità del token (expiration date)
+  public isLoggedIn() {
+    return localStorage.getItem('id_token') !== null;
+  }
+/*
+  isLoggedOut() {
+    return !this.isLoggedIn();
+  }
+*/
 }

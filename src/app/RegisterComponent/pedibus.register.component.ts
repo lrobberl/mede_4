@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {UserService} from '../pedibus.user.service';
 import {Router} from '@angular/router';
+import {HttpResponse} from '@angular/common/http';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class PedibusRegisterComponent {
   hidepass1 = true;
   hidepass2 = true;
   error: string;
-  emailAlreadyPresent = false;
+  emailPresent : boolean;
 
   constructor(private userService: UserService, private router: Router) {
   }
@@ -36,6 +37,7 @@ export class PedibusRegisterComponent {
   lastName = new FormControl('', [
                 Validators.required,
                 Validators.pattern('^[a-zA-Z]{2,40}$')]);
+  emailPresenceMessage: 'Email inserita è già presente nel sistema';
 
   getErrorMessage(campo: string) {
     if (campo === 'email') {
@@ -84,11 +86,15 @@ export class PedibusRegisterComponent {
     return true;
   }
 
-  isEmailPresent(email: string) {
+  isEmailPresent() {
     if (!this.email.invalid) {
-      let result = '';
-      this.userService.checkEmailPresent(email).subscribe(res => { result = res; });
-      this.emailAlreadyPresent = (result === 'true');
+      this.userService.checkEmailPresent(this.email.value).subscribe(res => {
+        if ( res.ok ) {
+          this.emailPresent = false;
+        } else {
+        this.emailPresent = true;
+      }
+    });
     }
   }
 }
