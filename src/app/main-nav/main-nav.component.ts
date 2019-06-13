@@ -16,7 +16,7 @@ export class MainNavComponent {
       map(result => result.matches)
     );
 
-  title = 'Esercitazione #4';
+  title = 'PIEDIBUS';
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 

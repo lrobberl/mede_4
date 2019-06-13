@@ -1,42 +1,56 @@
-<h2>Login Page</h2>
+<div class="bg">
 
-<form>
-  <mat-card>
-    <mat-list role="list">
+  <form>
+    <mat-card class="form-container">
 
-      <mat-list-item role="listitem">
-        <div class="input-form-container">
-          <mat-form-field>
-            <label>
-              <input matInput placeholder="Enter your email" [formControl]="email">
-            </label>
-            <mat-error *ngIf="email.invalid">{{getErrorMessage('email')}}</mat-error>
-          </mat-form-field>
-        </div>
-      </mat-list-item><br><br> <!-- todo: da separare col CSS e togliere i <br> -->
+      <mat-card-header>
+        <h1>Login Page</h1>
+      </mat-card-header>
 
-      <mat-list-item role="listitem">
-        <div class="input-form-container">
-          <mat-form-field>
-            <label>
-              <input matInput placeholder="Enter your password" [type]="hidepass ? 'password' : 'text'" [formControl]="password">
-            </label>
-            <button mat-icon-button matSuffix (click)="hidepass = !hidepass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidepass">
-              <mat-icon>{{hidepass ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+      <mat-card-content>
+        <mat-list role="list">
+
+          <mat-list-item role="listitem">
+            <div class="input-form-container">
+              <mat-form-field>
+                <label>
+                  <input matInput placeholder="Enter your email" [formControl]="email">
+                </label>
+                <mat-error *ngIf="email.invalid">{{getErrorMessage('email')}}</mat-error>
+              </mat-form-field>
+            </div>
+          </mat-list-item>
+          <br><br> <!-- todo: da separare col CSS e togliere i <br> -->
+
+          <mat-list-item role="listitem">
+            <div class="input-form-container">
+              <mat-form-field>
+                <label>
+                  <input matInput placeholder="Enter your password" [type]="hidepass ? 'password' : 'text'"
+                         [formControl]="password">
+                </label>
+                <button mat-icon-button matSuffix (click)="hidepass = !hidepass" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hidepass">
+                  <mat-icon>{{hidepass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="password.invalid">{{getErrorMessage('password')}}</mat-error>
+              </mat-form-field>
+            </div>
+          </mat-list-item>
+          <br><br>  <!-- todo: da separare col CSS e togliere i <br> -->
+
+        </mat-list>
+
+        <mat-card-actions>
+          <div class="form-group">
+            <button mat-raised-button [disabled]="checkForInputs() == false" class="btn btn-primary" (click)="onSubmit()">
+              Login
             </button>
-            <mat-error *ngIf="password.invalid">{{getErrorMessage('password')}}</mat-error>
-          </mat-form-field>
-        </div>
-      </mat-list-item><br><br>  <!-- todo: da separare col CSS e togliere i <br> -->
+          </div>
+        </mat-card-actions>
+      </mat-card-content>
 
-    </mat-list>
-
-    <mat-card-footer>
-      <div class="form-group">
-        <button [disabled]="checkForInputs() == false" class="btn btn-primary" (click)="onSubmit()">
-          Login
-        </button>
-      </div>
-    </mat-card-footer>
-  </mat-card>
-</form>
+    </mat-card>
+  </form>
+</div>
