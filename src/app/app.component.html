@@ -1,21 +1,29 @@
-<h1>Pedibus - Home Page</h1>
-<nav>
-  <a routerLink="/attendance" routerLinkActive="active">Corse</a><br>
-  <a routerLink="/register" routerLinkActive="active">Registrazione</a><br>
-  <a routerLink="/login" routerLinkActive="active">Login</a>
-</nav>
+<!--<h1>Pedibus - Home Page</h1>-->
+<!--<nav>-->
+<!--  <a routerLink="/attendance" routerLinkActive="active">Corse</a><br>-->
+<!--  <a routerLink="/register" routerLinkActive="active">Registrazione</a><br>-->
+<!--  <a routerLink="/login" routerLinkActive="active">Login</a>-->
+<!--</nav>-->
+<main-nav>
+  <div> {{getUserLoggedIn()}} </div>
 
-<!-- todo: Aggiungere css per metterlo in alto a sinistra -->
-<div class="top-right"> {{getUserLoggedIn()}} </div>
-
-<div class="form-group">
-  <button [disabled]="isLoggedIn() == false" class="btn btn-primary" (click)="logout()">
-    Logout
+  <button [disabled]="isLoggedIn() == false" (click)="logout()">
+  Logout
   </button>
-</div>
 
+  <router-outlet></router-outlet>
+</main-nav>
 
-<router-outlet></router-outlet>
+<!--todo: Aggiungere css per metterlo in alto a sinistra
+<main-nav>
+
+  <div class="top-right"> {{getUserLoggedIn()}} </div>
+  <div class="form-group">
+
+  </div>
+
+</main-nav>
+-->
 
 <!-- <main-nav>
   <mat-card style="text-align: center" content="align: center">

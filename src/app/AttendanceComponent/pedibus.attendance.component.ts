@@ -41,7 +41,7 @@ export class PedibusAttendanceComponent implements OnInit {
   segnaPresente($event: MouseEvent, bambino: Bambino, verso: string, feramata: Fermata) {
     bambino.presente = (bambino.presente === true) ? false : true;
 
-    this.attendanceService.cambiaStato(bambino, this.data.linea, this.data.date, verso, feramata).subscribe((response) => {
+    this.attendanceService.cambiaStato(bambino, this.data.linea, this.data.date, verso.toLowerCase(), feramata).subscribe((response) => {
         // do something with the response
         console.log('Response is: ', response);
       },

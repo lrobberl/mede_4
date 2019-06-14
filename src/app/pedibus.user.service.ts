@@ -25,6 +25,10 @@ export interface LoginData {
   password: string;
 }
 
+export interface CheckEmailPresent {
+  presente: string;
+}
+
 @Injectable()
 export class UserService {
   user: User;
@@ -94,7 +98,7 @@ export class UserService {
     localStorage.setItem('user', 'Not logged');
   }
 
-  checkEmailPresent(email: string): Observable<HttpResponse<string>> {
+  checkEmailPresent(email: string): Observable<CheckEmailPresent> {
     console.log('UserService.checkEmailPresent:');
     return this.http.get(REST_URL + 'presence/' + email).pipe(
       catchError(err => {

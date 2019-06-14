@@ -16,7 +16,7 @@ export class PedibusRegisterComponent {
   hidepass1 = true;
   hidepass2 = true;
   error: string;
-  emailPresent : boolean;
+  emailPresent = false;
 
   constructor(private userService: UserService, private router: Router) {
   }
@@ -86,17 +86,27 @@ export class PedibusRegisterComponent {
     return true;
   }
 
+  getIsEmailPresent() {
+    return this.emailPresent;
+  }
+
   isEmailPresent() {
     if (!this.email.invalid) {
       this.userService.checkEmailPresent(this.email.value).subscribe(res => {
-        if ( res.ok ) {
-          this.emailPresent = false;
+        console.log('Il valore attuale di email present è' + this.emailPresent);
+        console.log('Sono entrato nel register ts isEmailPresent');
+
+        if (res.presente === 'true') {
+          this.emailPresent = true;
         } else {
-        this.emailPresent = true;
-      }
-    });
+          this.emailPresent = false;
+        }
+        console.log('Il valore cambiato di email present è' + this.emailPresent);
+      });
     }
   }
+
+
 }
 
 
