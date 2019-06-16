@@ -2,8 +2,6 @@ import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../pedibus.user.service';
 import {Router} from '@angular/router';
-import * as moment from 'moment';
-
 
 @Component({
   selector: 'app-pedibus-login',
@@ -21,8 +19,9 @@ export class PedibusLoginComponent {
 
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('',
-    [Validators.required,
-      Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
+  [Validators.required,
+  Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
+
 
   getErrorMessage(campo: string) {
     if (campo === 'email') {
@@ -48,9 +47,10 @@ export class PedibusLoginComponent {
   }
 
   checkForInputs() {
-    return !(this.email.invalid || this.password.invalid);
+    return !(this.password.invalid || this.email.invalid);
   }
 }
+
 
 /*
 loginForm = new FormGroup({
