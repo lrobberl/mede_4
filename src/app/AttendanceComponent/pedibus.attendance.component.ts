@@ -16,6 +16,7 @@ export class PedibusAttendanceComponent implements OnInit {
   title = 'Esercitazione - #5';
   data: Data;
   linee: Linea[];
+  listaBambini: Bambino[];
 
   constructor(private attendanceService: AttendanceService) {
   }
@@ -53,6 +54,19 @@ export class PedibusAttendanceComponent implements OnInit {
     );
   }
 
+  prenotaBambinoMancante($event: MouseEvent, child: Bambino, verso: string, fermataSalita: Fermata, fermataDiscesa: Fermata) {
+      this.attendanceService.prenotaBambino(child, this.data.linea, verso, fermataSalita, fermataDiscesa).subscribe((response) => {
+          // do something with the response
+          console.log('Response is: ', response);
+        },
+        (error) => {
+          // catch the error
+          console.error('An error occurred, ', error);
+        }
+
+      );
+  }
+
   nextDay() {
     // andare avanti di un giorno
     const followingDay = new Date(this.data.date.getTime() + 86400000); // + 1 day in ms
@@ -75,6 +89,12 @@ export class PedibusAttendanceComponent implements OnInit {
     const yyyy = today.getFullYear();
     return dd + mm + yyyy;
   }
+
+  private displayBambiniAderenti() {
+    // this.attendanceService.getBambiniAderenti().subscribe(x => {this.listaBambini = x; });
+  }
+
+
   /*getAll() {
     this.data$ = this.service.getAll();
   }
@@ -85,6 +105,7 @@ export class PedibusAttendanceComponent implements OnInit {
     // .subscribe( () => this.getAll() ) // remove async pipe from code
     ;
   }*/
+
 
 }
 

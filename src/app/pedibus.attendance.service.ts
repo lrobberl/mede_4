@@ -91,6 +91,43 @@ export class AttendanceService {
       })
     );
   }
+
+  prenotaBambino(child: Bambino, line: string, direction: string, stopSalita: Fermata, stopDiscesa: Fermata) {
+      console.log('AttendanceService.prenotaBambino:');
+      const httpoptions = { headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Authorization, X-Requested-With, Content-Type, Accept, Origin',
+          'Access-Control-Allow-Methods': 'PUT, GET, POST, DELETE, OPTIONS',
+          'Access-Control-Max-Age': '1728000'
+        })
+      };
+
+      const bodyObj = {
+        bambino: child.nome,
+        fermata: stopDiscesa.id,
+        verso: direction
+      };
+
+      const body = JSON.stringify(bodyObj);
+
+      return this.http.post(REST_URL + 'reservations/' + line + '/' + stopSalita.id, body, httpoptions).pipe(
+        catchError(err => {
+          console.error(err);
+          return of(null);
+        })
+      );
+  }
+
+  getBambiniAderenti(): Observable<Bambino[]> {
+    console.log('AttendanceService.getBambiniAderenti:');
+    return this.http.get<Bambino[]>(REST_URL + '/bambini-liberi/{linea}/{data}/{verso}').pipe(
+      // todo tenere fermate? Il server non le passa
+      // map(arr => arr.map(x => ({id: x.id, nome: x.nome, presente: false}) as Bambino))
+    );
+  }
+
+
 }
 
 /*

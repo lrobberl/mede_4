@@ -26,7 +26,22 @@
           </span>
               </mat-list-item>
             </mat-list>
+
+          <!-- todo: CSS PER DIVIDRE MEGLIO I BAMBINI-->
+
+            <div>
+              <!--           <mat-icon>trip_origin</mat-icon>-->
+              <span *ngFor="let bambino of displayBambiniAderenti(); last as isLast"
+                    (click)="prenotaBambinoMancante($event, bambino, 'Andata', data.corse[0].fermate[0],
+                    data.corse[0].fermate[data.corse[0].fermate.length-1])">
+            <span [class.selected] = bambino.presente>{{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
+            </span>
+            </div>
+
+
           </mat-card-content>
+
+
 
       </mat-tab>
       <mat-tab label="Ritorno">
@@ -42,6 +57,19 @@
           </span>
               </mat-list-item>
             </mat-list>
+
+            <!-- todo: CSS PER DIVIDRE MEGLIO I BAMBINI-->
+
+            <div>
+              <!--           <mat-icon>trip_origin</mat-icon>-->
+              <span *ngFor="let bambino of displayBambiniAderenti(); last as isLast"
+                    (click)="prenotaBambinoMancante($event, bambino, 'Ritorno',
+                    data.corse[1].fermate[data.corse[1].fermate.length-1], data.corse[1].fermate[0])">
+            <span [class.selected] = bambino.presente>{{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
+            </span>
+            </div>
+
+
 
           </mat-card-content>
 
