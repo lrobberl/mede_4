@@ -93,15 +93,11 @@ export class PedibusRegisterComponent {
   isEmailPresent() {
     if (!this.email.invalid) {
       this.userService.checkEmailPresent(this.email.value).subscribe(res => {
-        console.log('Il valore attuale di email present è' + this.emailPresent);
-        console.log('Sono entrato nel register ts isEmailPresent');
-
         if (res.presente === 'true') {
           this.emailPresent = true;
         } else {
           this.emailPresent = false;
         }
-        console.log('Il valore cambiato di email present è' + this.emailPresent);
       });
     }
   }
