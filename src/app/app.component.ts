@@ -4,7 +4,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import * as moment from './LoginComponent/pedibus.login.component';
 import {HttpClient} from '@angular/common/http';
-import {User, UserService} from './pedibus.user.service';
+import {RegisterForm, UserService} from './Services/pedibus.user.service';
 
 @Component({
   selector: 'app-root',

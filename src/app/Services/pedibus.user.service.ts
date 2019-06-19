@@ -4,11 +4,11 @@ import {Observable, of} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
 import {Data} from './pedibus.attendance.service';
 import {xit} from 'selenium-webdriver/testing';
-import * as moment from './LoginComponent/pedibus.login.component';
+import * as moment from '../LoginComponent/pedibus.login.component';
 
 const REST_URL = 'http://localhost:8080/';
 
-export interface User {
+export interface RegisterForm {
   name: string;
   surname: string;
   email: string;
@@ -31,13 +31,14 @@ export interface CheckEmailPresent {
 
 @Injectable()
 export class UserService {
-  user: User;
+  user: RegisterForm;
   userLogged: string;
 
   constructor(private http: HttpClient) {
   }
 
-  register(firstName: string, lastName: string, mail: string, password: string, password2: string): Observable<User> {
+  // Todo: verificare cosa ritorna il Server dopo aver effettuato la registrazione
+  register(firstName: string, lastName: string, mail: string, password: string, password2: string): Observable<RegisterForm> {
     console.log('UserService.register:');
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -56,7 +57,7 @@ export class UserService {
   };
     const body = JSON.stringify(this.user);
 
-    return this.http.post<User>(REST_URL + 'register', body, httpOptions).pipe(
+    return this.http.post<RegisterForm>(REST_URL + 'register', body, httpOptions).pipe(
       catchError(err => {
         console.error(err);
         return of(null);

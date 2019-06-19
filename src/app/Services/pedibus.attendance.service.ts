@@ -40,6 +40,7 @@ const httpOptions = {
   })
 };
 
+// TODO: var date = new Date(UNIX_Timestamp * 1000); conversione da epoca UNIX a oggetto Date. Poi da convertire al formato 'dd-mm-aaaa'
 @Injectable()
 export class AttendanceService {
   constructor(private http: HttpClient) {

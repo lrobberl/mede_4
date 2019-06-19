@@ -17,20 +17,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AppComponent} from './app.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import {AttendanceService} from './pedibus.attendance.service';
+import {AttendanceService} from './Services/pedibus.attendance.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PedibusAttendanceComponent} from './AttendanceComponent/pedibus.attendance.component';
 import {PedibusRegisterComponent} from './RegisterComponent/pedibus.register.component';
 import {PedibusLoginComponent} from './LoginComponent/pedibus.login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
-import {UserService} from './pedibus.user.service';
-import {AuthInterceptor} from './pedibus.authInterceptor.service';
+import {UserService} from './Services/pedibus.user.service';
+import {AuthInterceptor} from './Services/pedibus.authInterceptor.service';
+import {AuthGuard} from './Services/auth.guard';
+import {HomeComponent} from './HomeComponent/home.component';
 
 const appRoutes: Routes = [
   { path: 'register', component: PedibusRegisterComponent },
-  { path: 'attendance', component: PedibusAttendanceComponent},
+  { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard]},
   { path: 'login', component: PedibusLoginComponent},
+  { path: '', component: HomeComponent,
+    // canActivate: [AuthGuard]
+    }
   // { path: 'login', component: PedibusAttendanceComponent},
   // { path: '**', component: PageNotFoundComponent }
 ];
@@ -41,7 +46,8 @@ const appRoutes: Routes = [
     PedibusAttendanceComponent,
     MainNavComponent,
     PedibusRegisterComponent,
-    PedibusLoginComponent
+    PedibusLoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +69,8 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [UserService, AttendanceService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [UserService, AttendanceService,
+              {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

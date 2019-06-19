@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../pedibus.user.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserService} from '../Services/pedibus.user.service';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../Services/authentication.service';
 
 @Component({
   selector: 'app-pedibus-login',
@@ -9,14 +10,38 @@ import {Router} from '@angular/router';
   styleUrls: ['./pedibus.login.component.css']
 })
 
-export class PedibusLoginComponent {
-
+export class PedibusLoginComponent implements OnInit {
+  loginForm: FormGroup;
   hidepass = true;
   error: string;
+  submitted = false;
+  loading = false;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private formBuilder: FormBuilder) {
+    // redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
   }
 
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required, Validators.email],
+      // tslint:disable-next-line:max-line-length
+      password: ['', Validators.required, Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]
+    });
+
+    // get return url from route parameters or default to '/'
+    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  // convenience getter for easy access to form fields
+  get f() { return this.loginForm.controls; }
+
+  /*
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('',
   [Validators.required,
@@ -34,20 +59,31 @@ export class PedibusLoginComponent {
           '';
     }
   }
-
-    onSubmit() {
-    this.userService.login(this.email.value, this.password.value)
-      .subscribe(token => {
-          localStorage.setItem('id_token', token);
-          this.router.navigate(['/attendance'], { queryParams: { logged: true }});
-        },
-        error => {
-          this.error = error;
-        });
-  }
-
   checkForInputs() {
     return !(this.password.invalid || this.email.invalid);
+  }
+  */
+
+    onSubmit() {
+
+      this.submitted = true;
+
+      // stop here if form is invalid
+      if (this.loginForm.invalid) {
+        return;
+      }
+
+      this.loading = true;
+      this.authenticationService.login(this.f.username.value, this.f.password.value)
+        .subscribe(token => {
+            // localStorage.setItem('id_token', token);
+            // Upon success, navigate to homepage
+            this.router.navigate(['/'], { queryParams: { logged: true }});
+          },
+          error => {
+            this.error = error;
+            this.loading = false;
+          });
   }
 }
 

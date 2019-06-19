@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {UserService} from '../pedibus.user.service';
+import {UserService} from '../Services/pedibus.user.service';
 import {Router} from '@angular/router';
 import {HttpResponse} from '@angular/common/http';
 

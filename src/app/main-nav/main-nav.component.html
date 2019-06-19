@@ -14,7 +14,10 @@
       <span class="spacer"></span>
       <a *ngIf="!(isHandset$ | async)" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
       <a *ngIf="!(isHandset$ | async)" routerLink="/register" routerLinkActive="active">Registrazione</a><br>
-      <a *ngIf="!(isHandset$ | async)" routerLink="/login" routerLinkActive="active">Login</a>
+      <a *ngIf="!(isHandset$ | async)" routerLink="/login" routerLinkActive="active">Login</a><br>
+      <a *ngIf="!(isHandset$ | async)" routerLink="/" routerLinkActive="active">Home</a><br>
+      <a *ngIf="!(isHandset$ | async)" (click)="logout()">Logout</a>
+
     </mat-toolbar>
     <!-- Add Content Here -->
     <ng-content></ng-content>
@@ -33,7 +36,9 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/attendance" routerLinkActive="active">Corse</a><br>
       <a mat-list-item routerLink="/register" routerLinkActive="active">Registrazione</a><br>
-      <a mat-list-item routerLink="/login" routerLinkActive="active">Login</a>
+      <a mat-list-item routerLink="/login" routerLinkActive="active">Login</a><br>
+      <a mat-list-item routerLink="/login" routerLinkActive="/">Home</a><br>
+      <a class="nav-item nav-link" (click)="logout()">Logout</a>
     </mat-nav-list>
 
   </mat-sidenav>
