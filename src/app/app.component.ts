@@ -5,6 +5,8 @@ import {MatIconRegistry} from '@angular/material';
 import * as moment from './LoginComponent/pedibus.login.component';
 import {HttpClient} from '@angular/common/http';
 import {RegisterForm, UserService} from './Services/pedibus.user.service';
+import {AuthenticationService} from './Services/authentication.service';
+import {User} from './Models/User';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +16,10 @@ import {RegisterForm, UserService} from './Services/pedibus.user.service';
 
 export class AppComponent implements OnInit {
   public title: string;
+  currentUser: User;
 
-  constructor(private userService: UserService) {
+  constructor(private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit(): void {
@@ -25,6 +29,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+  /*
   logout() {
     this.userService.logout();
   }
@@ -36,7 +41,7 @@ export class AppComponent implements OnInit {
   getUserLoggedIn() {
     return localStorage.getItem('user');
   }
-
+  */
 }
 
 

@@ -1,3 +1,4 @@
 <h1>Home</h1>
-<p>Your role is: <strong>{{currentUser.role}}</strong>.</p>
-<p>This page can be accessed by all authenticated users.</p>
+<p *ngIf="isLogged">You are authenticade as: <strong>{{currentUser.username}}</strong></p>
+<p *ngIf="isLogged"> Your role is: <strong>{{currentUser.role}}</strong></p>
+<p *ngIf="!isLogged">You are not authenticated</p>

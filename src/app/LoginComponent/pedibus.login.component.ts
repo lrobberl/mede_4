@@ -29,9 +29,10 @@ export class PedibusLoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required, Validators.email],
+      username: ['', [Validators.required, Validators.email]],
       // tslint:disable-next-line:max-line-length
-      password: ['', Validators.required, Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]
+      password: ['', [Validators.required,
+        Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]]
     });
 
     // get return url from route parameters or default to '/'
@@ -41,7 +42,29 @@ export class PedibusLoginComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
-  /*
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    this.authenticationService.login(this.f.username.value, this.f.password.value)
+      .subscribe(user => {
+          // localStorage.setItem('id_token', token);
+          // Upon success, navigate to homepage
+          this.router.navigate(['/'], { queryParams: { logged: true }});
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        });
+  }
+}
+
+/*
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('',
   [Validators.required,
@@ -63,29 +86,6 @@ export class PedibusLoginComponent implements OnInit {
     return !(this.password.invalid || this.email.invalid);
   }
   */
-
-    onSubmit() {
-
-      this.submitted = true;
-
-      // stop here if form is invalid
-      if (this.loginForm.invalid) {
-        return;
-      }
-
-      this.loading = true;
-      this.authenticationService.login(this.f.username.value, this.f.password.value)
-        .subscribe(token => {
-            // localStorage.setItem('id_token', token);
-            // Upon success, navigate to homepage
-            this.router.navigate(['/'], { queryParams: { logged: true }});
-          },
-          error => {
-            this.error = error;
-            this.loading = false;
-          });
-  }
-}
 
 
 /*

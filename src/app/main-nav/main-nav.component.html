@@ -12,11 +12,11 @@
       <span [ngClass]="{spacer: (isHandset$ | async)}"></span>
       <span>{{ title }}</span>
       <span class="spacer"></span>
-      <a *ngIf="!(isHandset$ | async)" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
-      <a *ngIf="!(isHandset$ | async)" routerLink="/register" routerLinkActive="active">Registrazione</a><br>
-      <a *ngIf="!(isHandset$ | async)" routerLink="/login" routerLinkActive="active">Login</a><br>
       <a *ngIf="!(isHandset$ | async)" routerLink="/" routerLinkActive="active">Home</a><br>
-      <a *ngIf="!(isHandset$ | async)" (click)="logout()">Logout</a>
+      <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
+      <a *ngIf="!(isHandset$ | async)" routerLink="/register" routerLinkActive="active">Registrazione</a><br>
+      <a *ngIf="!(isHandset$ | async) && !isLogged" routerLink="/login" routerLinkActive="active">Login</a><br>
+      <a *ngIf="!(isHandset$ | async) && isLogged" (click)="logout()">Logout</a>
 
     </mat-toolbar>
     <!-- Add Content Here -->
