@@ -30,14 +30,11 @@ import {AuthGuard} from './Services/auth.guard';
 import {HomeComponent} from './HomeComponent/home.component';
 
 const appRoutes: Routes = [
-  { path: 'register', component: PedibusRegisterComponent },
+  { path: 'register', component: PedibusRegisterComponent},
   { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard]},
   { path: 'login', component: PedibusLoginComponent},
-  { path: '', component: HomeComponent,
-    // canActivate: [AuthGuard]
-    }
-  // { path: 'login', component: PedibusAttendanceComponent},
-  // { path: '**', component: PageNotFoundComponent }
+  { path: '', component: HomeComponent // , canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
@@ -65,7 +62,6 @@ const appRoutes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes, {enableTracing: true}),
-    FormsModule,
     MatFormFieldModule,
     MatInputModule
   ],

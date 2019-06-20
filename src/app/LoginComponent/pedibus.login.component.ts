@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../Services/pedibus.user.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../Services/authentication.service';
 
 @Component({
@@ -14,12 +14,14 @@ export class PedibusLoginComponent implements OnInit {
   loginForm: FormGroup;
   hidepass = true;
   error: string;
-  submitted = false;
+  // submitted = false;
   loading = false;
+  returnUrl: string;
 
   constructor(private userService: UserService,
               private router: Router,
               private authenticationService: AuthenticationService,
+              private route: ActivatedRoute,
               private formBuilder: FormBuilder) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
@@ -36,14 +38,14 @@ export class PedibusLoginComponent implements OnInit {
     });
 
     // get return url from route parameters or default to '/'
-    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
-    this.submitted = true;
+    // this.submitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
@@ -55,12 +57,25 @@ export class PedibusLoginComponent implements OnInit {
       .subscribe(user => {
           // localStorage.setItem('id_token', token);
           // Upon success, navigate to homepage
-          this.router.navigate(['/'], { queryParams: { logged: true }});
+          // this.router.navigate(['/'], { queryParams: { logged: true }});
+          this.router.navigate([this.returnUrl]);
         },
         error => {
           this.error = error;
           this.loading = false;
         });
+  }
+
+  getErrorMessage(campo: string) {
+    if (campo === 'username') {
+      return this.f.username.hasError('required') ? 'Username is required' :
+        this.f.username.hasError('email') ? 'Username must be a valid email' :
+          '';
+    } else if (campo === 'password') {
+      return this.f.password.hasError('required') ? 'Password is required' :
+        this.f.password.hasError('pattern') ? 'Invalid password' :
+          '';
+    }
   }
 }
 
@@ -71,17 +86,7 @@ export class PedibusLoginComponent implements OnInit {
   Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
 
 
-  getErrorMessage(campo: string) {
-    if (campo === 'email') {
-      return this.email.hasError('required') ? 'You must enter a value' :
-        this.email.hasError('email') ? 'Not a valid email' :
-          '';
-    } else if (campo === 'password') {
-      return this.password.hasError('required') ? 'You must enter a value' :
-        this.password.hasError('pattern') ? 'Not a valid password' :
-          '';
-    }
-  }
+
   checkForInputs() {
     return !(this.password.invalid || this.email.invalid);
   }

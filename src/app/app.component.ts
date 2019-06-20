@@ -24,9 +24,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.title = 'PEDIBUS - Home Page';
-    if (localStorage.getItem('user') === null) {
-      localStorage.setItem('user', 'Not logged');
-    }
   }
 
   /*
