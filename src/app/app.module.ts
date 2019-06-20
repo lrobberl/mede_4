@@ -33,8 +33,7 @@ const appRoutes: Routes = [
   { path: 'register', component: PedibusRegisterComponent},
   { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard]},
   { path: 'login', component: PedibusLoginComponent},
-  { path: '', component: HomeComponent // , canActivate: [AuthGuard]
-  }
+  { path: '', component: HomeComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

@@ -34,17 +34,17 @@
           </mat-list-item>
           <br><br>
 
-    <mat-list-item role="listitem">
-      <div class="input-form-container">
-        <mat-form-field>
-          <label> <!-- (blur)="isEmailPresent()" -->
-            <input #emailField matInput placeholder="Enter your email" formControlName="username">
-          </label>
-          <mat-error *ngIf="f.username.invalid">{{getErrorMessage('username')}}</mat-error>
+          <mat-list-item role="listitem">
+            <div class="input-form-container">
+              <mat-form-field>
+                <label> <!-- (blur)="isEmailPresent()" -->
+                  <input #emailField matInput placeholder="Enter your email" formControlName="username">
+                </label>
+                <mat-error *ngIf="f.username.invalid">{{getErrorMessage('username')}}</mat-error>
 
-        </mat-form-field>
-      </div>
-    </mat-list-item><br><br>
+              </mat-form-field>
+            </div>
+          </mat-list-item><br><br>
 
           <mat-list-item role="listitem">
             <div class="input-form-container">

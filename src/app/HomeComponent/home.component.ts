@@ -16,8 +16,10 @@ export class HomeComponent {
     private router: Router
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
+
+    // Se per caso il login non va a buon fine, rimando alla pagina di login prima di mostrare i contenuti della homepage
     if (!this.currentUser) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login'], );
     }
   }
 

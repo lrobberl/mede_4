@@ -4,6 +4,7 @@ import {UserService} from '../Services/pedibus.user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpResponse} from '@angular/common/http';
 import {AuthenticationService} from '../Services/authentication.service';
+import {MustMatch} from '../Utils/must-match.validator';
 
 
 @Component({
@@ -43,6 +44,8 @@ export class PedibusRegisterComponent implements OnInit {
 
       lastName: ['', [Validators.required,
         Validators.pattern('^[a-zA-Z]{2,40}$')]]
+    }, {
+      validator: MustMatch('password', 'confermaPassword')
     });
 
     // get return url from route parameters or default to '/'
@@ -63,6 +66,7 @@ export class PedibusRegisterComponent implements OnInit {
     } else if (campo === 'confermaPassword') {
       return this.f.confermaPassword.hasError('required') ? 'Password confirm is required' :
         this.f.confermaPassword.hasError('pattern') ? 'Not a valid password confirm' :
+          this.f.confermaPassword.hasError('MustMatch') ? 'Passwords must match' :
           '';
     } else if (campo === 'firstName') {
       return this.f.firstName.hasError('required') ? 'First name is required' :

@@ -21,7 +21,7 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(mail: string, pass: string): Observable<string> {
+  login(mail: string, pass: string): Observable<User> {
     console.log('UserService.login:');
 
     const httpOptions = { headers: new HttpHeaders({
