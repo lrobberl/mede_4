@@ -15,6 +15,7 @@
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/" routerLinkActive="active">Home</a><br>
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/register" routerLinkActive="active">Registrazione</a><br>
+      <a *ngIf="!(isHandset$ | async) && isAdmin" routerLink="/adminRegister" routerLinkActive="active">AdminRegister</a><br>
       <!-- <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/login" routerLinkActive="active">Login</a><br> -->
       <a *ngIf="!(isHandset$ | async) && isLogged" (click)="logout()">Logout</a>
 

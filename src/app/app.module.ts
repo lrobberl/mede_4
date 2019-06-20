@@ -10,7 +10,7 @@ import {
   MatToolbarModule,
   MatButtonModule,
   MatSidenavModule,
-  MatFormFieldModule, MatInputModule
+  MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule
 } from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,18 +22,22 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PedibusAttendanceComponent} from './AttendanceComponent/pedibus.attendance.component';
 import {PedibusRegisterComponent} from './RegisterComponent/pedibus.register.component';
 import {PedibusLoginComponent} from './LoginComponent/pedibus.login.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import {UserService} from './Services/pedibus.user.service';
 import {AuthInterceptor} from './Services/pedibus.authInterceptor.service';
 import {AuthGuard} from './Services/auth.guard';
 import {HomeComponent} from './HomeComponent/home.component';
+import {AdminRegisterComponent} from './AdminRegisterComponent/admin.register.component';
+import {AdminService} from './Services/admin.service';
+import {Role} from './Models/Role';
 
 const appRoutes: Routes = [
   { path: 'register', component: PedibusRegisterComponent},
   { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard]},
   { path: 'login', component: PedibusLoginComponent},
-  { path: '', component: HomeComponent, canActivate: [AuthGuard]}
+  { path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } }
 ];
 
 @NgModule({
@@ -43,7 +47,8 @@ const appRoutes: Routes = [
     MainNavComponent,
     PedibusRegisterComponent,
     PedibusLoginComponent,
-    HomeComponent
+    HomeComponent,
+    AdminRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +67,11 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes, {enableTracing: true}),
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule
   ],
-  providers: [UserService, AttendanceService,
+  providers: [UserService, AttendanceService, AdminService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
