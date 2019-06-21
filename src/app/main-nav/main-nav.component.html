@@ -17,7 +17,7 @@
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/register" routerLinkActive="active">Registrazione</a><br>
       <a *ngIf="!(isHandset$ | async) && isAdmin" routerLink="/adminRegister" routerLinkActive="active">AdminRegister</a><br>
       <!-- <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/login" routerLinkActive="active">Login</a><br> -->
-      <a *ngIf="!(isHandset$ | async) && isLogged" (click)="logout()">Logout</a>
+      <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
 
     </mat-toolbar>
     <!-- Add Content Here -->
@@ -38,7 +38,8 @@
       <a *ngIf="isLogged" mat-list-item routerLink="/attendance" routerLinkActive="active">Corse</a><br>
       <a *ngIf="isLogged" mat-list-item routerLink="/register" routerLinkActive="active">Registrazione</a><br>
       <a *ngIf="isLogged" mat-list-item routerLink="/login" routerLinkActive="/">Home</a><br>
-      <a *ngIf="isLogged" class="nav-item nav-link" (click)="logout()">Logout</a>
+      <a *ngIf="isAdmin" mat-list-item routerLink="/adminRegister" routerLinkActive="active">AdminRegister</a><br>
+      <a *ngIf="isLogged" mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
       <!--  <a *ngIf="isLogged" mat-list-item routerLink="/login" routerLinkActive="active">Login</a><br> -->
     </mat-nav-list>
 

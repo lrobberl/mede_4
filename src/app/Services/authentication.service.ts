@@ -36,8 +36,6 @@ export class AuthenticationService {
 
     const body = JSON.stringify(bodyObj);
 
-    localStorage.setItem('user', mail);
-
     return this.http.post<User>(REST_URL + 'login', body, httpOptions).pipe(
       map(user => {
         if (user && user.token) {
@@ -49,7 +47,6 @@ export class AuthenticationService {
       }),
       catchError(err => {
         console.error(err);
-        localStorage.setItem('user', 'Not logged');
         return of(null);
       })
     );
