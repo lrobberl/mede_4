@@ -1,0 +1,54 @@
+<div class="bg">
+
+  <mat-card class="form-container">
+    <form [formGroup]="adminRegisterForm" (ngSubmit)="onSubmit()">
+      <mat-card-header>
+        <h1>Admin Register Page</h1>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-list role="list">
+
+          <mat-list-item role="listitem">
+            <div class="input-form-container">
+              <mat-form-field>
+                <input type="text" matInput placeholder="Enter username" formControlName="username">
+                <mat-error *ngIf="f.username.invalid"> {{getErrorMessage('username')}}</mat-error>
+              </mat-form-field>
+            </div>
+          </mat-list-item>
+          <br><br> <!-- todo: da separare col CSS e togliere i <br> -->
+
+          <mat-list-item role="listitem">
+            <div class="input-form-container">
+              <mat-form-field>
+                <mat-select matInput placeholder="Select user role" formControlName="role">
+                  <mat-option value="User">User</mat-option>
+                  <mat-option value="Admin">Admin</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-list-item>
+          <br><br>  <!-- todo: da separare col CSS e togliere i <br> -->
+
+        </mat-list>
+        <div class="form-group">
+          <button [disabled]="loading || adminRegisterForm.invalid" class="btn btn-primary">Register User</button>
+          <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>
+
+
+<!--
+<input type="text" matInput placeholder="Enter user role" formControlName="role">
+<mat-error *ngIf="f.role.invalid"> {{getErrorMessage('role')}}</mat-error>
+
+<mat-select>
+  <mat-option>-- None --</mat-option>
+  <mat-option value="option">Option</mat-option>
+</mat-select>
+-->
