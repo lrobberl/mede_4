@@ -47,18 +47,14 @@ export class AdminRegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.adminService.registerUser(this.f.username.value, this.f.role.value);
-      /* .subscribe(user => {
-          // localStorage.setItem('id_token', token);
-          // Upon success, navigate to homepage
-          // this.router.navigate(['/'], { queryParams: { logged: true }});
-          this.router.navigate([this.returnUrl]);
+    this.adminService.registerUser(this.f.username.value, this.f.role.value)
+       .subscribe(user => {
+          this.router.navigate(['/'], { queryParams: { newUserCreated: true }});
         },
         error => {
           this.error = error;
           this.loading = false;
         });
-       */
   }
 
   getErrorMessage(campo: string) {

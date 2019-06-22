@@ -21,6 +21,7 @@ export class PedibusRegisterComponent implements OnInit {
   error: string;
   emailPresent = false;
   loading = false;
+  urlParam: string;
   emailPresenceMessage: 'Email inserita è già presente nel sistema';
 
   constructor(private userService: UserService,
@@ -48,6 +49,9 @@ export class PedibusRegisterComponent implements OnInit {
       validator: MustMatch('password', 'confermaPassword')
     });
 
+    // Get random UUID from URL because it is needed to contact the correct registration endpoint on the server
+    this.urlParam = this.route.snapshot.paramMap.get('uuid');
+    console.log(this.urlParam);
     // get return url from route parameters or default to '/'
     // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
@@ -87,7 +91,7 @@ export class PedibusRegisterComponent implements OnInit {
 
     this.loading = true;
     this.userService.register(this.f.firstName.value, this.f.lastName.value, this.f.username.value,
-      this.f.password.value, this.f.confermaPassword.value)
+      this.f.password.value, this.f.confermaPassword.value, this.urlParam)
       .subscribe(
         data => {
           this.router.navigate(['/login'], { queryParams: { registered: true }});
@@ -98,7 +102,7 @@ export class PedibusRegisterComponent implements OnInit {
         });
   }
 
-
+  // TODO: check delle funzionalità
   getIsEmailPresent() {
     return this.emailPresent;
   }

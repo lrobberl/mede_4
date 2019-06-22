@@ -33,7 +33,7 @@ import {AdminService} from './Services/admin.service';
 import {Role} from './Models/Role';
 
 const appRoutes: Routes = [
-  { path: 'register', component: PedibusRegisterComponent},
+  { path: 'confirm/:uuid', component: PedibusRegisterComponent},
   { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard]},
   { path: 'login', component: PedibusLoginComponent},
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},

@@ -5,6 +5,7 @@ import {catchError, map, retry} from 'rxjs/operators';
 import {Data} from './pedibus.attendance.service';
 import {xit} from 'selenium-webdriver/testing';
 import * as moment from '../LoginComponent/pedibus.login.component';
+import {NewUser} from '../Models/NewUser';
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -12,11 +13,13 @@ const REST_URL = 'http://localhost:8080/';
 @Injectable()
 export class AdminService {
 
+  newUser: NewUser;
+
   constructor(private http: HttpClient) {
   }
 
-  registerUser(username: string, role: string) {
-    console.log('UserService.register:');
+  registerUser(usrn: string, ruolo: string) {
+    console.log('AdminService.registerUser');
 
     // tslint:disable-next-line:no-shadowed-variable
     const httpOptions = {
@@ -24,22 +27,19 @@ export class AdminService {
         'Content-Type':  'application/json',
       })
     };
-    /*
-    this.user = {
-      name: firstName,
-      surname: lastName,
-      email: mail,
-      pass: password,
-      pass2: password2
-    };
-    const body = JSON.stringify(this.user);
 
-    return this.http.post<RegisterForm>(REST_URL + 'register', body, httpOptions).pipe(
+    this.newUser = {
+      username: usrn,
+      role: ruolo
+    };
+
+    const body = JSON.stringify(this.newUser);
+
+    return this.http.post<any>(REST_URL + 'adminRegister', body, httpOptions).pipe(
       catchError(err => {
         console.error(err);
         return of(null);
       })
     );
-  */
   }
 }

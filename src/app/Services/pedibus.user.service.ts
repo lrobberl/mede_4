@@ -38,7 +38,7 @@ export class UserService {
   }
 
   // Todo: verificare cosa ritorna il Server dopo aver effettuato la registrazione
-  register(firstName: string, lastName: string, mail: string, password: string, password2: string): Observable<RegisterForm> {
+  register(firstName: string, lastName: string, mail: string, password: string, password2: string, uuid: string): Observable<RegisterForm> {
     console.log('UserService.register:');
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -57,7 +57,7 @@ export class UserService {
   };
     const body = JSON.stringify(this.user);
 
-    return this.http.post<RegisterForm>(REST_URL + 'register', body, httpOptions).pipe(
+    return this.http.post<RegisterForm>(REST_URL + '/confirm/' + uuid, body, httpOptions).pipe(
       catchError(err => {
         console.error(err);
         return of(null);
