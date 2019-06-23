@@ -57,7 +57,7 @@ export class UserService {
   };
     const body = JSON.stringify(this.user);
 
-    return this.http.post<RegisterForm>(REST_URL + '/confirm/' + uuid, body, httpOptions).pipe(
+    return this.http.post<RegisterForm>(REST_URL + 'confirm/' + uuid, body, httpOptions).pipe(
       catchError(err => {
         console.error(err);
         return of(null);
