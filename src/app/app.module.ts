@@ -32,13 +32,15 @@ import {AdminRegisterComponent} from './AdminRegisterComponent/admin.register.co
 import {AdminService} from './Services/admin.service';
 import {Role} from './Models/Role';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {NotFoundComponent} from './NotFoundComponent/notFound.component';
 
 const appRoutes: Routes = [
   { path: 'confirm/:uuid', component: PedibusRegisterComponent},
   { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard]},
   { path: 'login', component: PedibusLoginComponent},
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } }
+  { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
+  { path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
@@ -49,7 +51,8 @@ const appRoutes: Routes = [
     PedibusRegisterComponent,
     PedibusLoginComponent,
     HomeComponent,
-    AdminRegisterComponent
+    AdminRegisterComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,7 @@ const appRoutes: Routes = [
     MatOptionModule,
     MatSelectModule
   ],
-  providers: [UserService, AttendanceService, AdminService, JwtHelperService,
+  providers: [UserService, AttendanceService, AdminService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

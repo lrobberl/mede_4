@@ -14,8 +14,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient,
-              private jwttokenservice: JwtHelperService) {
+  constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -62,7 +61,8 @@ export class AuthenticationService {
   }
 
   checkTokenvalidity(token: string): boolean {
-    return this.jwttokenservice.isTokenExpired(token);
+    const helper = new JwtHelperService();
+    return helper.isTokenExpired(token);
   }
 }
 
