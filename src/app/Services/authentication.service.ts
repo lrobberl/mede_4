@@ -4,6 +4,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {TokenData} from './pedibus.user.service';
 import {User} from '../Models/User';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -12,7 +14,8 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private jwttokenservice: JwtHelperService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -58,21 +61,9 @@ export class AuthenticationService {
     this.currentUserSubject.next(null);
   }
 
-/*
-  login(username: string, password: string) {
-    return this.http.post<any>(`/users/authenticate`, { username, password })
-      .pipe(map(user => {
-        // login successful if there's a jwt token in the response
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
-
-        return user;
-      }));
+  checkTokenvalidity(token: string): boolean {
+    return this.jwttokenservice.isTokenExpired(token);
   }
- */
 }
 
 

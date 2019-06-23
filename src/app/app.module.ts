@@ -31,6 +31,7 @@ import {HomeComponent} from './HomeComponent/home.component';
 import {AdminRegisterComponent} from './AdminRegisterComponent/admin.register.component';
 import {AdminService} from './Services/admin.service';
 import {Role} from './Models/Role';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 const appRoutes: Routes = [
   { path: 'confirm/:uuid', component: PedibusRegisterComponent},
@@ -71,7 +72,7 @@ const appRoutes: Routes = [
     MatOptionModule,
     MatSelectModule
   ],
-  providers: [UserService, AttendanceService, AdminService,
+  providers: [UserService, AttendanceService, AdminService, JwtHelperService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
