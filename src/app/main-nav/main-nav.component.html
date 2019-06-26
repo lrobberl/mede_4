@@ -14,8 +14,14 @@
       <span class="spacer"></span>
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/" routerLinkActive="active">Home</a><br>
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
-      <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/register" routerLinkActive="active">Registrazione</a><br>
-      <a *ngIf="!(isHandset$ | async) && isAdmin" routerLink="/adminRegister" routerLinkActive="active">AdminRegister</a><br>
+      <button *ngIf="!(isHandset$ | async) && isAdmin" mat-button [matMenuTriggerFor]="menu">Admin</button>
+      <mat-menu #menu="matMenu"> <!-- <button mat-menu-item>Item 2</button> -->
+        <a routerLink="/adminRegister" routerLinkActive="active">AdminRegister</a><br>
+        <a routerLink="/users" routerLinkActive="active">Users</a><br>
+        <a *ngIf="isSystemAdmin"routerLink="/changeUserRole" routerLinkActive="active">Change User Role</a><br>
+      </mat-menu>
+
+      <!-- <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/register" routerLinkActive="active">Registrazione</a><br> -->
       <!-- <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/login" routerLinkActive="active">Login</a><br> -->
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
 
@@ -38,9 +44,17 @@
       <a *ngIf="isLogged" mat-list-item routerLink="/attendance" routerLinkActive="active">Corse</a><br>
       <a *ngIf="isLogged" mat-list-item routerLink="/register" routerLinkActive="active">Registrazione</a><br>
       <a *ngIf="isLogged" mat-list-item routerLink="/login" routerLinkActive="/">Home</a><br>
-      <a *ngIf="isAdmin" mat-list-item routerLink="/adminRegister" routerLinkActive="active">AdminRegister</a><br>
+      <button *ngIf="isAdmin" mat-button [matMenuTriggerFor]="menu">Admin</button>
+      <mat-menu #menu="matMenu"> <!-- <button mat-menu-item>Item 2</button> -->
+        <a routerLink="/adminRegister" routerLinkActive="active">AdminRegister</a><br>
+        <a routerLink="/users" routerLinkActive="active">Users</a><br>
+        <a *ngIf="isSystemAdmin"routerLink="/changeUserRole" routerLinkActive="active">Change User Role</a><br>
+      </mat-menu>
+
       <a *ngIf="isLogged" mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
-      <!--  <a *ngIf="isLogged" mat-list-item routerLink="/login" routerLinkActive="active">Login</a><br> -->
+      <!--  <a *ngIf="isLogged" mat-list-item routerLink="/login" routerLinkActive="active">Login</a><br>
+      <a *ngIf="isAdmin" mat-list-item routerLink="/adminRegister" routerLinkActive="active">AdminRegister</a><br>
+      -->
     </mat-nav-list>
 
   </mat-sidenav>

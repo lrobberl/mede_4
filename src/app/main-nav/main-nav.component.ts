@@ -32,6 +32,10 @@ export class MainNavComponent {
     return this.currentUser && this.currentUser.role === Role.Admin;
   }
 
+  get isSystemAdmin() {
+    return this.currentUser && this.currentUser.role === Role.SystemAdmin;
+  }
+
   get isLogged() {
     return this.currentUser && (this.currentUser.role === Role.Admin || this.currentUser.role === Role.User);
   }

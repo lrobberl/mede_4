@@ -14,6 +14,7 @@ export class AuthGuard implements CanActivate {
     if (currentUser) {
       // Check token validity
       if (this.authenticationService.checkTokenvalidity(currentUser.token)) {
+        this.authenticationService.logout();
         this.router.navigate(['/login'], { queryParams: { tokenExpired: true, returnUrl: state.url }});
         return false;
       }

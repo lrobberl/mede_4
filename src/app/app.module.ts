@@ -1,22 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { MatListModule } from '@angular/material/list';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {MatListModule} from '@angular/material/list';
 // tslint:disable-next-line:max-line-length
 import {
+  MatButtonModule,
   MatCardModule,
+  MatFormFieldModule,
   MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatOptionModule,
   MatPaginatorModule,
   MatRadioModule,
-  MatToolbarModule,
-  MatButtonModule,
+  MatSelectModule,
   MatSidenavModule,
-  MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule
+  MatToolbarModule
 } from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppComponent} from './app.component';
-import { MainNavComponent } from './main-nav/main-nav.component';
-import { LayoutModule } from '@angular/cdk/layout';
+import {MainNavComponent} from './main-nav/main-nav.component';
+import {LayoutModule} from '@angular/cdk/layout';
 import {AttendanceService} from './Services/pedibus.attendance.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PedibusAttendanceComponent} from './AttendanceComponent/pedibus.attendance.component';
@@ -31,15 +35,19 @@ import {HomeComponent} from './HomeComponent/home.component';
 import {AdminRegisterComponent} from './AdminRegisterComponent/admin.register.component';
 import {AdminService} from './Services/admin.service';
 import {Role} from './Models/Role';
-import {JwtHelperService} from '@auth0/angular-jwt';
 import {NotFoundComponent} from './NotFoundComponent/notFound.component';
+import {UserListComponent} from './AdminUserListComponent/user.list.component';
+import {ChangeRoleComponent} from './AdminChangeRoleComponent/admin.change.role.component';
+import {SystemAdminService} from './Services/systemAdmin.service';
 
 const appRoutes: Routes = [
   { path: 'confirm/:uuid', component: PedibusRegisterComponent},
   { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard]},
   { path: 'login', component: PedibusLoginComponent},
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
+  { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.SystemAdmin] } },
+  { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.SystemAdmin] }},
+  { path: 'changeUserRole', component: ChangeRoleComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},
   { path: '**', component: NotFoundComponent}
 ];
 
@@ -52,6 +60,8 @@ const appRoutes: Routes = [
     PedibusLoginComponent,
     HomeComponent,
     AdminRegisterComponent,
+    UserListComponent,
+    ChangeRoleComponent,
     NotFoundComponent
   ],
   imports: [
@@ -73,9 +83,10 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule
   ],
-  providers: [UserService, AttendanceService, AdminService,
+  providers: [UserService, AttendanceService, AdminService, SystemAdminService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

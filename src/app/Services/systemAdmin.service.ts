@@ -2,9 +2,6 @@ import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
-import {Data, Linea} from './pedibus.attendance.service';
-import {xit} from 'selenium-webdriver/testing';
-import * as moment from '../LoginComponent/pedibus.login.component';
 import {NewUser} from '../Models/NewUser';
 import {User} from '../Models/User';
 
@@ -12,15 +9,15 @@ const REST_URL = 'http://localhost:8080/';
 
 
 @Injectable()
-export class AdminService {
+export class SystemAdminService {
 
   // newUser: NewUser;
 
   constructor(private http: HttpClient) {
   }
 
-  registerUser(usrn: string, ruolo: string) {
-    console.log('AdminService.registerUser');
+  changeUserRole(usrn: string, ruolo: string) {
+    console.log('SystemAdminService.changeUserRole');
 
     // tslint:disable-next-line:no-shadowed-variable
     const httpOptions = {
@@ -36,19 +33,11 @@ export class AdminService {
 
     const body = JSON.stringify(newUser);
 
-    return this.http.post<any>(REST_URL + 'adminRegister', body, httpOptions).pipe(
+    return this.http.put<any>(REST_URL + 'changeUserRole', body, httpOptions).pipe(
       catchError(err => {
         console.error(err);
         return of(null);
       })
-    );
-  }
-
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>('/users').pipe(
-      // todo tenere fermate? Il server non le passa
-      map(arr => arr.map(x => ({id: x.id, username: x.username, password: x.password,
-      firstName: x.firstName, lastName: x.lastName, role: x.role, token: x.token}) as User))
     );
   }
 }
