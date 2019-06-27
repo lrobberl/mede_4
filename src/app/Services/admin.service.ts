@@ -45,10 +45,10 @@ export class AdminService {
   }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>('/users').pipe(
+    return this.http.get<User[]>(REST_URL + 'users').pipe(
       // todo tenere fermate? Il server non le passa
       map(arr => arr.map(x => ({id: x.id, username: x.username, password: x.password,
-      firstName: x.firstName, lastName: x.lastName, role: x.role, token: x.token}) as User))
+      firstName: x.firstName, lastName: x.lastName, role: x.role}) as User))
     );
   }
 }
