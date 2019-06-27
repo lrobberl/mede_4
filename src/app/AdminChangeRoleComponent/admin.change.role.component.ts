@@ -27,7 +27,12 @@ export class ChangeRoleComponent implements OnInit {
               private route: ActivatedRoute,
               private formBuilder: FormBuilder,
               private systemAdminService: SystemAdminService,
-              private adminService: AdminService) {
+              private adminService: AdminService,
+              private authenticationService: AuthenticationService) {
+    if (!this.authenticationService.isLoggedIn()) {
+      this.authenticationService.logout();
+      this.router.navigate(['/login'], );
+    }
   }
 
   ngOnInit(): void {

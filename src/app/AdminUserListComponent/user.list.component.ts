@@ -20,7 +20,12 @@ export class UserListComponent implements OnInit {
   // todo: valutare se è potenzialmente non sicuro ritornare al componente oggetti con USER con dentro la pwd in chiaro
 
   constructor(private router: Router,
-              private adminService: AdminService) {
+              private adminService: AdminService,
+              private authenticationService: AuthenticationService) {
+    if (!this.authenticationService.isLoggedIn()) {
+      this.authenticationService.logout();
+      this.router.navigate(['/login'], );
+    }
   }
 
   ngOnInit(): void {

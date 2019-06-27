@@ -21,7 +21,12 @@ export class AdminRegisterComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder,
-              private adminService: AdminService) {
+              private adminService: AdminService,
+              private authenticationService: AuthenticationService) {
+    if (!this.authenticationService.isLoggedIn()) {
+      this.authenticationService.logout();
+      this.router.navigate(['/login'], );
+    }
   }
 
   ngOnInit(): void {

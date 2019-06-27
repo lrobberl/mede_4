@@ -5,7 +5,7 @@ import {catchError, map} from 'rxjs/operators';
 import {TokenData} from './pedibus.user.service';
 import {User} from '../Models/User';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
+import {Role} from '../Models/Role';
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -58,6 +58,14 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+  }
+
+  isLoggedIn() {
+    const curUser = this.currentUserSubject.value;
+
+    return curUser &&
+      (curUser.role === Role.Admin || curUser.role === Role.User || curUser.role === Role.SystemAdmin) &&
+      this.checkTokenvalidity(curUser.token);
   }
 
   checkTokenvalidity(token: string): boolean {

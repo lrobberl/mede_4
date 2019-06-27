@@ -18,12 +18,13 @@ export class HomeComponent {
     this.currentUser = this.authenticationService.currentUserValue;
 
     // Se per caso il login non va a buon fine, rimando alla pagina di login prima di mostrare i contenuti della homepage
-    if (!this.currentUser) {
+    if (!this.authenticationService.isLoggedIn()) {
+      this.authenticationService.logout();
       this.router.navigate(['/login'], );
     }
   }
 
   get isLogged() {
-    return this.currentUser && (this.currentUser.role === Role.Admin || this.currentUser.role === Role.User);
+    return this.authenticationService.isLoggedIn();
   }
 }

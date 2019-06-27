@@ -5,10 +5,9 @@
   </mat-card-title>
 
   <mat-tab-group dynamicHeight>
-    <mat-tab label="Andata">
       <mat-card-content>
         <mat-list>
-          <mat-list-item *ngFor="let user of users | async">
+          <mat-list-item *ngFor="let user of users$ | async">
             <mat-icon></mat-icon> <!-- todo: aggiungere icona utente -->
             <span class="highlight">{{user.id}}&nbsp;&nbsp;{{user.username}}&nbsp;&nbsp;{{user.firstName}} &nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp; {{user.lastName}} &nbsp;&nbsp; {{user.role}}</span>
@@ -16,7 +15,6 @@
           <mat-divider></mat-divider>
         </mat-list>
       </mat-card-content>
-    </mat-tab>
   </mat-tab-group>
 
   <!-- todo: vedere se gestire il paginator in caso di molti utenti

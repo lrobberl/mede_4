@@ -4,6 +4,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import {Linea, Fermata, Data, Bambino, Corsa, AttendanceService} from '../Services/pedibus.attendance.service';
 import {Observable} from 'rxjs';
+import {AuthenticationService} from '../Services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-pedibus-attendance',
@@ -13,11 +15,17 @@ import {Observable} from 'rxjs';
 
 
 export class PedibusAttendanceComponent implements OnInit {
-  title = 'Esercitazione - #5';
   data: Data;
   linee: Linea[];
 
-  constructor(private attendanceService: AttendanceService) {
+  constructor(private attendanceService: AttendanceService,
+              private authenticationService: AuthenticationService,
+              private router: Router) {
+
+    if (!this.authenticationService.isLoggedIn()) {
+      this.authenticationService.logout();
+      this.router.navigate(['/login']);
+    }
   }
 
   ngOnInit() {
