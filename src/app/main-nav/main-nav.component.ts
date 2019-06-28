@@ -29,15 +29,16 @@ export class MainNavComponent {
   }
 
   get isAdmin() {
-    return this.currentUser && this.currentUser.role === Role.Admin;
+    return this.currentUser && this.currentUser.listaRuoli.includes(Role.Admin);
   }
 
   get isSystemAdmin() {
-    return this.currentUser && this.currentUser.role === Role.SystemAdmin;
+    return this.currentUser && this.currentUser.listaRuoli.includes(Role.SystemAdmin);
   }
 
   get isLogged() {
-    return this.currentUser && (this.currentUser.role === Role.Admin || this.currentUser.role === Role.User);
+    return this.currentUser && (this.currentUser.listaRuoli.includes(Role.Admin) || this.currentUser.listaRuoli.includes(Role.User)
+      || this.currentUser.listaRuoli.includes(Role.SystemAdmin));
   }
 
   logout() {

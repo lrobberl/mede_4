@@ -4,19 +4,48 @@
     <h5> Pagina accedibile solo agli admin </h5>
   </mat-card-title>
 
-  <mat-tab-group dynamicHeight>
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item *ngFor="let user of users$ | async">
-            <mat-icon></mat-icon> <!-- todo: aggiungere icona utente -->
-            <span class="highlight">{{user.id}}&nbsp;&nbsp;{{user.username}}&nbsp;&nbsp;{{user.firstName}} &nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp; {{user.lastName}} &nbsp;&nbsp; {{user.role}}</span>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-        </mat-list>
-      </mat-card-content>
-  </mat-tab-group>
+    <mat-card-content>
 
+
+  <table style="text-align: center" content="align: center" mat-table [dataSource]="users" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <!--
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef> FirstName </th>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef> LastName </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    </ng-container>
+
+    -->
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef> Username </th>
+      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+    </mat-card-content>
   <!-- todo: vedere se gestire il paginator in caso di molti utenti
   <mat-paginator (page)="cambiaGiorno($event)"
                  [length]= 365
@@ -25,7 +54,18 @@
                  style="align-content: center">
   </mat-paginator>
   -->
-
 </mat-card>
 
+<!--
+<mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let user of users">
+          <mat-icon></mat-icon>
+<span>{{user.id}}&nbsp;&nbsp;{{user.username}}&nbsp;&nbsp;{{user.firstName}} &nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp; {{user.lastName}} &nbsp;&nbsp; {{user.listaRuoli}}</span>
+</mat-list-item>
+<mat-divider></mat-divider>
+</mat-list>
+</mat-card-content>
+-->
 

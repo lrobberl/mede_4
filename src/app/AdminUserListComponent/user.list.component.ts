@@ -14,8 +14,9 @@ import {User} from '../Models/User';
 })
 
 export class UserListComponent implements OnInit {
-  // users: User[];
-  users$: Observable<User[]>;
+  users: User[];
+  // users$: Observable<User[]>;
+  displayedColumns: string[] = ['id', 'username', 'role', 'status'];
 
   // todo: valutare se è potenzialmente non sicuro ritornare al componente oggetti con USER con dentro la pwd in chiaro
 
@@ -30,7 +31,11 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     // this.adminService.getAllUsers().subscribe( res => { this.users = res; });
-    this.users$ = this.adminService.getAllUsers();
-    console.log(this.users$);
+    // this.users$ = this.adminService.getAllUsers();
+    this.adminService.getAllUsers().subscribe( users => {
+      this.users = users;
+      console.log(this.users[0].username);
+    });
+    // console.log(this.users$);
   }
 }

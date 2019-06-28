@@ -13,7 +13,7 @@ import {
   MatPaginatorModule,
   MatRadioModule,
   MatSelectModule,
-  MatSidenavModule,
+  MatSidenavModule, MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -84,7 +84,8 @@ const appRoutes: Routes = [
     MatInputModule,
     MatOptionModule,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule
   ],
   providers: [UserService, AttendanceService, AdminService, SystemAdminService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],

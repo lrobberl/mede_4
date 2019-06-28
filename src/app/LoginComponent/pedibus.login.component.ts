@@ -24,7 +24,7 @@ export class PedibusLoginComponent implements OnInit {
               private route: ActivatedRoute,
               private formBuilder: FormBuilder) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
+    if (this.authenticationService.isLoggedIn()) {
       this.router.navigate(['/']);
     }
   }
@@ -58,11 +58,20 @@ export class PedibusLoginComponent implements OnInit {
           // localStorage.setItem('id_token', token);
           // Upon success, navigate to homepage
           // this.router.navigate(['/'], { queryParams: { logged: true }});
+          if (this.authenticationService.error !== '') {
+            this.error = 'Invalid Credentials';
+            this.loading = false;
+          }
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.error = error;
-          this.loading = false;
+          if (error === null) {
+            this.error = 'Invalid Credentials';
+            this.loading = false;
+          } else {
+            this.error = error;
+            this.loading = false;
+          }
         });
   }
 

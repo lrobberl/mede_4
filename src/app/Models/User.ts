@@ -1,9 +1,13 @@
 export class User {
   id: string;
   username: string;
-  password: string;
+  // password: string;
   firstName: string;
   lastName: string;
   role: string;
+  listaRuoli: string[];
+  status: string;
   token?: string;
 }
+
+

@@ -13,6 +13,7 @@ const REST_URL = 'http://localhost:8080/';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  public error = '';
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -45,11 +46,14 @@ export class AuthenticationService {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
         }
+        this.error = '';
         return user;
       }),
       catchError(err => {
         console.error(err);
-        return of(null);
+        this.error = err;
+        // tslint:disable-next-line:new-parens
+        return of(null); // todo: da pensare come strutturare meglio
       })
     );
   }
@@ -63,11 +67,14 @@ export class AuthenticationService {
   isLoggedIn() {
     const curUser = this.currentUserSubject.value;
 
-    return curUser &&
-      (curUser.role === Role.Admin || curUser.role === Role.User || curUser.role === Role.SystemAdmin) &&
-      this.checkTokenvalidity(curUser.token);
+    if (!curUser || (!curUser.listaRuoli.includes(Role.Admin) && !curUser.listaRuoli.includes(Role.User)
+          && !curUser.listaRuoli.includes(Role.SystemAdmin))) {
+      return false;
+    } else { // return this.checkTokenvalidity(curUser.token);
+      return true; }
   }
 
+  // todo: NON VA - da controllare!
   checkTokenvalidity(token: string): boolean {
     const helper = new JwtHelperService();
     return helper.isTokenExpired(token);
