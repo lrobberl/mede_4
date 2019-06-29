@@ -64,7 +64,7 @@ export class UserService {
       })
     );
   }
-
+  /*
   login(mail: string, pass: string): Observable<string> {
     console.log('UserService.login:');
 
@@ -94,10 +94,12 @@ export class UserService {
     );
   }
 
+
   logout() {
     localStorage.removeItem('id_token');
     localStorage.setItem('user', 'Not logged');
   }
+  */
 
   checkEmailPresent(email: string): Observable<CheckEmailPresent> {
     console.log('UserService.checkEmailPresent:');
@@ -108,13 +110,50 @@ export class UserService {
       })
     );
   }
-  // todo: inserire anche il controllo sulla validità del token (expiration date)
-  public isLoggedIn() {
-    return localStorage.getItem('id_token') !== null;
+
+  recoverPassword(mail: string) {
+    console.log('UserService.recoverPassword:');
+
+    const httpOptions = { headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    const bodyObj = {
+      username: mail,
+    };
+
+    const body = JSON.stringify(bodyObj);
+
+    return this.http.post<string>(REST_URL + 'recover', body, httpOptions);
+    /*.pipe(
+      map(x => {
+
+        return ;
+      }),
+      catchError(err => {
+        console.error(err);
+        return of(null);
+      })
+    );
+     */
   }
-/*
-  isLoggedOut() {
-    return !this.isLoggedIn();
+
+  resetPassword(p1: string, p2: string, uuid: string) {
+    console.log('UserService.resetPassword:');
+
+    const httpOptions = { headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    const bodyObj = {
+      pass: p1,
+      pass2: p2
+    };
+
+    const body = JSON.stringify(bodyObj);
+
+    return this.http.post<string>(REST_URL + 'recover/' + uuid, body, httpOptions);
   }
-*/
 }

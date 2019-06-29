@@ -39,6 +39,8 @@ import {NotFoundComponent} from './NotFoundComponent/notFound.component';
 import {UserListComponent} from './AdminUserListComponent/user.list.component';
 import {ChangeRoleComponent} from './AdminChangeRoleComponent/admin.change.role.component';
 import {SystemAdminService} from './Services/systemAdmin.service';
+import {RecoverPasswordComponent} from './RecoverPasswordComponent/recoverPassword.component';
+import {ResetPasswordComponent} from './ResetPasswordComponent/resetPassword.component';
 
 const appRoutes: Routes = [
   { path: 'confirm/:uuid', component: PedibusRegisterComponent},
@@ -48,6 +50,8 @@ const appRoutes: Routes = [
   { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.SystemAdmin] } },
   { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.SystemAdmin] }},
   { path: 'changeUserRole', component: ChangeRoleComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},
+  { path: 'recoverPassword', component: RecoverPasswordComponent},
+  { path: 'resetPassword/:uuid', component: ResetPasswordComponent},
   { path: '**', component: NotFoundComponent}
 ];
 
@@ -62,6 +66,8 @@ const appRoutes: Routes = [
     AdminRegisterComponent,
     UserListComponent,
     ChangeRoleComponent,
+    RecoverPasswordComponent,
+    ResetPasswordComponent,
     NotFoundComponent
   ],
   imports: [
