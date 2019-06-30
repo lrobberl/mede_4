@@ -1,4 +1,51 @@
-<h1>Home</h1>
-<p *ngIf="isLogged">You are authenticated as: <strong>{{currentUser.username}}</strong></p>
-<p *ngIf="isLogged"> Your role is: <strong>{{currentUser.role}}</strong></p>
-<p *ngIf="!isLogged">You are not authenticated</p>
+<header>
+  <h1>Home</h1>
+  <p *ngIf="isLogged">You are authenticated as: <strong>{{currentUser.username}}</strong></p>
+  <p *ngIf="isLogged"> Your role is: <strong>{{currentUser.role}}</strong></p>
+  <p *ngIf="!isLogged">You are not authenticated</p>
+</header>
+
+<mat-card style="text-align: center" content="align: center">
+  <mat-card-title>
+    <h3> MESSAGGI </h3>
+  </mat-card-title>
+
+  <mat-card-content>
+    <div class="example-table-container">
+    <table class="example-table" *ngIf="table" style="text-align: center" content="align: center" mat-table [dataSource]="messaggio">
+
+      <ng-container matColumnDef="data">
+        <th mat-header-cell *matHeaderCellDef> Data </th>
+        <td mat-cell *matCellDef="let element"> {{element.data}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="utente">
+        <th mat-header-cell *matHeaderCellDef> Sender </th>
+        <td mat-cell *matCellDef="let element"> {{element.utente}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="messaggio">
+        <th mat-header-cell *matHeaderCellDef> Testo </th>
+        <td mat-cell *matCellDef="let element" (click)="markRead(element)">
+          <span [class.selected] = !element.read>{{element.messaggio}} </span></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    </div>
+
+  </mat-card-content>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="15"></mat-paginator>
+  <!-- todo: vedere se gestire il paginator in caso di molti utenti
+  <mat-paginator (page)="cambiaGiorno($event)"
+                 [length]= 365
+                 [pageSize]=1
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 style="align-content: center">
+  </mat-paginator>
+  -->
+</mat-card>
+
+

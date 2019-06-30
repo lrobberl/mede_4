@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of, BehaviorSubject} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {TokenData} from './pedibus.user.service';
 import {User} from '../Models/User';
@@ -24,11 +24,12 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(mail: string, pass: string): Observable<User> {
+  login(mail: string, pass: string): Observable<User |string> {
     console.log('UserService.login:');
 
     const httpOptions = { headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type':  'application/json',
+        observe: 'response'
       })
     };
 
@@ -40,20 +41,20 @@ export class AuthenticationService {
     const body = JSON.stringify(bodyObj);
 
     return this.http.post<User>(REST_URL + 'login', body, httpOptions).pipe(
-      map(user => {
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
-        this.error = '';
-        return user;
-      }),
+      map(response => {
+        // console.log(response, response.ok, response.status, response.type, response.headers);
+        if (response && response.token) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(response));
+            this.currentUserSubject.next(response);
+            return response;
+          } else {
+            return 'Bad Request';
+          }
+        }),
       catchError(err => {
         console.error(err);
-        this.error = err;
-        // tslint:disable-next-line:new-parens
-        return of(null); // todo: da pensare come strutturare meglio
+        return 'Bad Request';
       })
     );
   }

@@ -5,6 +5,8 @@ import {catchError, map, retry} from 'rxjs/operators';
 import {Data} from './pedibus.attendance.service';
 import {xit} from 'selenium-webdriver/testing';
 import * as moment from '../LoginComponent/pedibus.login.component';
+import {Message} from '../Models/Message';
+import {User} from '../Models/User';
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -39,7 +41,7 @@ export class UserService {
 
   // Todo: verificare cosa ritorna il Server dopo aver effettuato la registrazione
   register(firstName: string, lastName: string, mail: string, password: string, password2: string, uuid: string): Observable<RegisterForm> {
-    console.log('UserService.register:');
+    console.log('UserService.register');
 
     // tslint:disable-next-line:no-shadowed-variable
     const httpOptions = {
@@ -102,7 +104,7 @@ export class UserService {
   */
 
   checkEmailPresent(email: string): Observable<CheckEmailPresent> {
-    console.log('UserService.checkEmailPresent:');
+    console.log('UserService.checkEmailPresent');
     return this.http.get(REST_URL + 'presence/' + email).pipe(
       catchError(err => {
         console.error(err);
@@ -112,7 +114,7 @@ export class UserService {
   }
 
   recoverPassword(mail: string) {
-    console.log('UserService.recoverPassword:');
+    console.log('UserService.recoverPassword');
 
     const httpOptions = { headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -125,7 +127,12 @@ export class UserService {
 
     const body = JSON.stringify(bodyObj);
 
-    return this.http.post<string>(REST_URL + 'recover', body, httpOptions);
+    return this.http.post(REST_URL + 'recover', body, httpOptions).pipe(
+      catchError(err => {
+        console.error(err);
+        return 'Bad Request';
+      })
+    );
     /*.pipe(
       map(x => {
 
@@ -140,8 +147,9 @@ export class UserService {
   }
 
   resetPassword(p1: string, p2: string, uuid: string) {
-    console.log('UserService.resetPassword:');
+    console.log('UserService.resetPassword');
 
+    // todo: Controllo se c'è il token nel localstorage?
     const httpOptions = { headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
@@ -154,6 +162,22 @@ export class UserService {
 
     const body = JSON.stringify(bodyObj);
 
-    return this.http.post<string>(REST_URL + 'recover/' + uuid, body, httpOptions);
+    return this.http.post<string>(REST_URL + 'recover/' + uuid, body, httpOptions).pipe(
+      catchError(err => {
+        console.error(err);
+        return 'Bad Request';
+      })
+    );
+  }
+
+  getAllMessages(): Observable<Message [] | string> {
+    console.log('UserService.getAllMessages');
+
+    return this.http.get<Message []>(REST_URL + 'comunicazioni').pipe(
+      catchError(err => {
+        console.error(err);
+        return 'Bad Request';
+      })
+    );
   }
 }

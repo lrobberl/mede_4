@@ -54,24 +54,13 @@ export class PedibusLoginComponent implements OnInit {
 
     this.loading = true;
     this.authenticationService.login(this.f.username.value, this.f.password.value)
-      .subscribe(user => {
-          // localStorage.setItem('id_token', token);
-          // Upon success, navigate to homepage
-          // this.router.navigate(['/'], { queryParams: { logged: true }});
-          if (this.authenticationService.error !== '') { // c'è stato un errore
-            this.error = 'Invalid Credentials';
+      .subscribe(res => {
+        console.log(res);
+        if (res === 'B') {
+            this.error = 'Bad Request';
             this.loading = false;
           } else { // No errori
             this.router.navigate(['/']);
-          }
-        },
-        error => {
-          if (error === null) {
-            this.error = 'Invalid Credentials';
-            this.loading = false;
-          } else {
-            this.error = error;
-            this.loading = false;
           }
         });
   }
