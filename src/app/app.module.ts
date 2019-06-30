@@ -41,6 +41,7 @@ import {ChangeRoleComponent} from './AdminChangeRoleComponent/admin.change.role.
 import {SystemAdminService} from './Services/systemAdmin.service';
 import {RecoverPasswordComponent} from './RecoverPasswordComponent/recoverPassword.component';
 import {ResetPasswordComponent} from './ResetPasswordComponent/resetPassword.component';
+import {ComunicationComponent} from './ComunicationComponent/comunication.component';
 
 const appRoutes: Routes = [
   { path: 'confirm/:uuid', component: PedibusRegisterComponent},
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
   { path: 'changeUserRole', component: ChangeRoleComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},
   { path: 'recoverPassword', component: RecoverPasswordComponent},
   { path: 'resetPassword/:uuid', component: ResetPasswordComponent},
+  { path: 'comunications', component: ComunicationComponent, canActivate: [AuthGuard]},
   { path: '**', component: NotFoundComponent}
 ];
 
@@ -68,6 +70,7 @@ const appRoutes: Routes = [
     ChangeRoleComponent,
     RecoverPasswordComponent,
     ResetPasswordComponent,
+    ComunicationComponent,
     NotFoundComponent
   ],
   imports: [

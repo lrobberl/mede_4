@@ -17,6 +17,7 @@ export class UserListComponent implements OnInit {
   users: User[];
   // users$: Observable<User[]>;
   displayedColumns: string[] = ['id', 'username', 'role', 'status'];
+  error = '';
 
   // todo: valutare se è potenzialmente non sicuro ritornare al componente oggetti con USER con dentro la pwd in chiaro
 
@@ -33,8 +34,13 @@ export class UserListComponent implements OnInit {
     // this.adminService.getAllUsers().subscribe( res => { this.users = res; });
     // this.users$ = this.adminService.getAllUsers();
     this.adminService.getAllUsers().subscribe( users => {
-      this.users = users;
-      console.log(this.users[0].username);
+      if (users === 'B') {
+        this.error = 'Bad Request';
+      } else {
+        this.users = users as User[];
+        console.log(this.users[0].username);
+        this.error = '';
+      }
     });
     // console.log(this.users$);
   }

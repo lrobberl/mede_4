@@ -17,6 +17,7 @@
       <span class="spacer"></span>
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/" routerLinkActive="active">Home</a><br>
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
+      <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/comunications" routerLinkActive="active">Comunicazioni</a><br>
       <button *ngIf="!(isHandset$ | async) && isAdmin" mat-button [matMenuTriggerFor]="menu">Admin</button>
       <mat-menu #menu="matMenu"> <!-- <button mat-menu-item>Item 2</button> -->
         <a routerLink="/adminRegister" routerLinkActive="active">Create New User</a><br>
@@ -46,6 +47,7 @@
     <mat-nav-list>
       <a *ngIf="isLogged" routerLink="/" routerLinkActive="active">Home</a><br>
       <a *ngIf="isLogged" mat-list-item routerLink="/attendance" routerLinkActive="active">Corse</a><br>
+      <a *ngIf="isLogged" routerLink="/comunications" routerLinkActive="active">Comunicazioni</a><br>
       <button *ngIf="isAdmin" mat-button [matMenuTriggerFor]="menu">Admin</button>
       <mat-menu #menu="matMenu"> <!-- <button mat-menu-item>Item 2</button> -->
         <a routerLink="/adminRegister" routerLinkActive="active">AdminRegister</a><br>

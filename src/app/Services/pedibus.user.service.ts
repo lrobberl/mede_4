@@ -180,4 +180,15 @@ export class UserService {
       })
     );
   }
+  // Get from the server the number of incoming messages for a certain USER specified in the URL path
+  getNumberNewMessages(user: string): Observable<number | string> {
+    console.log('UserService.getNumberNewMessages');
+
+    return this.http.get<number>(REST_URL + 'comunicazioni/' + user).pipe(
+      catchError(err => {
+        console.error(err);
+        return 'Bad Request';
+      })
+    );
+  }
 }

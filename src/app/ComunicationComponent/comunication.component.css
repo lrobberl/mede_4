@@ -42,10 +42,11 @@ table {
   text-align: center;
 }
 
+/* Column Widths */
+.mat-column-data {
+  max-width: 64px;
+}
 
-.mat-column-status,
-.mat-column-id,
-.mat-column-username,
-.mat-column-role {
+.mat-column-utente {
   max-width: 124px;
 }
