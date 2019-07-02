@@ -4,7 +4,7 @@ import {MatListModule} from '@angular/material/list';
 // tslint:disable-next-line:max-line-length
 import {
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -48,8 +48,8 @@ const appRoutes: Routes = [
   { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard]},
   { path: 'login', component: PedibusLoginComponent},
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.SystemAdmin] } },
-  { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.SystemAdmin] }},
+  { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] } },
+  { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},
   { path: 'changeUserRole', component: ChangeRoleComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},
   { path: 'recoverPassword', component: RecoverPasswordComponent},
   { path: 'resetPassword/:uuid', component: ResetPasswordComponent},
@@ -94,7 +94,8 @@ const appRoutes: Routes = [
     MatOptionModule,
     MatSelectModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule
   ],
   providers: [UserService, AttendanceService, AdminService, SystemAdminService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],

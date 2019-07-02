@@ -27,17 +27,18 @@ export class MainNavComponent {
               private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
-
+  /*
   get isAdmin() {
-    return this.currentUser && this.currentUser.listaRuoli.includes(Role.Admin);
+    return this.currentUser && this.currentUser.listaRuoli.includes(Role.Accompagnatore);
   }
+   */
 
   get isSystemAdmin() {
     return this.currentUser && this.currentUser.listaRuoli.includes(Role.SystemAdmin);
   }
 
   get isLogged() {
-    return this.currentUser && (this.currentUser.listaRuoli.includes(Role.Admin) || this.currentUser.listaRuoli.includes(Role.User)
+    return this.currentUser && (this.currentUser.listaRuoli.includes(Role.Accompagnatore) || this.currentUser.listaRuoli.includes(Role.User)
       || this.currentUser.listaRuoli.includes(Role.SystemAdmin));
   }
 

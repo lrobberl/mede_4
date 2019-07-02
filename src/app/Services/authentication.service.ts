@@ -68,7 +68,7 @@ export class AuthenticationService {
   isLoggedIn() {
     const curUser = this.currentUserSubject.value;
 
-    if (!curUser || (!curUser.listaRuoli.includes(Role.Admin) && !curUser.listaRuoli.includes(Role.User)
+    if (!curUser || (!curUser.listaRuoli.includes(Role.Accompagnatore) && !curUser.listaRuoli.includes(Role.User)
           && !curUser.listaRuoli.includes(Role.SystemAdmin))) {
       return false;
     } else { // return this.checkTokenvalidity(curUser.token);

@@ -19,7 +19,7 @@ export class AdminService {
   constructor(private http: HttpClient) {
   }
 
-  registerUser(usrn: string, ruolo: string) {
+  registerUser(usrn: string, ruolo: string, linee: string[]) {
     console.log('AdminService.registerUser');
 
     // tslint:disable-next-line:no-shadowed-variable

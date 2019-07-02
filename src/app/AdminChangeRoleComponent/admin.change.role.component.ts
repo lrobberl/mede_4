@@ -46,7 +46,7 @@ export class ChangeRoleComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
 
     // Get all users
-    this.users$ = this.adminService.getAllUsers();
+    // this.users$ = this.adminService.getAllUsers() as User[];
     // this.urlParam = this.route.snapshot.paramMap.get('id');
   }
 
