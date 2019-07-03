@@ -7,6 +7,7 @@ import {xit} from 'selenium-webdriver/testing';
 import * as moment from '../LoginComponent/pedibus.login.component';
 import {Message} from '../Models/Message';
 import {User} from '../Models/User';
+import {forEach} from '@angular/router/src/utils/collection';
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -16,16 +17,20 @@ export interface RegisterForm {
   email: string;
   pass: string;
   pass2: string;
+  figli: BambinoRegistration[];
 }
 
 export interface TokenData {
   id_token: string;
 }
 
-export interface LoginData {
-  username: string;
-  password: string;
+export interface BambinoRegistration {
+  nome: string;
+  cognome: string;
+  fermataDefault: string;
 }
+
+
 
 export interface CheckEmailPresent {
   presente: string;
@@ -40,7 +45,8 @@ export class UserService {
   }
 
   // Todo: verificare cosa ritorna il Server dopo aver effettuato la registrazione
-  register(firstName: string, lastName: string, mail: string, password: string, password2: string, uuid: string): Observable<RegisterForm> {
+  register(firstName: string, lastName: string, mail: string, password: string, password2: string,
+           fermataDefault: string , figliArray: BambinoRegistration[], uuid: string): Observable<RegisterForm> {
     console.log('UserService.register');
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -50,13 +56,28 @@ export class UserService {
       })
     };
 
+    /*
+    const listaBambini: BambinoRegistration[] = [];
+
+    figliArray.forEach( value => {
+      const tmp: BambinoRegistration = {
+        nome: value.nome,
+        cognome: value.cognome,
+        fermataDefault: value.fermataDefault
+      };
+      listaBambini.push(tmp);
+    });
+     */
+
     this.user = {
       name: firstName,
       surname: lastName,
       email: mail,
       pass: password,
-      pass2: password2
+      pass2: password2,
+      figli: figliArray
   };
+
     const body = JSON.stringify(this.user);
 
     return this.http.post<RegisterForm>(REST_URL + 'confirm/' + uuid, body, httpOptions).pipe(

@@ -1,10 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../Services/pedibus.user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpResponse} from '@angular/common/http';
 import {AuthenticationService} from '../Services/authentication.service';
 import {MustMatch} from '../Utils/must-match.validator';
+import {AttendanceService, Fermata, FermataShort} from '../Services/pedibus.attendance.service';
+import {User} from '../Models/User';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -23,11 +26,16 @@ export class PedibusRegisterComponent implements OnInit {
   loading = false;
   urlParam: string;
   emailPresenceMessage: 'Email inserita è già presente nel sistema';
+  formFigli = false;
+  numFigli = 0;
+  fermate$: Observable<FermataShort[]>;
+  fer = ['pippo', 'pluto'];
 
   constructor(private userService: UserService,
               private router: Router,
               private route: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private attendanceService: AttendanceService) {
   }
 
   ngOnInit(): void {
@@ -44,7 +52,14 @@ export class PedibusRegisterComponent implements OnInit {
         Validators.pattern('^[a-zA-Z]{2,40}$')]],
 
       lastName: ['', [Validators.required,
-        Validators.pattern('^[a-zA-Z]{2,40}$')]]
+        Validators.pattern('^[a-zA-Z]{2,40}$')]],
+      figliArray: this.formBuilder.array([this.formBuilder.group({
+        nome: ['', [Validators.required,
+          Validators.pattern('^[a-zA-Z]{2,40}$')]],
+        cognome: ['', [Validators.required,
+          Validators.pattern('^[a-zA-Z]{2,40}$')]]
+      })]),
+      fermataDefault: ['', [Validators.required]]
     }, {
       validator: MustMatch('password', 'confermaPassword')
     });
@@ -54,9 +69,27 @@ export class PedibusRegisterComponent implements OnInit {
     console.log(this.urlParam);
     // get return url from route parameters or default to '/'
     // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+    this.fermate$ = this.attendanceService.getFermate();
   }
 
   get f() { return this.registerForm.controls; }
+
+  get getFigli() {
+    return this.registerForm.get('figliArray') as FormArray;
+  }
+
+  addFiglio() {
+    this.getFigli.push(this.formBuilder.group({
+      nome: ['', [Validators.required,
+        Validators.pattern('^[a-zA-Z]{2,40}$')]],
+      cognome: ['', [Validators.required,
+        Validators.pattern('^[a-zA-Z]{2,40}$')]]
+    }));
+  }
+
+  deleteFiglio(index) {
+    this.getFigli.removeAt(index);
+  }
 
   getErrorMessage(campo: string) {
     if (campo === 'username') {
@@ -80,6 +113,9 @@ export class PedibusRegisterComponent implements OnInit {
       return this.f.lastName.hasError('required') ? 'Last name is required' :
         this.f.lastName.hasError('pattern') ? 'Not a valid last name' :
           '';
+    } else if (campo === 'numFigli') {
+      return this.f.numFigli.hasError('pattern') ? 'Invalid number of Children' :
+        '';
     }
   }
 
@@ -91,7 +127,8 @@ export class PedibusRegisterComponent implements OnInit {
 
     this.loading = true;
     this.userService.register(this.f.firstName.value, this.f.lastName.value, this.f.username.value,
-      this.f.password.value, this.f.confermaPassword.value, this.urlParam)
+      this.f.password.value, this.f.confermaPassword.value, this.f.fermataDefault.value, this.f.figliArray.value,
+      this.urlParam)
       .subscribe(
         data => {
           this.router.navigate(['/login'], { queryParams: { registered: true }});
@@ -124,6 +161,10 @@ export class PedibusRegisterComponent implements OnInit {
   }
 
 
+  showFigliForm() {
+    this.formFigli = true;
+    this.numFigli = this.f.numFigli.value;
+  }
 }
 
 

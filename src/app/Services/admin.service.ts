@@ -31,7 +31,8 @@ export class AdminService {
 
     const newUser = {
       username: usrn,
-      role: ruolo
+      role: ruolo,
+      lineeAdminUtente: linee
     };
 
     const body = JSON.stringify(newUser);
@@ -39,7 +40,7 @@ export class AdminService {
     return this.http.post<any>(REST_URL + 'adminRegister', body, httpOptions).pipe(
       catchError(err => {
         console.error(err);
-        return of(null);
+        return 'Bad Request';
       })
     );
   }

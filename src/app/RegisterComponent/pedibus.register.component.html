@@ -80,7 +80,34 @@
           </mat-list-item>
           <br><br>
 
-          <!-- todo: <mat-error *ngIf="checkPasswords()"> Password mismatch</mat-error> -->
+          <div formArrayName="figliArray">
+            <div *ngFor="let item of getFigli.controls; let pointIndex=index" [formGroupName]="pointIndex">
+              <mat-form-field>
+              <label>
+                <input matInput placeholder="Name" formControlName="nome" />
+              </label>
+              </mat-form-field><br><br>
+              <mat-form-field>
+                <label>
+                  <input matInput placeholder="Surame" formControlName="cognome" />
+                </label>
+              </mat-form-field><br><br>
+              <button type="button" (click)="deleteFiglio(pointIndex)">Delete Figlio</button>
+            </div>
+            <button type="button" (click)="addFiglio()">Add Figlio</button>
+          </div><br><br>
+
+          <mat-list-item role="listitem">
+          <mat-form-field>
+            <label>
+              <mat-select matInput placeholder="Fermata di Default valida per ogni figlio" formControlName="fermataDefault">
+                <mat-option *ngFor="let fermata of fer" value="{{fermata}}">{{fermata}}</mat-option>
+              </mat-select>
+            </label>
+          </mat-form-field>
+          </mat-list-item><br><br>
+          <!-- <button (click)="showFigliForm()"></button>
+          todo: <mat-error *ngIf="checkPasswords()"> Password mismatch</mat-error> -->
           <!-- todo: <mat-error *ngIf="getIsEmailPresent()"> L'email inserita è già presente nel sistema</mat-error> -->
         </mat-list>
 

@@ -66,18 +66,21 @@ export class ResetPasswordComponent implements OnInit {
       .subscribe(res => {
           // Upon success, navigate to homepage
           // this.router.navigate(['/'], { queryParams: { logged: true }});
-          if (res !== '') {
+          if (res === 'B') {
             this.error = 'Bad Request';
             this.loading = false;
           } else {
             this.router.navigate(['/']);
           }
-        },
+        });
+  }
+  /*
+  ,
         error => {
           this.error = 'Bad Request';
           this.loading = false;
-        });
-  }
+        }
+   */
 
   getErrorMessage(campo: string) {
     if (campo === 'password') {

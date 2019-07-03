@@ -66,14 +66,22 @@ export class AdminRegisterComponent implements OnInit {
 
     this.loading = true;
     this.adminService.registerUser(this.f.username.value, this.f.role.value, this.lineeSelezionate)
-       .subscribe(user => {
-          this.router.navigate(['/'], { queryParams: { newUserCreated: true }});
-        },
+       .subscribe(res => {
+           if (res === 'B') {
+             this.error = 'Bad Request';
+             this.loading = false;
+           } else { // No errori
+             this.router.navigate(['/'], { queryParams: { newUserCreated: true }});
+           }
+        });
+  }
+  /*
+  ,
         error => {
           this.error = error;
           this.loading = false;
         });
-  }
+   */
 
   getErrorMessage(campo: string) {
     if (campo === 'username') {

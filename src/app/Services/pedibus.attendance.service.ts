@@ -26,6 +26,12 @@ export interface Fermata {
   bambini: Bambino[];
 }
 
+export interface FermataShort {
+  id: string;
+  nome: string;
+  linea: string;
+}
+
 export interface Data {
   date: Date;
   linea: string;
@@ -90,6 +96,14 @@ export class AttendanceService {
         console.error(err);
         return of(null);
       })
+    );
+  }
+
+  getFermate(): Observable<FermataShort []> {
+    console.log('AttendanceService.getFermate:');
+    return this.http.get<FermataShort []>(REST_URL + 'fermate').pipe(
+      // todo tenere fermate? Il server non le passa
+      map(arr => arr.map(x => ({nome: x.nome, id: x.id, linea: x.linea}) as FermataShort))
     );
   }
 }

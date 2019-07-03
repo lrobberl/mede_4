@@ -17,6 +17,7 @@ export class RecoverPasswordComponent implements OnInit {
   // submitted = false;
   loading = false;
   returnUrl: string;
+  message = '';
 
   constructor(private userService: UserService,
               private router: Router,
@@ -55,16 +56,14 @@ export class RecoverPasswordComponent implements OnInit {
       .subscribe(res => {
           // Upon success, navigate to homepage
           // this.router.navigate(['/'], { queryParams: { logged: true }});
-          if (res !== '') {
+          if (res === 'B') {
             this.error = 'Invalid Username/email';
             this.loading = false;
+            this.message = '';
           } else {
-            this.router.navigate(['/']);
+            this.message = 'E\' stata inviata una email all\'indirizzo specificato';
+            this.loading = false;
           }
-        },
-        error => {
-          this.error = 'Invalid Credentials';
-          this.loading = false;
         });
   }
 
