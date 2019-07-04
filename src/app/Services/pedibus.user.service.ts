@@ -17,6 +17,7 @@ export interface RegisterForm {
   email: string;
   pass: string;
   pass2: string;
+  fermataDefault: string;
   figli: BambinoRegistration[];
 }
 
@@ -46,7 +47,7 @@ export class UserService {
 
   // Todo: verificare cosa ritorna il Server dopo aver effettuato la registrazione
   register(firstName: string, lastName: string, mail: string, password: string, password2: string,
-           fermataDefault: string , figliArray: BambinoRegistration[], uuid: string): Observable<RegisterForm> {
+           fermataDef: string , figliArray: BambinoRegistration[], uuid: string): Observable<RegisterForm> {
     console.log('UserService.register');
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -75,6 +76,7 @@ export class UserService {
       email: mail,
       pass: password,
       pass2: password2,
+      fermataDefault: fermataDef,
       figli: figliArray
   };
 
@@ -197,7 +199,7 @@ export class UserService {
     return this.http.get<Message []>(REST_URL + 'comunicazioni').pipe(
       catchError(err => {
         console.error(err);
-        return 'Bad Request';
+        return '0';
       })
     );
   }
@@ -209,6 +211,28 @@ export class UserService {
       catchError(err => {
         console.error(err);
         return 'Bad Request';
+      })
+    );
+  }
+
+  segnaMessaggioLetto(element: Message) {
+    console.log('UserService.segnaMessaggioLetto');
+
+    const httpOptions = { headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    const bodyObj = {
+      id: element.id,
+    };
+
+    const body = JSON.stringify(bodyObj);
+
+    return this.http.put<string>(REST_URL + 'comunicazioni', body, httpOptions).pipe(
+      catchError(err => {
+        console.error(err);
+        return '0';
       })
     );
   }

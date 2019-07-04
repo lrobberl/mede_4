@@ -53,12 +53,7 @@ export class PedibusRegisterComponent implements OnInit {
 
       lastName: ['', [Validators.required,
         Validators.pattern('^[a-zA-Z]{2,40}$')]],
-      figliArray: this.formBuilder.array([this.formBuilder.group({
-        nome: ['', [Validators.required,
-          Validators.pattern('^[a-zA-Z]{2,40}$')]],
-        cognome: ['', [Validators.required,
-          Validators.pattern('^[a-zA-Z]{2,40}$')]]
-      })]),
+      figliArray: this.formBuilder.array([]),
       fermataDefault: ['', [Validators.required]]
     }, {
       validator: MustMatch('password', 'confermaPassword')

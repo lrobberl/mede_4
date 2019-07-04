@@ -1,7 +1,8 @@
 export class Message {
   id: string;
-  utente: string;
+  mittente: string;
+  destinatario: string;
   messaggio: string;
   data: string;
-  read: boolean;
+  letto: boolean;
 }

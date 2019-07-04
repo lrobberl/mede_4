@@ -17,7 +17,7 @@ import {MatCheckboxChange, PageEvent} from '@angular/material';
 
 export class AdminRegisterComponent implements OnInit {
   adminRegisterForm: FormGroup;
-    error: string;
+  error: string;
   // submitted = false;
   loading = false;
   returnUrl: string;
@@ -67,7 +67,7 @@ export class AdminRegisterComponent implements OnInit {
     this.loading = true;
     this.adminService.registerUser(this.f.username.value, this.f.role.value, this.lineeSelezionate)
        .subscribe(res => {
-           if (res === 'B') {
+           if (res === '0') {
              this.error = 'Bad Request';
              this.loading = false;
            } else { // No errori

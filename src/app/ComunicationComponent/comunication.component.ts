@@ -12,16 +12,18 @@ import {UserService} from '../Services/pedibus.user.service';
 })
 export class ComunicationComponent implements OnInit {
   currentUser: User;
-  displayedColumns: string[] = ['data', 'messaggio', 'utente'];
+  displayedColumns: string[] = ['data', 'messaggio', 'mittente'];
   messages: Message[];
+  /*
   messaggio: Message[] = [{
     id: '1234',
     utente: 'pippo',
     messaggio: 'Buongiorno, \n, volevo informale che l utente Pippo ha confermato la disponibilità per la corsa del 22/07/2019 per la ' +
       'linea Rossa. \n\n Grazie della visione',
     data: '30/06/2019',
-    read: false,
+    letto: false,
   }];
+   */
 
   error: string;
   table = true;
@@ -50,23 +52,30 @@ export class ComunicationComponent implements OnInit {
     // this.adminService.getAllUsers().subscribe( res => { this.users = res; });
     // this.users$ = this.adminService.getAllUsers();
     // console.log(this.users$);
-    /*
+
 this.userService.getAllMessages().subscribe( messages => {
-      if (messages === 'B') {
+      if (messages === '0') {
         this.error = 'Bad Request';
         this.table = false;
       } else {
         this.messages = messages as Message[];
-        this.resultsLength = messages.length;
-        console.log(this.messages);
+        // this.resultsLength = messages.length;
+        // console.log(this.messages);
         this.table = true;
       }
       // console.log(this.users[0].username);
     });
- */
   }
 
-  markRead(element: Message) {
-    element.read = true;
+  segnaLetto(element: Message) {
+    this.userService.segnaMessaggioLetto(element).subscribe(
+      res => {
+        if (res === '0') {
+          this.error = 'Bad Request';
+        } else {
+          element.letto = true;
+        }
+      }
+    );
   }
 }

@@ -19,7 +19,7 @@ export class AdminService {
   constructor(private http: HttpClient) {
   }
 
-  registerUser(usrn: string, ruolo: string, linee: string[]) {
+  registerUser(usrn: string, ruolo: string, linee: string[]): Observable<string | any> {
     console.log('AdminService.registerUser');
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -37,10 +37,13 @@ export class AdminService {
 
     const body = JSON.stringify(newUser);
 
-    return this.http.post<any>(REST_URL + 'adminRegister', body, httpOptions).pipe(
+    return this.http.post(REST_URL + 'adminRegister', body, httpOptions).pipe(
+      map(x => {
+        return '1';
+      }),
       catchError(err => {
         console.error(err);
-        return 'Bad Request';
+        return '0';
       })
     );
   }

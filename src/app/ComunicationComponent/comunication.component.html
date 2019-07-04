@@ -6,22 +6,22 @@
 
   <mat-card-content>
     <div class="example-table-container">
-      <table class="example-table" *ngIf="table" style="text-align: center" content="align: center" mat-table [dataSource]="messaggio">
+      <table class="example-table" *ngIf="table" style="text-align: center" content="align: center" mat-table [dataSource]="messages">
 
         <ng-container matColumnDef="data">
           <th mat-header-cell *matHeaderCellDef> Data </th>
           <td mat-cell *matCellDef="let element"> {{element.data}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="utente">
-          <th mat-header-cell *matHeaderCellDef> Sender </th>
-          <td mat-cell *matCellDef="let element"> {{element.utente}} </td>
+        <ng-container matColumnDef="mittente">
+          <th mat-header-cell *matHeaderCellDef> Mittente </th>
+          <td mat-cell *matCellDef="let element"> {{element.mittente}} </td>
         </ng-container>
 
         <ng-container matColumnDef="messaggio">
           <th mat-header-cell *matHeaderCellDef> Testo </th>
-          <td mat-cell *matCellDef="let element" (click)="markRead(element)">
-            <span [class.selected] = !element.read>{{element.messaggio}} </span></td>
+          <td mat-cell *matCellDef="let element" (click)="segnaLetto(element)">
+            <span [class.selected] = !element.letto>{{element.messaggio}} </span></td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
