@@ -69,7 +69,7 @@ export class PedibusRegisterComponent implements OnInit {
       res => {
         this.fermate = res as FermataShort[];
       }, error1 => {
-        this.error = 'Operazione \<getAllFermate\> Fallita';
+        this.error = 'Operazione -getAllFermate- Fallita';
       }
     );
   }
@@ -126,12 +126,10 @@ export class PedibusRegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    const fermata = this.f.fermataDefault.value.toString().split('-')[0];
-    const linea = this.f.fermataDefault.value.toString().split('-')[1];
 
     this.loading = true;
     this.userService.register(this.f.firstName.value, this.f.lastName.value, this.f.username.value,
-      this.f.password.value, this.f.confermaPassword.value, fermata, linea,  this.f.figliArray.value,
+      this.f.password.value, this.f.confermaPassword.value, this.f.fermataDefault.value, this.f.figliArray.value,
       this.urlParam)
       .subscribe(
         data => {

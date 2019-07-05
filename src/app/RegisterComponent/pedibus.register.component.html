@@ -101,7 +101,7 @@
           <mat-form-field>
             <label>
               <mat-select matInput placeholder="Fermata di Default valida per ogni figlio" formControlName="fermataDefault">
-                <mat-option *ngFor="let fermata of fermate" value="{{fermata.nome}}-{{fermata.linea}}">
+                <mat-option *ngFor="let fermata of fermate" value="{{fermata.id}}">
                   {{fermata.nome}} - {{fermata.linea}}</mat-option>
               </mat-select>
             </label>

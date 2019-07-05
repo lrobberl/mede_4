@@ -22,7 +22,7 @@
       <mat-menu #menu="matMenu"> <!-- <button mat-menu-item>Item 2</button> -->
         <a *ngIf="!(isHandset$ | async)" routerLink="/adminRegister" routerLinkActive="active">Create New User</a><br>
         <a *ngIf="!(isHandset$ | async)" routerLink="/users" routerLinkActive="active">Users</a><br>
-        <!-- <a *ngIf="!(isHandset$ | async)" routerLink="/changeUserRole" routerLinkActive="active">Change User Role</a><br> -->
+        <a *ngIf="!(isHandset$ | async)" routerLink="/changeUserRole" routerLinkActive="active">Change User Role</a><br>
       </mat-menu>
 
       <!-- <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/register" routerLinkActive="active">Registrazione</a><br> -->
@@ -52,7 +52,7 @@
       <mat-menu #menu="matMenu"> <!-- <button mat-menu-item>Item 2</button> -->
         <a routerLink="/adminRegister" routerLinkActive="active">New User</a><br>
         <a routerLink="/users" routerLinkActive="active">Users</a><br>
-        <!-- <a routerLink="/changeUserRole" routerLinkActive="active">Change User Role</a><br> -->
+        <a routerLink="/changeUserRole" routerLinkActive="active">Change User Role</a><br>
       </mat-menu>
 
       <a *ngIf="isLogged" mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>

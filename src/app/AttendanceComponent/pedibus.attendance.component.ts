@@ -16,7 +16,7 @@ import {Router} from '@angular/router';
 
 export class PedibusAttendanceComponent implements OnInit {
   data: Data;
-  linee: Linea[];
+  linee: Linea[] = [];
 
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,

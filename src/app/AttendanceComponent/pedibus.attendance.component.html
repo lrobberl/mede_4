@@ -1,4 +1,4 @@
-  <mat-card style="text-align: center" content="align: center">
+  <mat-card style="text-align: center" content="align: center" *ngIf="data">
     <mat-card-title>
       <h3> Fermate Pedibus - PRESENZE </h3>
     </mat-card-title>
@@ -8,7 +8,6 @@
     </mat-card-subtitle>
 
     <mat-radio-group aria-label="Seleziona una linea">
-      <!-- todo: non funziona il cambio linea tramite il radio-button [(ngModel)]="radioSelected"-->
       <mat-radio-button *ngFor="let linea of linee; i as index"
                         (change)="cambiaLinea($event)" [value]="linea.Nome" [checked]="linea.Nome === 'Rossa'">{{linea.Nome}} &nbsp;&nbsp;</mat-radio-button>
     </mat-radio-group>

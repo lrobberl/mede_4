@@ -55,14 +55,11 @@ export class PedibusLoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .subscribe(res => {
-        console.log(res);
-        if (res === 'B') {
-            this.error = 'Bad Request';
-            this.loading = false;
-          } else { // No errori
-            this.router.navigate(['/']);
-          }
-        });
+          this.router.navigate(['/']);
+        }, error1 => {
+         this.loading = false;
+         this.error = 'Operazione di Login fallita';
+      });
   }
 
   getErrorMessage(campo: string) {

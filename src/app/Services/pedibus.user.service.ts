@@ -18,7 +18,6 @@ export interface RegisterForm {
   pass: string;
   pass2: string;
   fermataDefault: string;
-  lineaDefault: string;
   figli: BambinoRegistration[];
 }
 
@@ -48,7 +47,7 @@ export class UserService {
 
   // Todo: verificare cosa ritorna il Server dopo aver effettuato la registrazione
   register(firstName: string, lastName: string, mail: string, password: string, password2: string,
-           fermataDef: string, lineaDef: string, figliArray: BambinoRegistration[], uuid: string): Observable<RegisterForm | string> {
+           fermataDef: string, figliArray: BambinoRegistration[], uuid: string): Observable<RegisterForm | string> {
     console.log('UserService.register');
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -78,7 +77,6 @@ export class UserService {
       pass: password,
       pass2: password2,
       fermataDefault: fermataDef,
-      lineaDefault: lineaDef,
       figli: figliArray
   };
 

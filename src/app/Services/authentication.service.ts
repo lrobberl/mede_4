@@ -48,15 +48,8 @@ export class AuthenticationService {
             localStorage.setItem('currentUser', JSON.stringify(response));
             this.currentUserSubject.next(response);
             return response;
-          } else {
-            return 'Bad Request';
           }
-        }),
-      catchError(err => {
-        console.error(err);
-        return 'Bad Request';
-      })
-    );
+        }));
   }
 
   logout() {
