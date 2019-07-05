@@ -67,13 +67,12 @@ export class AdminRegisterComponent implements OnInit {
     this.loading = true;
     this.adminService.registerUser(this.f.username.value, this.f.role.value, this.lineeSelezionate)
        .subscribe(res => {
-           if (res === '0') {
-             this.error = 'Bad Request';
-             this.loading = false;
-           } else { // No errori
              this.router.navigate(['/'], { queryParams: { newUserCreated: true }});
-           }
-        });
+        },
+         error1 => {
+           this.error = 'Operazione Fallita';
+           this.loading = false;
+         });
   }
   /*
   ,

@@ -33,15 +33,13 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     // this.adminService.getAllUsers().subscribe( res => { this.users = res; });
     // this.users$ = this.adminService.getAllUsers();
-    this.adminService.getAllUsers().subscribe( users => {
-      if (users === 'B') {
-        this.error = 'Bad Request';
-      } else {
+    this.adminService.getAllUsers().subscribe(
+      users => {
         this.users = users as User[];
-        console.log(this.users[0].username);
         this.error = '';
-      }
-    });
+    }, error1 => {
+        this.error = 'Operazione -getAllUsers- fallita';
+      });
     // console.log(this.users$);
   }
 }

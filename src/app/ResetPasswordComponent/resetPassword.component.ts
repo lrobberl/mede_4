@@ -65,14 +65,11 @@ export class ResetPasswordComponent implements OnInit {
     this.userService.resetPassword(this.f.password.value, this.f.confermaPassword.value, this.urlParam)
       .subscribe(res => {
           // Upon success, navigate to homepage
-          // this.router.navigate(['/'], { queryParams: { logged: true }});
-          if (res === 'B') {
-            this.error = 'Bad Request';
-            this.loading = false;
-          } else {
-            this.router.navigate(['/']);
-          }
-        });
+          this.router.navigate(['/'], { queryParams: { resetPassword: true }});
+        }, error1 => {
+        this.error = 'Operazione -resetPassword- fallita';
+        this.loading = false;
+      });
   }
   /*
   ,

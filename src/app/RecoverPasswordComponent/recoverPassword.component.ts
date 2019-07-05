@@ -54,17 +54,16 @@ export class RecoverPasswordComponent implements OnInit {
     this.loading = true;
     this.userService.recoverPassword(this.f.username.value)
       .subscribe(res => {
+        this.error = undefined;
+        this.message = 'E\' stata inviata una email all\'indirizzo specificato';
+        this.loading = false;
           // Upon success, navigate to homepage
           // this.router.navigate(['/'], { queryParams: { logged: true }});
-          if (res === 'B') {
-            this.error = 'Invalid Username/email';
-            this.loading = false;
-            this.message = '';
-          } else {
-            this.message = 'E\' stata inviata una email all\'indirizzo specificato';
-            this.loading = false;
-          }
-        });
+        }, error1 => {
+        this.error = 'Invalid Username/email';
+        this.loading = false;
+        this.message = '';
+      });
   }
 
   getErrorMessage(campo: string) {

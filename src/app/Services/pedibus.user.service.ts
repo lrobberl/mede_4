@@ -84,14 +84,15 @@ export class UserService {
 
     const body = JSON.stringify(this.user);
 
-    return this.http.post<RegisterForm>(REST_URL + 'confirm/' + uuid, body, httpOptions).pipe(
+    return this.http.post<RegisterForm>(REST_URL + 'confirm/' + uuid, body, httpOptions);
+  }
+  /*
+  .pipe(
       catchError(err => {
         console.error(err);
         return '0';
       })
-    );
-  }
-  /*
+    )
   login(mail: string, pass: string): Observable<string> {
     console.log('UserService.login:');
 
@@ -152,23 +153,7 @@ export class UserService {
 
     const body = JSON.stringify(bodyObj);
 
-    return this.http.post(REST_URL + 'recover', body, httpOptions).pipe(
-      catchError(err => {
-        console.error(err);
-        return 'Bad Request';
-      })
-    );
-    /*.pipe(
-      map(x => {
-
-        return ;
-      }),
-      catchError(err => {
-        console.error(err);
-        return of(null);
-      })
-    );
-     */
+    return this.http.post(REST_URL + 'recover', body, httpOptions);
   }
 
   resetPassword(p1: string, p2: string, uuid: string) {
@@ -187,23 +172,13 @@ export class UserService {
 
     const body = JSON.stringify(bodyObj);
 
-    return this.http.post<string>(REST_URL + 'recover/' + uuid, body, httpOptions).pipe(
-      catchError(err => {
-        console.error(err);
-        return 'Bad Request';
-      })
-    );
+    return this.http.post<string>(REST_URL + 'recover/' + uuid, body, httpOptions);
   }
 
   getAllMessages(): Observable<Message [] | string> {
     console.log('UserService.getAllMessages');
 
-    return this.http.get<Message []>(REST_URL + 'comunicazioni').pipe(
-      catchError(err => {
-        console.error(err);
-        return '0';
-      })
-    );
+    return this.http.get<Message []>(REST_URL + 'comunicazioni');
   }
   // Get from the server the number of incoming messages for a certain USER specified in the URL path
   getNumberNewMessages(user: string): Observable<number | string> {
@@ -231,11 +206,6 @@ export class UserService {
 
     const body = JSON.stringify(bodyObj);
 
-    return this.http.put<string>(REST_URL + 'comunicazioni', body, httpOptions).pipe(
-      catchError(err => {
-        console.error(err);
-        return '0';
-      })
-    );
+    return this.http.put<string>(REST_URL + 'comunicazioni', body, httpOptions);
   }
 }

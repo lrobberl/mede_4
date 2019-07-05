@@ -8,6 +8,7 @@ import {MustMatch} from '../Utils/must-match.validator';
 import {AttendanceService, Fermata, FermataShort} from '../Services/pedibus.attendance.service';
 import {User} from '../Models/User';
 import {Observable} from 'rxjs';
+import {error} from 'selenium-webdriver';
 
 
 @Component({
@@ -66,11 +67,9 @@ export class PedibusRegisterComponent implements OnInit {
     // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     this.attendanceService.getFermate().subscribe(
       res => {
-        if (res === '0') {
-          this.error = 'Operazione \<getAllFermate\> Fallita';
-        } else {
-          this.fermate = res as FermataShort[];
-        }
+        this.fermate = res as FermataShort[];
+      }, error1 => {
+        this.error = 'Operazione \<getAllFermate\> Fallita';
       }
     );
   }
@@ -136,12 +135,12 @@ export class PedibusRegisterComponent implements OnInit {
       this.urlParam)
       .subscribe(
         data => {
-          if (data === '0') {
-            this.loading = false;
-            this.error = 'Operazione di registrazione fallita';
-          } else {
             this.router.navigate(['/login'], {queryParams: {registered: true}});
-          }
+        },
+        // tslint:disable-next-line:no-shadowed-variable
+          error => {
+          this.loading = false;
+          this.error = 'Operazione di registrazione fallita';
         });
   }
 

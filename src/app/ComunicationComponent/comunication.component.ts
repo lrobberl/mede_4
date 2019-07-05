@@ -54,27 +54,20 @@ export class ComunicationComponent implements OnInit {
     // console.log(this.users$);
 
 this.userService.getAllMessages().subscribe( messages => {
-      if (messages === '0') {
-        this.error = 'Bad Request';
-        this.table = false;
-      } else {
-        this.messages = messages as Message[];
-        // this.resultsLength = messages.length;
-        // console.log(this.messages);
-        this.table = true;
-      }
-      // console.log(this.users[0].username);
-    });
+          this.messages = messages as Message[];
+          this.table = true;
+    }, error1 => {
+          this.error = 'Operazione -getAllMessages- fallita';
+          this.table = false;
+});
   }
 
   segnaLetto(element: Message) {
     this.userService.segnaMessaggioLetto(element).subscribe(
       res => {
-        if (res === '0') {
-          this.error = 'Bad Request';
-        } else {
-          element.letto = true;
-        }
+        element.letto = true;
+        }, error1 => {
+          this.error = 'Operazione -segnaLetto- fallita';
       }
     );
   }

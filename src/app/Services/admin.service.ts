@@ -37,12 +37,15 @@ export class AdminService {
 
     const body = JSON.stringify(newUser);
 
-    return this.http.post(REST_URL + 'adminRegister', body, httpOptions).pipe(
+    return this.http.post(REST_URL + 'adminRegister', body, httpOptions);
+    /*
+    .pipe(
       catchError(err => {
         console.error(err);
         return '0';
       })
-    );
+    )
+     */
   }
 
   getAllUsers(): Observable<User[] | string> {
