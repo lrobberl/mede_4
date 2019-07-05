@@ -37,6 +37,11 @@ export class MainNavComponent {
     return this.currentUser && this.currentUser.listaRuoli.includes(Role.SystemAdmin);
   }
 
+  get isSystemAdminOrAccompagnatore() {
+    return this.currentUser && this.currentUser.listaRuoli.includes(Role.SystemAdmin)
+      && this.currentUser.listaRuoli.includes(Role.Accompagnatore);
+  }
+
   get isLogged() {
     return this.currentUser && (this.currentUser.listaRuoli.includes(Role.Accompagnatore) || this.currentUser.listaRuoli.includes(Role.User)
       || this.currentUser.listaRuoli.includes(Role.SystemAdmin));

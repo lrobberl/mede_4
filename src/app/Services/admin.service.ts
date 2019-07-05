@@ -38,9 +38,6 @@ export class AdminService {
     const body = JSON.stringify(newUser);
 
     return this.http.post(REST_URL + 'adminRegister', body, httpOptions).pipe(
-      map(x => {
-        return '1';
-      }),
       catchError(err => {
         console.error(err);
         return '0';

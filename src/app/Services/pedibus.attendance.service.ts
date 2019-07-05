@@ -99,11 +99,15 @@ export class AttendanceService {
     );
   }
 
-  getFermate(): Observable<FermataShort []> {
+  getFermate(): Observable<FermataShort [] | string> {
     console.log('AttendanceService.getFermate:');
     return this.http.get<FermataShort []>(REST_URL + 'fermate').pipe(
       // todo tenere fermate? Il server non le passa
-      map(arr => arr.map(x => ({nome: x.nome, id: x.id, linea: x.linea}) as FermataShort))
+      map(arr => arr.map(x => ({nome: x.nome, id: x.id, linea: x.linea}) as FermataShort)),
+      catchError(err => {
+        console.error(err);
+        return '0';
+      })
     );
   }
 }

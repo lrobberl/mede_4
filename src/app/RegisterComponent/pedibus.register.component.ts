@@ -28,8 +28,8 @@ export class PedibusRegisterComponent implements OnInit {
   emailPresenceMessage: 'Email inserita è già presente nel sistema';
   formFigli = false;
   numFigli = 0;
-  fermate$: Observable<FermataShort[]>;
-  fer = ['pippo', 'pluto'];
+  fermate: FermataShort[];
+  // fer = ['pippo', 'pluto'];
 
   constructor(private userService: UserService,
               private router: Router,
@@ -64,7 +64,15 @@ export class PedibusRegisterComponent implements OnInit {
     console.log(this.urlParam);
     // get return url from route parameters or default to '/'
     // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-    this.fermate$ = this.attendanceService.getFermate();
+    this.attendanceService.getFermate().subscribe(
+      res => {
+        if (res === '0') {
+          this.error = 'Operazione \<getAllFermate\> Fallita';
+        } else {
+          this.fermate = res as FermataShort[];
+        }
+      }
+    );
   }
 
   get f() { return this.registerForm.controls; }
@@ -119,18 +127,21 @@ export class PedibusRegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+    const fermata = this.f.fermataDefault.value.toString().split('-')[0];
+    const linea = this.f.fermataDefault.value.toString().split('-')[1];
 
     this.loading = true;
     this.userService.register(this.f.firstName.value, this.f.lastName.value, this.f.username.value,
-      this.f.password.value, this.f.confermaPassword.value, this.f.fermataDefault.value, this.f.figliArray.value,
+      this.f.password.value, this.f.confermaPassword.value, fermata, linea,  this.f.figliArray.value,
       this.urlParam)
       .subscribe(
         data => {
-          this.router.navigate(['/login'], { queryParams: { registered: true }});
-        },
-        error => {
-          this.loading = false;
-          this.error = error;
+          if (data === '0') {
+            this.loading = false;
+            this.error = 'Operazione di registrazione fallita';
+          } else {
+            this.router.navigate(['/login'], {queryParams: {registered: true}});
+          }
         });
   }
 

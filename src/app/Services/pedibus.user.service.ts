@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
-import {Data} from './pedibus.attendance.service';
+import {Data, FermataShort} from './pedibus.attendance.service';
 import {xit} from 'selenium-webdriver/testing';
 import * as moment from '../LoginComponent/pedibus.login.component';
 import {Message} from '../Models/Message';
@@ -18,6 +18,7 @@ export interface RegisterForm {
   pass: string;
   pass2: string;
   fermataDefault: string;
+  lineaDefault: string;
   figli: BambinoRegistration[];
 }
 
@@ -47,7 +48,7 @@ export class UserService {
 
   // Todo: verificare cosa ritorna il Server dopo aver effettuato la registrazione
   register(firstName: string, lastName: string, mail: string, password: string, password2: string,
-           fermataDef: string , figliArray: BambinoRegistration[], uuid: string): Observable<RegisterForm> {
+           fermataDef: string, lineaDef: string, figliArray: BambinoRegistration[], uuid: string): Observable<RegisterForm | string> {
     console.log('UserService.register');
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -77,6 +78,7 @@ export class UserService {
       pass: password,
       pass2: password2,
       fermataDefault: fermataDef,
+      lineaDefault: lineaDef,
       figli: figliArray
   };
 
@@ -85,7 +87,7 @@ export class UserService {
     return this.http.post<RegisterForm>(REST_URL + 'confirm/' + uuid, body, httpOptions).pipe(
       catchError(err => {
         console.error(err);
-        return of(null);
+        return '0';
       })
     );
   }

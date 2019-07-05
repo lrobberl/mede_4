@@ -4,7 +4,8 @@ import {MatListModule} from '@angular/material/list';
 // tslint:disable-next-line:max-line-length
 import {
   MatButtonModule,
-  MatCardModule, MatCheckboxModule,
+  MatCardModule,
+  MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -13,7 +14,8 @@ import {
   MatPaginatorModule,
   MatRadioModule,
   MatSelectModule,
-  MatSidenavModule, MatTableModule,
+  MatSidenavModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -45,7 +47,8 @@ import {ComunicationComponent} from './ComunicationComponent/comunication.compon
 
 const appRoutes: Routes = [
   { path: 'confirm/:uuid', component: PedibusRegisterComponent},
-  { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard]},
+  { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin,
+          Role.Accompagnatore] }},
   { path: 'login', component: PedibusLoginComponent},
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] } },
