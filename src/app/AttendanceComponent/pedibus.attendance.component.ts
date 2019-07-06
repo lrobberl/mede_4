@@ -6,6 +6,10 @@ import {Linea, Fermata, Data, Bambino, Corsa, AttendanceService} from '../Servic
 import {Observable} from 'rxjs';
 import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
+import {FormControl, Validators} from '@angular/forms';
+import { saveAs } from 'file-saver';
+import exportFromJSON from 'export-from-json'
+import {User} from '../Models/User';
 
 @Component({
   selector: 'app-pedibus-attendance',
@@ -17,6 +21,8 @@ import {Router} from '@angular/router';
 export class PedibusAttendanceComponent implements OnInit {
   data: Data;
   linee: Linea[] = [];
+  error: string;
+  exportControl: FormControl;
 
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,
@@ -29,27 +35,54 @@ export class PedibusAttendanceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.attendanceService.getLines().subscribe(x => {this.linee = x; });
-    this.attendanceService.getCorsa('Rossa', this.formatDate(new Date())).subscribe(x => {this.data = x; });
-    // this.prova$ = this.httpService.getCorsa(this.selectedLine, this.formatDate(new Date()));
+    this.attendanceService.getLines().subscribe(
+      x => {
+                  this.linee = x;
+                  this.error = undefined;
+                  },
+      error1 => {
+        this.error = 'Operazione -getLines OnInit- Fallita';
+      }
+      );
+    this.attendanceService.getCorsa('Rossa', this.formatDate(new Date())).subscribe(
+      x => {
+        this.data = x;
+        this.error = undefined;
+      }, error1 => {
+        this.error = 'Operazione -getCorsa OnInit- Fallita';
+      });
+
+    this.exportControl = new FormControl('', [Validators.required]);
   }
+
+  get f() { return this.exportControl; }
 
   getCorsa(linea: string, data: string) {
     // this.selectedDate = data;
-    this.attendanceService.getCorsa(linea, data).subscribe(x => {this.data = x; });
+    this.attendanceService.getCorsa(linea, data).subscribe(x => {
+      this.data = x;
+      this.error = undefined;
+    }, error1 => {
+      this.error = 'Operazione -getCorsa- Fallita';
+    });
   }
 
   cambiaLinea($event: MatRadioChange) {
     console.log($event.value);
     console.log(this.formatDate(this.data.date));
-    this.attendanceService.getCorsa($event.value, this.formatDate(this.data.date)).subscribe(x => {this.data = x; });
+    this.attendanceService.getCorsa($event.value, this.formatDate(this.data.date)).subscribe(x => {
+      this.data = x;
+      this.error = undefined;
+    }, error1 => {
+      this.error = 'Operazione -getCorsa [cambiaLinea]- Fallita';
+    });
     console.log(this.data);
   }
 
   segnaPresente($event: MouseEvent, bambino: Bambino, verso: string, feramata: Fermata) {
     bambino.presente = (bambino.presente === true) ? false : true;
 
-    this.attendanceService.cambiaStato(bambino, this.data.linea, this.data.date, verso.toLowerCase(),
+    this.attendanceService.cambiaStato(bambino, this.data.linea, this.data.date, verso.toUpperCase(),
       feramata).subscribe((response) => {
         // do something with the response
         console.log('Response is: ', response);
@@ -57,7 +90,7 @@ export class PedibusAttendanceComponent implements OnInit {
       },
       (error) => {
         // catch the error
-        console.error('An error occurred, ', error);
+        this.error = 'Operazione -segnaPresente- fallita';
       }
 
     );
@@ -96,6 +129,17 @@ export class PedibusAttendanceComponent implements OnInit {
     ;
   }*/
 
+  esportaFile() {
+    const format = this.exportControl.value;
+
+    if (format === 'csv') {
+    } else if (format === 'json') {
+      const blob = new Blob([JSON.stringify(this.data, null, '  ')], {type: 'text/json' });
+      saveAs(blob, 'myFile.json');
+    } else {
+      this.error = 'Errore nel formato di download del file ' + format;
+    }
+  }
 }
 
 

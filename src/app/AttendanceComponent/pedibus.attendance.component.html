@@ -9,7 +9,7 @@
 
     <mat-radio-group aria-label="Seleziona una linea">
       <mat-radio-button *ngFor="let linea of linee; i as index"
-                        (change)="cambiaLinea($event)" [value]="linea.Nome" [checked]="linea.Nome === 'Rossa'">{{linea.Nome}} &nbsp;&nbsp;</mat-radio-button>
+                        (change)="cambiaLinea($event)" [value]="linea.nome" [checked]="linea.nome === 'Rossa'">{{linea.nome}} &nbsp;&nbsp;</mat-radio-button>
     </mat-radio-group>
 
     <mat-tab-group dynamicHeight>
@@ -21,7 +21,8 @@
                 <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span *ngFor="let bambino of fermata.bambini; last as isLast"
                       (click)="segnaPresente($event, bambino, 'Andata', fermata)">
-          <span [class.selected] = bambino.presente>{{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
+          <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>
+                  {{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
           </span>
               </mat-list-item>
             </mat-list>
@@ -37,7 +38,8 @@
                 <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span *ngFor="let bambino of fermata.bambini; last as isLast"
                       (click)="segnaPresente($event, bambino, 'Ritorno', fermata)">
-          <span [class.selected] = bambino.presente>{{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
+          <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>{{bambino.nome}}
+                      <span *ngIf="!isLast">,&nbsp;</span></span>
           </span>
               </mat-list-item>
             </mat-list>
@@ -55,5 +57,15 @@
                    style="align-content: center">
     </mat-paginator>
 
+    <mat-card-footer>
+      <mat-form-field>
+      <mat-label>Formato Download</mat-label>
+      <select matNativeControl [formControl]="exportControl">
+        <!-- <option value="csv">CSV</option> -->
+        <option value="json">JSON</option>
+      </select>
+      </mat-form-field>
+      <button [disabled]="f.invalid" mat-raised-button color="primary" (click)="esportaFile()">Esporta file</button>
+    </mat-card-footer>
   </mat-card>
 

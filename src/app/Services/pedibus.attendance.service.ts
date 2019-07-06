@@ -4,7 +4,9 @@ import { map, retry, catchError, tap, first } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 export interface Linea {
-  Nome: string;
+  id: string;
+  nome: string;
+  aaccompagnatori: string[];
   fermate: Fermata[];
 }
 
@@ -12,6 +14,7 @@ export interface Bambino {
   id: string;
   nome: string;
   presente: boolean;
+  prenotato: boolean;
 }
 
 export interface Corsa {
@@ -57,17 +60,13 @@ export class AttendanceService {
     console.log('AttendanceService.getCorsa:');
     return this.http.get<Data>(REST_URL + 'corsa/' + linea + '/' + data).pipe(
       map(x => ({date: new Date(x.date), linea: x.linea, corse: x.corse}) as Data),
-      retry(3),
-      catchError(error => of(null))
+      retry(3)
     );
   }
 
   getLines(): Observable<Linea[]> {
     console.log('AttendanceService.getLines:');
-    return this.http.get<Linea[]>(REST_URL + 'lines').pipe(
-      // todo tenere fermate? Il server non le passa
-      map(arr => arr.map(x => ({Nome: x.Nome, fermate: x.fermate}) as Linea))
-    );
+    return this.http.get<Linea[]>(REST_URL + 'lines');
   }
 
   cambiaStato(bambino: Bambino, line: string, date: Date, direction: string, stop: Fermata) {
@@ -91,12 +90,7 @@ export class AttendanceService {
 
     const body = JSON.stringify(bodyObj);
 
-    return this.http.put(REST_URL + 'stato/' + bambino.id.toString(), body, httpoptions).pipe(
-      catchError(err => {
-        console.error(err);
-        return of(null);
-      })
-    );
+    return this.http.put(REST_URL + 'stato/' + bambino.id.toString(), body, httpoptions);
   }
 
   getFermate(): Observable<FermataShort [] | string> {

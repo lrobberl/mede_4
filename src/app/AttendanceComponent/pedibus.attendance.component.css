@@ -1,7 +1,11 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 .selected {
-  font-weight: bold;
+   font-weight: bold;
+ }
+
+.prenotato {
+  color: lightseagreen;
 }
 
 .highlight {
