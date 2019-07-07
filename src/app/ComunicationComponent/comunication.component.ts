@@ -12,7 +12,7 @@ import {UserService} from '../Services/pedibus.user.service';
 })
 export class ComunicationComponent implements OnInit {
   currentUser: User;
-  displayedColumns: string[] = ['data', 'messaggio', 'mittente'];
+  displayedColumns: string[] = ['data', 'messaggio'];
   messages: Message[];
   /*
   messaggio: Message[] = [{
