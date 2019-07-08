@@ -5,11 +5,11 @@ import {MatListModule} from '@angular/material/list';
 import {
   MatButtonModule,
   MatCardModule,
-  MatCheckboxModule,
+  MatCheckboxModule, MatDatepickerModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule,
+  MatMenuModule, MatNativeDateModule,
   MatOptionModule,
   MatPaginatorModule,
   MatRadioModule,
@@ -44,6 +44,7 @@ import {SystemAdminService} from './Services/systemAdmin.service';
 import {RecoverPasswordComponent} from './RecoverPasswordComponent/recoverPassword.component';
 import {ResetPasswordComponent} from './ResetPasswordComponent/resetPassword.component';
 import {ComunicationComponent} from './ComunicationComponent/comunication.component';
+import {AdminTurniComponent} from './AdminTurniComponent/admin.turni.component';
 
 const appRoutes: Routes = [
   { path: 'confirm/:uuid', component: PedibusRegisterComponent},
@@ -54,6 +55,7 @@ const appRoutes: Routes = [
   { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] } },
   { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},
   { path: 'changeUserRole', component: ChangeRoleComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},
+  { path: 'turni', component: AdminTurniComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},
   { path: 'recoverPassword', component: RecoverPasswordComponent},
   { path: 'resetPassword/:uuid', component: ResetPasswordComponent},
   { path: 'comunications', component: ComunicationComponent, canActivate: [AuthGuard]},
@@ -74,6 +76,7 @@ const appRoutes: Routes = [
     RecoverPasswordComponent,
     ResetPasswordComponent,
     ComunicationComponent,
+    AdminTurniComponent,
     NotFoundComponent
   ],
   imports: [
@@ -98,9 +101,11 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatMenuModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [UserService, AttendanceService, AdminService, SystemAdminService,
+  providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

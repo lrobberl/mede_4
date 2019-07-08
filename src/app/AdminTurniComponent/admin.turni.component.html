@@ -1,0 +1,82 @@
+<mat-card style="text-align: center" content="align: center">
+  <mat-card-title>
+    <h3> SYSTEM-ADMIN - TURNI </h3>
+  </mat-card-title>
+
+  <!--
+  <mat-card-subtitle style="text-align: center" >
+     <h3> {{ data.date | date:'dd-MM-yyyy'}} </h3>
+  </mat-card-subtitle>
+  -->
+
+  <!-- <h4>Seleziona una linea</h4>
+  <mat-form-field>
+    <mat-label>Linea</mat-label>
+    <select matNativeControl required>
+      <option *ngFor="let linea of linee" value="{{linea.nome}}" (change)="selezionaLinea($event)">{{linea.nome}}</option>
+    </select>
+    </mat-form-field> -->
+  <form [formGroup]="dateLineForm">
+    <h4>Seleziona una linea</h4>
+    <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
+      <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
+        {{linea.nome}} &nbsp;&nbsp;
+      </mat-radio-button>
+    </mat-radio-group><br><br>
+
+      <h4>Seleziona una data</h4>
+      <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker><br><br>
+
+      <button [disabled]="dateLineForm.invalid" mat-raised-button color="primary" (click)="getDisponibilitaCorsa()">
+        Mostra Corsa
+      </button>
+  </form>
+
+
+
+  <mat-tab-group dynamicHeight *ngIf="data">
+    <mat-tab label="Andata">
+      <div class="example-large-box mat-elevation-z4">
+        <mat-card-content style="text-align: center">
+          <h3>Dettagli Corsa: &nbsp;&nbsp;{{data.linea}}&nbsp;{{formatDateDashed(data.date)}}</h3>
+          <mat-list>
+            <mat-list-item *ngFor="let accompagnatore of data.versi[0].accompagnatori">
+              <mat-icon>trip_origin</mat-icon>
+              <span class="highlight">{{accompagnatore.nome}}&nbsp;&nbsp;</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Ritorno">
+      <div class="example-large-box mat-elevation-z4">
+        <mat-card-content style="text-align: center">
+          <mat-list>
+            <mat-list-item *ngFor="let accompagnatore of data.versi[1].accompagnatori">
+              <mat-icon>trip_origin</mat-icon>
+              <span class="highlight">{{accompagnatore.nome}}&nbsp;&nbsp;</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
+</mat-card>
+<!--
+<mat-card-footer>
+  <mat-form-field>
+    <mat-label>Formato Download</mat-label>
+    <select matNativeControl [formControl]="exportControl">
+
+      <option value="json">JSON</option>
+    </select>
+  </mat-form-field>
+  <button [disabled]="f.invalid" mat-raised-button color="primary" (click)="esportaFile()">Esporta file</button>
+</mat-card-footer>
+
+-->

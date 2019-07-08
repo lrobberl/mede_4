@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of, pipe } from 'rxjs';
 import { map, retry, catchError, tap, first } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
 
 export interface Linea {
   id: string;
@@ -102,6 +103,14 @@ export class AttendanceService {
         console.error(err);
         return '0';
       })
+    );
+  }
+
+  getDisponibilitaCorsa(linea: string, dataSelezionata: string) {
+    console.log('AttendanceService.getDisponibilitaCorsa');
+    return this.http.get<DisponibilitaCorsa>(REST_URL + 'disponibilita/' + linea + '/' + dataSelezionata).pipe(
+      map(x => ({date: new Date(x.date), linea: x.linea, versi: x.versi}) as DisponibilitaCorsa),
+      retry(3)
     );
   }
 }

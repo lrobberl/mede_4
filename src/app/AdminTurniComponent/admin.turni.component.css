@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+.selected {
+  font-weight: bold;
+}
+
+.prenotato {
+  color: lightseagreen;
+}
+
+.highlight {
+  font-weight: bold;
+  font-style: italic;
+  font-family: "Arial Black";
+  font-size: large;
+}
