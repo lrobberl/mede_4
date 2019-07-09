@@ -4,6 +4,7 @@ import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
+import {MatCheckboxChange} from '@angular/material';
 
 @Component({
   selector: 'app-pedibus-turni',
@@ -18,6 +19,9 @@ export class AdminTurniComponent implements OnInit {
   selectedData: string;
   error: string;
   dateLineForm: FormGroup;
+  accompagnatoriAndata: Array<string> = [];
+  accompagnatoriRitorno: Array<string> = [];
+  message: string;
 
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,
@@ -52,17 +56,61 @@ export class AdminTurniComponent implements OnInit {
   getDisponibilitaCorsa() {
     // this.selectedDate = data;
     if (this.dateLineForm.invalid) {
+      this.error = 'I valori inseriti sono errati';
       return;
     }
+
     const linea = this.f.line.value;
     const dataSelezionata = this.formatDate(this.f.date.value);
 
-    this.attendanceService.getDisponibilitaCorsa(linea as string, dataSelezionata).subscribe(x => {
+    this.attendanceService.getAccompagnatori(linea as string, dataSelezionata).subscribe(x => {
       this.data = x;
       this.error = undefined;
       this.selectedData = this.formatDateDashed(this.f.date.value);
     }, error1 => {
       this.error = 'Operazione Fallita.\n Hai i privilegi necessari per gestire la linea specificata?';
+    });
+  }
+
+  segnaAccompagnatoreAndata($event: MatCheckboxChange, accompagnatore: string) {
+    if ($event.checked) {
+      this.accompagnatoriAndata.push(accompagnatore);
+    } else {
+      const index = this.accompagnatoriAndata.indexOf(accompagnatore);
+      this.accompagnatoriAndata.splice(index);
+    }
+  }
+
+  segnaAccompagnatoreRitorno($event: MatCheckboxChange, accompagnatore: string) {
+    if ($event.checked) {
+      this.accompagnatoriRitorno.push(accompagnatore);
+    } else {
+      const index = this.accompagnatoriRitorno.indexOf(accompagnatore);
+      this.accompagnatoriRitorno.splice(index);
+    }
+  }
+
+  consolidaTurnoAndata() {
+    console.log(this.accompagnatoriAndata);
+
+    this.attendanceService.consolidaTurno(this.data.linea, this.formatDate(this.data.date), 'ANDATA', this.accompagnatoriAndata)
+      .subscribe(x => {
+      this.error = undefined;
+      this.message = 'Turno consolidato con successo';
+    }, error1 => {
+      this.error = 'Operazione -consolidaTurno- Fallita';
+    });
+  }
+
+  consolidaTurnoRitorno() {
+    console.log(this.accompagnatoriRitorno);
+
+    this.attendanceService.consolidaTurno(this.data.linea, this.formatDate(this.data.date), 'RITORNO', this.accompagnatoriRitorno)
+      .subscribe(x => {
+      this.error = undefined;
+      this.message = 'Turno consolidato con successo';
+    }, error1 => {
+      this.error = 'Operazione -consolidaTurno- Fallita';
     });
   }
 
@@ -134,6 +182,7 @@ export class AdminTurniComponent implements OnInit {
     }
   }
    */
+
 }
 
 

@@ -3,6 +3,7 @@ import { Observable, from, of, pipe } from 'rxjs';
 import { map, retry, catchError, tap, first } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
+import {AccompagnatoriVerso} from '../Models/AccompagnatoriVerso';
 
 export interface Linea {
   id: string;
@@ -74,10 +75,6 @@ export class AttendanceService {
     console.log('AttendanceService.cambiaStato:');
     const httpoptions = { headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Authorization, X-Requested-With, Content-Type, Accept, Origin',
-        'Access-Control-Allow-Methods': 'PUT, GET, POST, DELETE, OPTIONS',
-        'Access-Control-Max-Age': '1728000'
       })
     };
 
@@ -106,12 +103,30 @@ export class AttendanceService {
     );
   }
 
-  getDisponibilitaCorsa(linea: string, dataSelezionata: string) {
+  getAccompagnatori(linea: string, dataSelezionata: string) {
     console.log('AttendanceService.getDisponibilitaCorsa');
     return this.http.get<DisponibilitaCorsa>(REST_URL + 'disponibilita/' + linea + '/' + dataSelezionata).pipe(
-      map(x => ({date: new Date(x.date), linea: x.linea, versi: x.versi}) as DisponibilitaCorsa),
+      map(x => ({date: new Date(x.date), linea: x.linea, accompagnatoriAndata: x.accompagnatoriAndata,
+                        accompagnatoriRitorno: x.accompagnatoriRitorno}) as DisponibilitaCorsa),
       retry(3)
     );
+  }
+
+  consolidaTurno(line: string, date: string, direction: string, accomp: Array<string>) {
+    console.log('AttendanceService.consolidaTurno' + direction);
+
+    const httpoptions = { headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+
+    const bodyObj = {
+      emailAccompagnatori: accomp
+    };
+
+    const body = JSON.stringify(bodyObj);
+
+    return this.http.put(REST_URL + 'turno/' + line + '/' + date + '/' + direction , body, httpoptions);
   }
 }
 

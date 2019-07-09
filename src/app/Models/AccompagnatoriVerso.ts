@@ -1,5 +1,5 @@
-import {Accompagnatore} from './Accompagnatore';
+// import {Accompagnatore} from './Accompagnatore';
 
 export interface AccompagnatoriVerso {
-  accompagnatori: Accompagnatore[];
+  nome: string;
 }

@@ -16,6 +16,7 @@
       <option *ngFor="let linea of linee" value="{{linea.nome}}" (change)="selezionaLinea($event)">{{linea.nome}}</option>
     </select>
     </mat-form-field> -->
+  <div>
   <form [formGroup]="dateLineForm">
     <h4>Seleziona una linea</h4>
     <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
@@ -33,39 +34,53 @@
         Mostra Corsa
       </button>
   </form>
+  </div>
 
-
-
-  <mat-tab-group dynamicHeight *ngIf="data">
-    <mat-tab label="Andata">
+  <div *ngIf="data">
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="Andata" name="tabAndata">
       <div class="example-large-box mat-elevation-z4">
         <mat-card-content style="text-align: center">
-          <h3>Dettagli Corsa: &nbsp;&nbsp;{{data.linea}}&nbsp;{{formatDateDashed(data.date)}}</h3>
+          <h3>Dettagli Corsa</h3>
+          <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
           <mat-list>
-            <mat-list-item *ngFor="let accompagnatore of data.versi[0].accompagnatori">
-              <mat-icon>trip_origin</mat-icon>
-              <span class="highlight">{{accompagnatore.nome}}&nbsp;&nbsp;</span>
+            <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriAndata; last as isLast">
+              <mat-checkbox (change)="segnaAccompagnatoreAndata($event, accompagnatore)">{{accompagnatore}}</mat-checkbox>
             </mat-list-item>
           </mat-list>
         </mat-card-content>
+        <button mat-raised-button color="primary" (click)="consolidaTurnoAndata()">
+          Consolida Turno
+        </button>
       </div>
     </mat-tab>
 
-    <mat-tab label="Ritorno">
+    <mat-tab dynamicHeight label="Ritorno" name="tabRitorno">
       <div class="example-large-box mat-elevation-z4">
         <mat-card-content style="text-align: center">
+          <h3>Dettagli Corsa</h3>
+          <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
           <mat-list>
-            <mat-list-item *ngFor="let accompagnatore of data.versi[1].accompagnatori">
-              <mat-icon>trip_origin</mat-icon>
-              <span class="highlight">{{accompagnatore.nome}}&nbsp;&nbsp;</span>
+            <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriRitorno; last as isLast">
+              <mat-checkbox (change)="segnaAccompagnatoreRitorno($event, accompagnatore)">{{accompagnatore}}</mat-checkbox>
             </mat-list-item>
           </mat-list>
         </mat-card-content>
+        <button mat-raised-button color="primary" (click)="consolidaTurnoRitorno()">
+          Consolida Turno
+        </button>
       </div>
     </mat-tab>
-  </mat-tab-group>
+  </mat-tab-group><br><br>
 
-  <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
+  </div>
+
+
+
+  <div>
+    <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
+    <span class="highlight">{{message}}</span>
+  </div>
 </mat-card>
 <!--
 <mat-card-footer>
