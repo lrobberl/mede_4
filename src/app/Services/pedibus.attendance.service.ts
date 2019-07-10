@@ -107,7 +107,8 @@ export class AttendanceService {
     console.log('AttendanceService.getDisponibilitaCorsa');
     return this.http.get<DisponibilitaCorsa>(REST_URL + 'disponibilita/' + linea + '/' + dataSelezionata).pipe(
       map(x => ({date: new Date(x.date), linea: x.linea, accompagnatoriAndata: x.accompagnatoriAndata,
-                        accompagnatoriRitorno: x.accompagnatoriRitorno}) as DisponibilitaCorsa),
+                        accompagnatoriRitorno: x.accompagnatoriRitorno, chiusoRitorno: x.chiusoRitorno,
+                        chiusoAndata: x.chiusoAndata, idAndata: x.idAndata, idRitorno: x.idRitorno}) as DisponibilitaCorsa),
       retry(3)
     );
   }
@@ -127,6 +128,22 @@ export class AttendanceService {
     const body = JSON.stringify(bodyObj);
 
     return this.http.put(REST_URL + 'turno/' + line + '/' + date + '/' + direction , body, httpoptions);
+  }
+
+  riapriTurno(id: string) {
+    console.log('AttendanceService.riapriTurno:');
+    const httpoptions = { headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+
+    const bodyObj = {
+      idCorsa: id
+    };
+
+    const body = JSON.stringify(bodyObj);
+
+    return this.http.put(REST_URL + 'riapri-turno', body, httpoptions);
   }
 }
 

@@ -23,9 +23,6 @@
           Mostra Corsa
         </button>
       </mat-card-actions>
-      <div>
-        <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
-      </div>
     </mat-card-content>
   </div>
 </mat-card>
@@ -47,9 +44,14 @@
               </mat-list-item>
             </mat-list>
           </mat-card-content>
-          <button mat-raised-button color="primary" (click)="consolidaTurnoAndata()">
-            Consolida Turno
-          </button>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="data.chiusoAndata" (click)="consolidaTurnoAndata()">
+              Consolida Turno
+            </button>
+            <button mat-raised-button color="primary" [disabled]="!data.chiusoAndata" (click)="riapriTurnoAndata()">
+              Riapri Turno
+            </button>
+          </mat-card-actions>
         </div>
       </mat-tab>
 
@@ -62,9 +64,14 @@
               </mat-list-item>
             </mat-list>
           </mat-card-content>
-          <button mat-raised-button color="primary" (click)="consolidaTurnoRitorno()">
-            Consolida Turno
-          </button>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="data.chiusoRitorno" (click)="consolidaTurnoRitorno()">
+              Consolida Turno
+            </button>
+            <button mat-raised-button color="primary" [disabled]="!data.chiusoRitorno" (click)="riapriTurnoRitorno()">
+              Riapri Turno
+            </button>
+          </mat-card-actions>
         </div>
       </mat-tab>
     </mat-tab-group><br><br>
@@ -72,6 +79,7 @@
 </mat-card>
 
 <div class="bottom">
+  <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
   <span class="highlight">{{message}}</span>
 </div>
 

@@ -101,9 +101,11 @@ export class AdminTurniComponent implements OnInit {
     this.attendanceService.consolidaTurno(this.data.linea, this.formatDate(this.data.date), 'ANDATA', this.accompagnatoriAndata)
       .subscribe(x => {
       this.error = undefined;
+      this.data.chiusoAndata = true;
       this.message = 'Turno consolidato con successo';
     }, error1 => {
       this.error = 'Operazione -consolidaTurno- Fallita';
+      this.data.chiusoAndata = false;
     });
   }
 
@@ -113,9 +115,11 @@ export class AdminTurniComponent implements OnInit {
     this.attendanceService.consolidaTurno(this.data.linea, this.formatDate(this.data.date), 'RITORNO', this.accompagnatoriRitorno)
       .subscribe(x => {
       this.error = undefined;
+      this.data.chiusoRitorno = true;
       this.message = 'Turno consolidato con successo';
     }, error1 => {
       this.error = 'Operazione -consolidaTurno- Fallita';
+      this.data.chiusoRitorno = false;
     });
   }
 
@@ -188,6 +192,30 @@ export class AdminTurniComponent implements OnInit {
   }
    */
 
+  riapriTurnoRitorno() {
+
+    this.attendanceService.riapriTurno(this.data.idRitorno)
+      .subscribe(x => {
+        this.error = undefined;
+        this.data.chiusoRitorno = false;
+        this.message = 'Turno riaperto con successo';
+      }, error1 => {
+        this.error = 'Operazione -riapriTurno- Fallita';
+        this.data.chiusoRitorno = true;
+      });
+  }
+
+  riapriTurnoAndata() {
+    this.attendanceService.riapriTurno(this.data.idAndata)
+      .subscribe(x => {
+        this.error = undefined;
+        this.data.chiusoAndata = false;
+        this.message = 'Turno riaperto con successo';
+      }, error1 => {
+        this.error = 'Operazione -riapriTurno- Fallita';
+        this.data.chiusoAndata = true;
+      });
+  }
 }
 
 

@@ -10,9 +10,9 @@
 }
 
 .bottom {
+  max-width: 30em;
   margin-left: 38em;
   margin-top: 32em;
-  align-content: center;
 }
 
 .centeredCard {
@@ -23,20 +23,20 @@
 
 .rightCard {
   margin-top: 3em;
-  max-width: 600px;
+  max-width: 200em;
   text-align: center;
   align-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 15em;
   margin-right: 10em;
   float: right;
 }
 
 .leftCard {
   margin-top: 3em;
-  max-width: 600px;
+  max-width: 200em;
   text-align: center;
   align-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 15em;
   margin-left: 10em;
   float: left;
 }
