@@ -13,6 +13,7 @@
       <span>{{ title }}</span>
       <span class="spacer"></span>
       <a *ngIf="!(isHandset$ | async)" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
+      <a *ngIf="!(isHandset$ | async)" routerLink="/reservation" routerLinkActive="active">Prenotazioni</a><br>
       <a *ngIf="!(isHandset$ | async)" routerLink="/register" routerLinkActive="active">Registrazione</a><br>
       <a *ngIf="!(isHandset$ | async)" routerLink="/login" routerLinkActive="active">Login</a>
     </mat-toolbar>
@@ -32,6 +33,7 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/attendance" routerLinkActive="active">Corse</a><br>
+      <a mat-list-item routerLink="/reservation" routerLinkActive="active">Prenotazioni</a><br>
       <a mat-list-item routerLink="/register" routerLinkActive="active">Registrazione</a><br>
       <a mat-list-item routerLink="/login" routerLinkActive="active">Login</a>
     </mat-nav-list>

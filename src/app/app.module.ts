@@ -10,7 +10,7 @@ import {
   MatToolbarModule,
   MatButtonModule,
   MatSidenavModule,
-  MatFormFieldModule, MatInputModule
+  MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatStepperModule, MatOptionModule, MatSelectModule, MatCheckboxModule
 } from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,11 +26,16 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import {UserService} from './pedibus.user.service';
 import {AuthInterceptor} from './pedibus.authInterceptor.service';
+import { ReservationComponent } from './reservation/reservation.component';
+import { TableSelectionComponent } from './reservation/table-selection/table-selection.component';
+import { StepperComponent } from './reservation/stepper/stepper.component';
+import { SelectChildrenComponent } from './reservation/select-children/select-children.component';
 
 const appRoutes: Routes = [
   { path: 'register', component: PedibusRegisterComponent },
   { path: 'attendance', component: PedibusAttendanceComponent},
   { path: 'login', component: PedibusLoginComponent},
+  { path: 'reservation', component: ReservationComponent},
   // { path: 'login', component: PedibusAttendanceComponent},
   // { path: '**', component: PageNotFoundComponent }
 ];
@@ -41,7 +46,11 @@ const appRoutes: Routes = [
     PedibusAttendanceComponent,
     MainNavComponent,
     PedibusRegisterComponent,
-    PedibusLoginComponent
+    PedibusLoginComponent,
+    ReservationComponent,
+    TableSelectionComponent,
+    StepperComponent,
+    SelectChildrenComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +70,13 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes, {enableTracing: true}),
     FormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatStepperModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ],
   providers: [UserService, AttendanceService, AuthInterceptor],
   bootstrap: [AppComponent]
