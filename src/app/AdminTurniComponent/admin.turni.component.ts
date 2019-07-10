@@ -59,6 +59,8 @@ export class AdminTurniComponent implements OnInit {
       this.error = 'I valori inseriti sono errati';
       return;
     }
+    this.data = undefined;
+    this.message = undefined;
 
     const linea = this.f.line.value;
     const dataSelezionata = this.formatDate(this.f.date.value);

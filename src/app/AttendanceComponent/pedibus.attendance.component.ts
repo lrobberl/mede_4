@@ -6,9 +6,9 @@ import {Linea, Fermata, Data, Bambino, Corsa, AttendanceService} from '../Servic
 import {Observable} from 'rxjs';
 import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
-import {FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { saveAs } from 'file-saver';
-import exportFromJSON from 'export-from-json'
+import exportFromJSON from 'export-from-json';
 import {User} from '../Models/User';
 
 @Component({
@@ -23,10 +23,14 @@ export class PedibusAttendanceComponent implements OnInit {
   linee: Linea[] = [];
   error: string;
   exportControl: FormControl;
+  dateLineForm: FormGroup;
+  message: string;
+  selectedData: string;
 
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private formBuilder: FormBuilder) {
 
     if (!this.authenticationService.isLoggedIn()) {
       this.authenticationService.logout();
@@ -44,24 +48,33 @@ export class PedibusAttendanceComponent implements OnInit {
         this.error = 'Operazione -getLines OnInit- Fallita';
       }
       );
-    this.attendanceService.getCorsa('Rossa', this.formatDate(new Date())).subscribe(
-      x => {
-        this.data = x;
-        this.error = undefined;
-      }, error1 => {
-        this.error = 'Operazione -getCorsa OnInit- Fallita';
-      });
 
     this.exportControl = new FormControl('', [Validators.required]);
+    this.dateLineForm = this.formBuilder.group({
+      date: ['', [Validators.required]],
+      line: ['', [Validators.required]]
+    });
   }
 
-  get f() { return this.exportControl; }
+  get fExport() { return this.exportControl; }
+  get f() { return this.dateLineForm.controls; }
 
-  getCorsa(linea: string, data: string) {
-    // this.selectedDate = data;
-    this.attendanceService.getCorsa(linea, data).subscribe(x => {
+  getCorsa() {
+
+    if (this.dateLineForm.invalid) {
+      this.error = 'I valori inseriti sono errati';
+      return;
+    }
+    this.data = undefined;
+    this.message = undefined;
+
+    const linea = this.f.line.value;
+    const dataSelezionata = this.formatDate(this.f.date.value);
+
+    this.attendanceService.getCorsa(linea as string, dataSelezionata).subscribe(x => {
       this.data = x;
       this.error = undefined;
+      this.selectedData = this.formatDateDashed(this.f.date.value);
     }, error1 => {
       this.error = 'Operazione -getCorsa- Fallita';
     });
@@ -96,6 +109,34 @@ export class PedibusAttendanceComponent implements OnInit {
     );
   }
 
+  private formatDate(today: Date) {
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear();
+    return dd + mm + yyyy;
+  }
+
+  private formatDateDashed(data: Date) {
+    const dd = String(data.getDate()).padStart(2, '0');
+    const mm = String(data.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = data.getFullYear();
+    return dd + '-' + mm + '-' + yyyy;
+  }
+
+  esportaFile() {
+    const format = this.exportControl.value;
+
+    if (format === 'csv') {
+    } else if (format === 'json') {
+      const blob = new Blob([JSON.stringify(this.data, null, '  ')], {type: 'text/json' });
+      saveAs(blob, 'myFile.json');
+    } else {
+      this.error = 'Errore nel formato di download del file ' + format;
+    }
+  }
+}
+
+/*
   nextDay() {
     // andare avanti di un giorno
     const followingDay = new Date(this.data.date.getTime() + 86400000); // + 1 day in ms
@@ -112,13 +153,7 @@ export class PedibusAttendanceComponent implements OnInit {
     ($event.pageIndex - $event.previousPageIndex > 0) ? this.nextDay() : this.previousDay();
   }
 
-  private formatDate(today: Date) {
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    const yyyy = today.getFullYear();
-    return dd + mm + yyyy;
-  }
-  /*getAll() {
+  getAll() {
     this.data$ = this.service.getAll();
   }
 
@@ -128,18 +163,5 @@ export class PedibusAttendanceComponent implements OnInit {
     // .subscribe( () => this.getAll() ) // remove async pipe from code
     ;
   }*/
-
-  esportaFile() {
-    const format = this.exportControl.value;
-
-    if (format === 'csv') {
-    } else if (format === 'json') {
-      const blob = new Blob([JSON.stringify(this.data, null, '  ')], {type: 'text/json' });
-      saveAs(blob, 'myFile.json');
-    } else {
-      this.error = 'Errore nel formato di download del file ' + format;
-    }
-  }
-}
 
 

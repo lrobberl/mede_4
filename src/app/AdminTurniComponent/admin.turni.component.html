@@ -1,97 +1,72 @@
-<mat-card style="text-align: center" content="align: center">
+<mat-card style="text-align: center" content="align: center" class="leftCard">
   <mat-card-title>
     <h3> SYSTEM-ADMIN - TURNI </h3>
   </mat-card-title>
 
-  <!--
-  <mat-card-subtitle style="text-align: center" >
-     <h3> {{ data.date | date:'dd-MM-yyyy'}} </h3>
-  </mat-card-subtitle>
-  -->
-
-  <!-- <h4>Seleziona una linea</h4>
-  <mat-form-field>
-    <mat-label>Linea</mat-label>
-    <select matNativeControl required>
-      <option *ngFor="let linea of linee" value="{{linea.nome}}" (change)="selezionaLinea($event)">{{linea.nome}}</option>
-    </select>
-    </mat-form-field> -->
   <div>
-  <form [formGroup]="dateLineForm">
-    <h4>Seleziona una linea</h4>
-    <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
-      <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
-        {{linea.nome}} &nbsp;&nbsp;
-      </mat-radio-button>
-    </mat-radio-group><br><br>
+    <form [formGroup]="dateLineForm">
+      <h4>Seleziona una linea</h4>
+      <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
+        <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
+          {{linea.nome}} &nbsp;&nbsp;
+        </mat-radio-button>
+      </mat-radio-group><br><br>
 
-      <h4>Seleziona una data</h4>
-      <input matInput [matDatepicker]="picker" formControlName="date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker><br><br>
+        <h4>Seleziona una data</h4>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker><br><br>
 
-      <button [disabled]="dateLineForm.invalid" mat-raised-button color="primary" (click)="getDisponibilitaCorsa()">
-        Mostra Corsa
-      </button>
-  </form>
-  </div>
-
-  <div *ngIf="data">
-  <mat-tab-group dynamicHeight>
-    <mat-tab label="Andata" name="tabAndata">
-      <div class="example-large-box mat-elevation-z4">
-        <mat-card-content style="text-align: center">
-          <h3>Dettagli Corsa</h3>
-          <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
-          <mat-list>
-            <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriAndata; last as isLast">
-              <mat-checkbox (change)="segnaAccompagnatoreAndata($event, accompagnatore)">{{accompagnatore}}</mat-checkbox>
-            </mat-list-item>
-          </mat-list>
-        </mat-card-content>
-        <button mat-raised-button color="primary" (click)="consolidaTurnoAndata()">
-          Consolida Turno
+        <button [disabled]="dateLineForm.invalid" mat-raised-button color="primary" (click)="getDisponibilitaCorsa()">
+          Mostra Corsa
         </button>
-      </div>
-    </mat-tab>
+    </form>
 
-    <mat-tab dynamicHeight label="Ritorno" name="tabRitorno">
-      <div class="example-large-box mat-elevation-z4">
-        <mat-card-content style="text-align: center">
-          <h3>Dettagli Corsa</h3>
-          <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
-          <mat-list>
-            <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriRitorno; last as isLast">
-              <mat-checkbox (change)="segnaAccompagnatoreRitorno($event, accompagnatore)">{{accompagnatore}}</mat-checkbox>
-            </mat-list-item>
-          </mat-list>
-        </mat-card-content>
-        <button mat-raised-button color="primary" (click)="consolidaTurnoRitorno()">
-          Consolida Turno
-        </button>
-      </div>
-    </mat-tab>
-  </mat-tab-group><br><br>
-
-  </div>
-
-
-
-  <div>
-    <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
-    <span class="highlight">{{message}}</span>
+    <div>
+      <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
+      <span class="highlight">{{message}}</span>
+    </div>
   </div>
 </mat-card>
-<!--
-<mat-card-footer>
-  <mat-form-field>
-    <mat-label>Formato Download</mat-label>
-    <select matNativeControl [formControl]="exportControl">
 
-      <option value="json">JSON</option>
-    </select>
-  </mat-form-field>
-  <button [disabled]="f.invalid" mat-raised-button color="primary" (click)="esportaFile()">Esporta file</button>
-</mat-card-footer>
+<mat-card style="text-align: center" content="align: center" class="rightCard" *ngIf="data">
+  <mat-card-title>
+    <h3>Dettagli Corsa</h3>
+    <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
+  </mat-card-title>
 
--->
+  <div>
+    <mat-tab-group dynamicHeight>
+      <mat-tab label="Andata" name="tabAndata">
+        <div class="example-large-box mat-elevation-z4">
+          <mat-card-content style="text-align: center">
+            <mat-list>
+              <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriAndata; last as isLast">
+                <mat-checkbox (change)="segnaAccompagnatoreAndata($event, accompagnatore)">{{accompagnatore}}</mat-checkbox>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+          <button mat-raised-button color="primary" (click)="consolidaTurnoAndata()">
+            Consolida Turno
+          </button>
+        </div>
+      </mat-tab>
+
+      <mat-tab dynamicHeight label="Ritorno" name="tabRitorno">
+        <div class="example-large-box mat-elevation-z4">
+          <mat-card-content style="text-align: center">
+            <mat-list>
+              <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriRitorno; last as isLast">
+                <mat-checkbox (change)="segnaAccompagnatoreRitorno($event, accompagnatore)">{{accompagnatore}}</mat-checkbox>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+          <button mat-raised-button color="primary" (click)="consolidaTurnoRitorno()">
+            Consolida Turno
+          </button>
+        </div>
+      </mat-tab>
+    </mat-tab-group><br><br>
+  </div>
+
+</mat-card>

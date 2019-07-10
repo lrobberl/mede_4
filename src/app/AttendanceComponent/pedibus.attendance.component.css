@@ -8,6 +8,20 @@
   color: lightseagreen;
 }
 
+.rightCard {
+  max-width: 600px;
+  margin-bottom: 20px;
+  margin-right: 10em;
+  float: right;
+}
+
+.leftCard {
+  max-width: 600px;
+  margin-bottom: 20px;
+  margin-left: 10em;
+  float: left;
+}
+
 .highlight {
   font-weight: bold;
   font-style: italic;
