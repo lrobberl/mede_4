@@ -22,6 +22,7 @@ export class AdminTurniComponent implements OnInit {
   accompagnatoriAndata: Array<string> = [];
   accompagnatoriRitorno: Array<string> = [];
   message: string;
+  classType = 'centeredCard';
 
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,
@@ -61,6 +62,7 @@ export class AdminTurniComponent implements OnInit {
     }
     this.data = undefined;
     this.message = undefined;
+    this.classType = 'leftCard';
 
     const linea = this.f.line.value;
     const dataSelezionata = this.formatDate(this.f.date.value);
@@ -71,6 +73,7 @@ export class AdminTurniComponent implements OnInit {
       this.selectedData = this.formatDateDashed(this.f.date.value);
     }, error1 => {
       this.error = 'Operazione Fallita.\n Hai i privilegi necessari per gestire la linea specificata?';
+      this.classType = 'centeredCard';
     });
   }
 

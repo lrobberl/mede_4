@@ -4,19 +4,37 @@
    font-weight: bold;
  }
 
+.bottom {
+  margin-left: 38em;
+  margin-top: 32em;
+  align-content: center;
+}
+
 .prenotato {
   color: lightseagreen;
 }
 
+.centeredCard {
+  margin-top: 3em;
+  text-align: center;
+  align-content: center;
+}
+
 .rightCard {
+  margin-top: 3em;
   max-width: 600px;
+  text-align: center;
+  align-content: center;
   margin-bottom: 20px;
   margin-right: 10em;
   float: right;
 }
 
 .leftCard {
+  margin-top: 3em;
   max-width: 600px;
+  text-align: center;
+  align-content: center;
   margin-bottom: 20px;
   margin-left: 10em;
   float: left;

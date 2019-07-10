@@ -1,9 +1,5 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {MatRadioChange, PageEvent} from '@angular/material';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
 import {Linea, Fermata, Data, Bambino, Corsa, AttendanceService} from '../Services/pedibus.attendance.service';
-import {Observable} from 'rxjs';
 import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -26,6 +22,7 @@ export class PedibusAttendanceComponent implements OnInit {
   dateLineForm: FormGroup;
   message: string;
   selectedData: string;
+  classType = 'centeredCard';
 
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,
@@ -67,6 +64,7 @@ export class PedibusAttendanceComponent implements OnInit {
     }
     this.data = undefined;
     this.message = undefined;
+    this.classType = 'leftCard';
 
     const linea = this.f.line.value;
     const dataSelezionata = this.formatDate(this.f.date.value);
@@ -77,23 +75,16 @@ export class PedibusAttendanceComponent implements OnInit {
       this.selectedData = this.formatDateDashed(this.f.date.value);
     }, error1 => {
       this.error = 'Operazione -getCorsa- Fallita';
+      this.classType = 'centeredCard';
     });
-  }
-
-  cambiaLinea($event: MatRadioChange) {
-    console.log($event.value);
-    console.log(this.formatDate(this.data.date));
-    this.attendanceService.getCorsa($event.value, this.formatDate(this.data.date)).subscribe(x => {
-      this.data = x;
-      this.error = undefined;
-    }, error1 => {
-      this.error = 'Operazione -getCorsa [cambiaLinea]- Fallita';
-    });
-    console.log(this.data);
   }
 
   segnaPresente($event: MouseEvent, bambino: Bambino, verso: string, feramata: Fermata) {
     bambino.presente = (bambino.presente === true) ? false : true;
+
+    if (bambino.prenotato === false) {
+      return;
+    }
 
     this.attendanceService.cambiaStato(bambino, this.data.linea, this.data.date, verso.toUpperCase(),
       feramata).subscribe((response) => {
@@ -137,6 +128,17 @@ export class PedibusAttendanceComponent implements OnInit {
 }
 
 /*
+cambiaLinea($event: MatRadioChange) {
+    console.log($event.value);
+    console.log(this.formatDate(this.data.date));
+    this.attendanceService.getCorsa($event.value, this.formatDate(this.data.date)).subscribe(x => {
+      this.data = x;
+      this.error = undefined;
+    }, error1 => {
+      this.error = 'Operazione -getCorsa [cambiaLinea]- Fallita';
+    });
+    console.log(this.data);
+  }
   nextDay() {
     // andare avanti di un giorno
     const followingDay = new Date(this.data.date.getTime() + 86400000); // + 1 day in ms

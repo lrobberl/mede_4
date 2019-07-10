@@ -1,35 +1,36 @@
-<mat-card style="text-align: center" content="align: center" class="leftCard">
+<mat-card class="{{classType}}">
   <mat-card-title>
     <h3> SYSTEM-ADMIN - TURNI </h3>
   </mat-card-title>
 
   <div>
-    <form [formGroup]="dateLineForm">
-      <h4>Seleziona una linea</h4>
-      <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
-        <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
-          {{linea.nome}} &nbsp;&nbsp;
-        </mat-radio-button>
-      </mat-radio-group><br><br>
+      <mat-card-content style="text-align: center">
+      <form [formGroup]="dateLineForm">
+        <h4>Seleziona una linea</h4>
+        <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
+          <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
+            {{linea.nome}} &nbsp;&nbsp;
+          </mat-radio-button>
+        </mat-radio-group><br><br>
 
-        <h4>Seleziona una data</h4>
-        <input matInput [matDatepicker]="picker" formControlName="date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker><br><br>
-
+          <h4>Seleziona una data</h4>
+          <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker><br><br>
+      </form>
+      <mat-card-actions>
         <button [disabled]="dateLineForm.invalid" mat-raised-button color="primary" (click)="getDisponibilitaCorsa()">
           Mostra Corsa
         </button>
-    </form>
-
-    <div>
-      <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
-      <span class="highlight">{{message}}</span>
-    </div>
+      </mat-card-actions>
+      <div>
+        <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
+      </div>
+    </mat-card-content>
   </div>
 </mat-card>
 
-<mat-card style="text-align: center" content="align: center" class="rightCard" *ngIf="data">
+<mat-card class="rightCard" *ngIf="data">
   <mat-card-title>
     <h3>Dettagli Corsa</h3>
     <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
@@ -68,5 +69,9 @@
       </mat-tab>
     </mat-tab-group><br><br>
   </div>
-
 </mat-card>
+
+<div class="bottom">
+  <span class="highlight">{{message}}</span>
+</div>
+
