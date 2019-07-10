@@ -1,0 +1,54 @@
+<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+</button>
+<mat-vertical-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Select your child name</ng-template>
+
+
+      <app-select-children></app-select-children>
+
+<!--      <select class="custom-select" formControlName="firstCtrl" required>-->
+<!--        <option value="" disabled>Choose your city</option>-->
+<!--&lt;!&ndash;        <option *ngFor="let city of firstFormGroup" [ngValue]="firstFormGroup">{{city}}</option>&ndash;&gt;-->
+<!--        <option>New York</option>-->
+<!--      </select>-->
+
+      <!--      <mat-form-field>-->
+      <!--        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>-->
+      <!--      </mat-form-field>-->
+      <div>
+        <button mat-button matStepperNext >Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Select your route</ng-template>
+
+      <mat-tab-group>
+        <mat-tab label=" Andata "> <app-table-selection></app-table-selection></mat-tab>
+        <mat-tab label=" Ritorno "> <app-table-selection></app-table-selection></mat-tab>
+      </mat-tab-group>
+
+<!--      <mat-form-field>-->
+<!--        <input matInput placeholder="Address" formControlName="secondCtrl" required>-->
+<!--      </mat-form-field>-->
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button>Save</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>
