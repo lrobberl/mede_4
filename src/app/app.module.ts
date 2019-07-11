@@ -14,7 +14,7 @@ import {
   MatPaginatorModule,
   MatRadioModule,
   MatSelectModule,
-  MatSidenavModule,
+  MatSidenavModule, MatStepperModule,
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
@@ -45,6 +45,10 @@ import {RecoverPasswordComponent} from './RecoverPasswordComponent/recoverPasswo
 import {ResetPasswordComponent} from './ResetPasswordComponent/resetPassword.component';
 import {ComunicationComponent} from './ComunicationComponent/comunication.component';
 import {AdminTurniComponent} from './AdminTurniComponent/admin.turni.component';
+import {ReservationComponent} from './ReservationComponent/reservation.component';
+import {StepperComponent} from './ReservationComponent/stepper/stepper.component';
+import {SelectChildrenComponent} from './ReservationComponent/select-children/select-children.component';
+import {TableSelectionComponent} from './ReservationComponent/table-selection/table-selection.component';
 
 const appRoutes: Routes = [
   { path: 'confirm/:uuid', component: PedibusRegisterComponent},
@@ -77,7 +81,11 @@ const appRoutes: Routes = [
     ResetPasswordComponent,
     ComunicationComponent,
     AdminTurniComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ReservationComponent,
+    StepperComponent,
+    SelectChildrenComponent,
+    TableSelectionComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +111,8 @@ const appRoutes: Routes = [
     MatTableModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatStepperModule
   ],
   providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
