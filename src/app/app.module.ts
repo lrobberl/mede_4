@@ -55,6 +55,7 @@ const appRoutes: Routes = [
   { path: 'attendance', component: PedibusAttendanceComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin,
           Role.Accompagnatore] }},
   { path: 'login', component: PedibusLoginComponent},
+  { path: 'prenotazioni', component: ReservationComponent, canActivate: [AuthGuard]},
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] } },
   { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},

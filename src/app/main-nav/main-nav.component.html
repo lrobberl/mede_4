@@ -16,6 +16,7 @@
       </div>
       <span class="spacer"></span>
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/" routerLinkActive="active">Home</a><br>
+      <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/prenotazioni" routerLinkActive="active">Prenotazioni</a><br>
       <a *ngIf="!(isHandset$ | async) && isLogged && isSystemAdminOrAccompagnatore" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/comunications" routerLinkActive="active">Comunicazioni</a><br>
       <button *ngIf="!(isHandset$ | async) && isSystemAdmin" mat-button [matMenuTriggerFor]="menu">Admin</button>
@@ -47,6 +48,7 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a *ngIf="isLogged" routerLink="/" routerLinkActive="active">Home</a><br>
+      <a *ngIf="isLogged" routerLink="/prenotazioni" routerLinkActive="active">Prenotazioni</a><br>
       <a *ngIf="isLogged && isSystemAdminOrAccompagnatore" mat-list-item routerLink="/attendance" routerLinkActive="active">Corse</a><br>
       <a *ngIf="isLogged" routerLink="/comunications" routerLinkActive="active">Comunicazioni</a><br>
       <button *ngIf="isSystemAdmin" mat-button [matMenuTriggerFor]="menu">Admin</button>

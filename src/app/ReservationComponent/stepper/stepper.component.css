@@ -2,3 +2,19 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.centeredCard {
+  margin-top: 3em;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  max-width: 35em;
+  min-width: 15em;
+  margin-left: 35%;
+  margin-right: 35%;
+}
+
+.centeredContent {
+  margin-top: 3em;
+  align-content: center;
+}
