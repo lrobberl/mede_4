@@ -23,6 +23,7 @@ export class PedibusAttendanceComponent implements OnInit {
   message: string;
   selectedData: string;
   classType = 'centeredCard';
+  display = true;
 
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,

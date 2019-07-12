@@ -62,6 +62,7 @@ export class AdminTurniComponent implements OnInit {
       this.errorLeft = 'I valori inseriti sono errati';
       return;
     }
+
     this.data = undefined;
     this.message = undefined;
 
@@ -125,37 +126,6 @@ export class AdminTurniComponent implements OnInit {
     });
   }
 
-  /*
-  selezionaLinea($event: MatRadioChange) {
-    console.log('Linea selezionata: ' + $event.value + ' data selezionata: ' + this.formatDate(this.data.date));
-    this.attendanceService.getDisponibilitaCorsa($event.value, this.formatDate(this.data.date)).subscribe(x => {
-      this.data = x;
-      this.error = undefined;
-    }, error1 => {
-      this.error = 'Operazione -selezionaLinea- Fallita.\n Hai i privilegi necessari per gestire la linea specificata?';
-    });
-  }
-   */
-
-  /*
-  segnaPresente($event: MouseEvent, bambino: Bambino, verso: string, feramata: Fermata) {
-    bambino.presente = (bambino.presente === true) ? false : true;
-
-    this.attendanceService.cambiaStato(bambino, this.data.linea, this.data.date, verso.toUpperCase(),
-      feramata).subscribe((response) => {
-        // do something with the response
-        console.log('Response is: ', response);
-        // todo: avvisare il rispettivo genitore
-      },
-      (error) => {
-        // catch the error
-        this.error = 'Operazione -segnaPresente- fallita';
-      }
-
-    );
-  }
-   */
-
   private formatDate(data: Date) {
     const dd = String(data.getDate()).padStart(2, '0');
     const mm = String(data.getMonth() + 1).padStart(2, '0'); // January is 0!
@@ -169,30 +139,6 @@ export class AdminTurniComponent implements OnInit {
     const yyyy = data.getFullYear();
     return dd + '-' + mm + '-' + yyyy;
   }
-  /*getAll() {
-    this.data$ = this.service.getAll();
-  }
-
-  addItem(item) {
-    console.log(item.value);
-    this.item$ = this.service.addItem({name: item.value})
-    // .subscribe( () => this.getAll() ) // remove async pipe from code
-    ;
-  }*/
-
-  /*
-  esportaFile() {
-    const format = this.exportControl.value;
-
-    if (format === 'csv') {
-    } else if (format === 'json') {
-      const blob = new Blob([JSON.stringify(this.data, null, '  ')], {type: 'text/json' });
-      saveAs(blob, 'myFile.json');
-    } else {
-      this.error = 'Errore nel formato di download del file ' + format;
-    }
-  }
-   */
 
   riapriTurnoRitorno() {
 

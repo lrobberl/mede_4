@@ -3,7 +3,6 @@ import { Observable, from, of, pipe } from 'rxjs';
 import { map, retry, catchError, tap, first } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
-import {AccompagnatoriVerso} from '../Models/AccompagnatoriVerso';
 
 export interface Linea {
   id: string;
@@ -146,29 +145,3 @@ export class AttendanceService {
     return this.http.put(REST_URL + 'riapri-turno', body, httpoptions);
   }
 }
-
-/*
-  getAll(): Observable<Data[]> {
-    console.log('httpService.getAll:');
-    return this.http.get<Data[]>(REST_URL + 'people/').pipe(
-      map(arr => arr.slice(arr.length - 10).map(x => ({name: x.name, id: x.id}) as Data)),
-      retry(3),
-      catchError(error => of(null))
-    );
-  }
-  addItem(item): Observable<Data> {
-
-    console.log('httpService.addItem: ' + JSON.stringify(item));
-
-    return this.http.post<Data>(
-      REST_URL + 'people/', item, httpOptions
-    ).pipe(
-      first(),
-      catchError(err => {
-        console.error(err);
-        return of(null);
-      })
-    );
-    // .subscribe( x => { console.log('Post: ' + JSON.stringify(x)); } );
-  }
-*/

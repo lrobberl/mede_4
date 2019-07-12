@@ -9,7 +9,7 @@ import {User} from '../Models/User';
 
 @Component({
   selector: 'app-pedibus-admin-user-list',
-  templateUrl: '../ComunicationComponent/user.list.component.html',
+  templateUrl: './user.list.component.html',
   styleUrls: ['./user.list.component.css']
 })
 

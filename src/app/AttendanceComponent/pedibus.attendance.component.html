@@ -1,33 +1,36 @@
-  <mat-card class="{{classType}}">
-    <mat-card-title>
-      <h3> ACCOMPAGNATORE - PRESENZE </h3>
-    </mat-card-title>
+  <mat-card class="{{classType}} mat-card ng-star-inserted">
+      <mat-card-title>
+        <h3> ACCOMPAGNATORE - PRESENZE </h3>
+      </mat-card-title>
 
-    <div class="example-large-box mat-elevation-z4" dynamicHeight>
         <mat-card-content style="text-align: center">
           <form [formGroup]="dateLineForm">
-            <h4>Seleziona una linea</h4>
-            <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
-              <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
-                {{linea.nome}} &nbsp;&nbsp;
-              </mat-radio-button>
-            </mat-radio-group><br><br>
+            <section>
+              <h4>Seleziona una linea</h4>
+              <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
+                <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
+                  {{linea.nome}} &nbsp;&nbsp;
+                </mat-radio-button>
+              </mat-radio-group>
+            </section><br><br>
 
-            <h4>Seleziona una data</h4>
-            <input matInput [matDatepicker]="picker" formControlName="date">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker><br><br>
-
-            <button [disabled]="dateLineForm.invalid" mat-raised-button color="primary" (click)="getCorsa()">
-              Mostra Corsa
-            </button>
+            <section>
+              <h4>Seleziona una data</h4>
+              <input matInput [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </section><br><br>
+            <section>
+              <button [disabled]="dateLineForm.invalid" mat-raised-button color="primary" (click)="getCorsa()">
+                Mostra Corsa
+              </button>
+            </section>
           </form>
         </mat-card-content>
-      <div>
-        <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
-        <span class="highlight">{{message}}</span>
-      </div>
-    </div>
+        <div>
+          <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
+          <span class="highlight">{{message}}</span>
+        </div>
   </mat-card>
 
   <mat-card class="rightCard" *ngIf="data">
@@ -35,43 +38,41 @@
       <h3>Dettagli Corsa</h3>
       <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
     </mat-card-title>
-    <div>
       <mat-tab-group dynamicHeight>
         <mat-tab label="Andata">
-          <div class="example-large-box mat-elevation-z4">
             <mat-card-content style="text-align: center">
-              <mat-list>
-                <mat-list-item *ngFor="let fermata of data.corse[0].fermate">
-                  <mat-icon>trip_origin</mat-icon>
-                  <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <span *ngFor="let bambino of fermata.bambini; last as isLast"
-                        (click)="segnaPresente($event, bambino, 'Andata', fermata)">
-            <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>
-                    {{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
-            </span>
-                </mat-list-item>
-              </mat-list>
+              <section>
+                <mat-list>
+                  <mat-list-item *ngFor="let fermata of data.corse[0].fermate">
+                    <mat-icon>trip_origin</mat-icon>
+                    <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span *ngFor="let bambino of fermata.bambini; last as isLast"
+                          (click)="segnaPresente($event, bambino, 'Andata', fermata)">
+                      <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>
+                      {{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
+                      </span>
+                  </mat-list-item>
+                </mat-list>
+              </section>
             </mat-card-content>
-          </div>
         </mat-tab>
         <mat-tab label="Ritorno">
-          <div class="example-large-box mat-elevation-z4">
             <mat-card-content style="text-align: center">
-              <mat-list>
-                <mat-list-item *ngFor="let fermata of data.corse[1].fermate">
-                  <mat-icon>trip_origin</mat-icon>
-                  <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <span *ngFor="let bambino of fermata.bambini; last as isLast"
-                        (click)="segnaPresente($event, bambino, 'Ritorno', fermata)">
-                    <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>{{bambino.nome}}
-                        <span *ngIf="!isLast">,&nbsp;</span></span></span>
-                </mat-list-item>
-              </mat-list>
+              <section>
+                <mat-list>
+                  <mat-list-item *ngFor="let fermata of data.corse[1].fermate">
+                    <mat-icon>trip_origin</mat-icon>
+                    <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span *ngFor="let bambino of fermata.bambini; last as isLast"
+                          (click)="segnaPresente($event, bambino, 'Ritorno', fermata)">
+                      <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>{{bambino.nome}}
+                          <span *ngIf="!isLast">,&nbsp;</span></span></span>
+                  </mat-list-item>
+                </mat-list>
+              </section>
             </mat-card-content>
-          </div>
         </mat-tab>
       </mat-tab-group>
-    </div>
   </mat-card>
 
   <footer *ngIf="data" class="bottom">

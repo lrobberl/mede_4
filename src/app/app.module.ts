@@ -49,6 +49,7 @@ import {ReservationComponent} from './ReservationComponent/reservation.component
 import {StepperComponent} from './ReservationComponent/stepper/stepper.component';
 import {SelectChildrenComponent} from './ReservationComponent/select-children/select-children.component';
 import {TableSelectionComponent} from './ReservationComponent/table-selection/table-selection.component';
+// import {WebSocketService} from './Services/websocket.service';
 
 const appRoutes: Routes = [
   { path: 'confirm/:uuid', component: PedibusRegisterComponent},
@@ -115,7 +116,7 @@ const appRoutes: Routes = [
     MatNativeDateModule,
     MatStepperModule
   ],
-  providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule,
+  providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule, // WebSocketService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
