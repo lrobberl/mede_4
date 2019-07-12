@@ -1,11 +1,15 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {Linea, Fermata, Data, Bambino, Corsa, AttendanceService} from '../Services/pedibus.attendance.service';
+import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { saveAs } from 'file-saver';
 import exportFromJSON from 'export-from-json';
 import {User} from '../Models/User';
+import {Bambino} from '../Models/Bambino';
+import {Fermata} from '../Models/Fermata';
+import {CorsaWrapper} from '../Models/CorsaWrapper';
+import {Linea} from '../Models/Linea';
 
 @Component({
   selector: 'app-pedibus-attendance',
@@ -15,7 +19,7 @@ import {User} from '../Models/User';
 
 
 export class PedibusAttendanceComponent implements OnInit {
-  data: Data;
+  data: CorsaWrapper;
   linee: Linea[] = [];
   error: string;
   exportControl: FormControl;
@@ -127,44 +131,5 @@ export class PedibusAttendanceComponent implements OnInit {
     }
   }
 }
-
-/*
-cambiaLinea($event: MatRadioChange) {
-    console.log($event.value);
-    console.log(this.formatDate(this.data.date));
-    this.attendanceService.getCorsa($event.value, this.formatDate(this.data.date)).subscribe(x => {
-      this.data = x;
-      this.error = undefined;
-    }, error1 => {
-      this.error = 'Operazione -getCorsa [cambiaLinea]- Fallita';
-    });
-    console.log(this.data);
-  }
-  nextDay() {
-    // andare avanti di un giorno
-    const followingDay = new Date(this.data.date.getTime() + 86400000); // + 1 day in ms
-    this.getCorsa(this.data.linea, this.formatDate(followingDay));
-  }
-
-  previousDay() {
-    // andare indietro di un giorno
-    const followingDay = new Date(this.data.date.getTime() - 86400000); // + 1 day in ms
-    this.getCorsa(this.data.linea, this.formatDate(followingDay));
-  }
-
-  cambiaGiorno($event: PageEvent) {
-    ($event.pageIndex - $event.previousPageIndex > 0) ? this.nextDay() : this.previousDay();
-  }
-
-  getAll() {
-    this.data$ = this.service.getAll();
-  }
-
-  addItem(item) {
-    console.log(item.value);
-    this.item$ = this.service.addItem({name: item.value})
-    // .subscribe( () => this.getAll() ) // remove async pipe from code
-    ;
-  }*/
 
 

@@ -6,8 +6,9 @@ import {AuthenticationService} from '../Services/authentication.service';
 import {AdminService} from '../Services/admin.service';
 import {Observable} from 'rxjs';
 import {Line} from 'tslint/lib/verify/lines';
-import {AttendanceService, Linea} from '../Services/pedibus.attendance.service';
+import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {MatCheckboxChange, PageEvent} from '@angular/material';
+import {Linea} from '../Models/Linea';
 
 @Component({
   selector: 'app-pedibus-admin-registraton',

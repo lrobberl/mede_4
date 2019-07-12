@@ -4,7 +4,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import * as moment from './LoginComponent/pedibus.login.component';
 import {HttpClient} from '@angular/common/http';
-import {RegisterForm, UserService} from './Services/pedibus.user.service';
+import {UserService} from './Services/pedibus.user.service';
 import {AuthenticationService} from './Services/authentication.service';
 import {User} from './Models/User';
 
@@ -25,20 +25,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.title = 'PEDIBUS - Home Page';
   }
-
-  /*
-  logout() {
-    this.userService.logout();
-  }
-
-  isLoggedIn() {
-    return this.userService.isLoggedIn();
-  }
-
-  getUserLoggedIn() {
-    return localStorage.getItem('user');
-  }
-  */
 }
 
 

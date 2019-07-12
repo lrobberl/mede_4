@@ -2,10 +2,6 @@ import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
-import {Data, Linea} from './pedibus.attendance.service';
-import {xit} from 'selenium-webdriver/testing';
-import * as moment from '../LoginComponent/pedibus.login.component';
-import {NewUser} from '../Models/NewUser';
 import {User} from '../Models/User';
 
 const REST_URL = 'http://localhost:8080/';

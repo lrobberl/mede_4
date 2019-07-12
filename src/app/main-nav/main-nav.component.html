@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar class="toolbar">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -10,7 +10,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span [ngClass]="{spacer: (isHandset$ | async)}"></span>
-      <div>
+      <div class="toolbar">
         <h1 style="font-size: larger">{{ title }}</h1>
         <h5 *ngIf="isLogged" style="font-size: small">{{currentUser.username}}</h5>
       </div>

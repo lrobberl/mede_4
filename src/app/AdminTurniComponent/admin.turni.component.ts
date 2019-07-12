@@ -1,10 +1,11 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {Linea, AttendanceService} from '../Services/pedibus.attendance.service';
+import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
 import {MatCheckboxChange} from '@angular/material';
+import {Linea} from '../Models/Linea';
 
 @Component({
   selector: 'app-pedibus-turni',

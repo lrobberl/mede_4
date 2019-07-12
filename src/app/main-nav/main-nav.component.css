@@ -4,9 +4,13 @@
 
 .sidenav {
   width: 200px;
-  box-shadow: 3px 0 6px rgba(0,0,0,.24);
+  box-shadow: 3px 0 6px;
 }
 
+.toolbar {
+  background-color: darkslategrey;
+  color: azure;
+}
 /*titleAlign {*/
 /*  flex: 1 1 auto;*/
 /*}*/
@@ -22,7 +26,7 @@
 mat-toolbar a {
   display: inline-block;
   margin: 0 8px;
-  color: white;
+  color: azure;
   text-decoration: none;
 }
 

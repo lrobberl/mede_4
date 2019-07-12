@@ -4,17 +4,24 @@
 }
 
 .centeredCard {
-  margin-top: 3em;
   text-align: center;
   align-content: center;
   justify-content: center;
-  max-width: 35em;
+  width: 40%;
+  max-width: 60%;
   min-width: 15em;
-  margin-left: 35%;
-  margin-right: 35%;
+  margin-top: 5em;
+  margin-bottom: 5em;
+  margin-left: 33%;
 }
 
 .centeredContent {
   margin-top: 3em;
   align-content: center;
+}
+
+
+.styleColor {
+  background-color: darkslategrey;
+  color: azure;
 }

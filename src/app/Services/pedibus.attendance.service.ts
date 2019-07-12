@@ -3,44 +3,16 @@ import { Observable, from, of, pipe } from 'rxjs';
 import { map, retry, catchError, tap, first } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
+import {Bambino} from '../Models/Bambino';
+import {CorsaWrapper} from '../Models/CorsaWrapper';
+import {Linea} from '../Models/Linea';
+import {Fermata} from '../Models/Fermata';
+import {FermataShort} from '../Models/FermataShort';
 
-export interface Linea {
-  id: string;
-  nome: string;
-  aaccompagnatori: string[];
-  fermate: Fermata[];
-}
 
-export interface Bambino {
-  id: string;
-  nome: string;
-  presente: boolean;
-  prenotato: boolean;
-}
 
-export interface Corsa {
-  fermate: Fermata[];
-  nomeverso: string;
-}
 
-export interface Fermata {
-  id: string;
-  nome: string;
-  orario: string;
-  bambini: Bambino[];
-}
 
-export interface FermataShort {
-  id: string;
-  nome: string;
-  linea: string;
-}
-
-export interface Data {
-  date: Date;
-  linea: string;
-  corse: Corsa[];
-}
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -57,10 +29,10 @@ export class AttendanceService {
   }
 
   // Get di una singola corsa dal server
-  getCorsa(linea: string, data: string): Observable<Data> {
+  getCorsa(linea: string, data: string): Observable<CorsaWrapper> {
     console.log('AttendanceService.getCorsa:');
-    return this.http.get<Data>(REST_URL + 'corsa/' + linea + '/' + data).pipe(
-      map(x => ({date: new Date(x.date), linea: x.linea, corse: x.corse}) as Data),
+    return this.http.get<CorsaWrapper>(REST_URL + 'corsa/' + linea + '/' + data).pipe(
+      map(x => ({date: new Date(x.date), linea: x.linea, corse: x.corse}) as CorsaWrapper),
       retry(3)
     );
   }

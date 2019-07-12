@@ -5,10 +5,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpResponse} from '@angular/common/http';
 import {AuthenticationService} from '../Services/authentication.service';
 import {MustMatch} from '../Utils/must-match.validator';
-import {AttendanceService, Fermata, FermataShort} from '../Services/pedibus.attendance.service';
+import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {User} from '../Models/User';
 import {Observable} from 'rxjs';
 import {error} from 'selenium-webdriver';
+import {FermataShort} from '../Models/FermataShort';
 
 
 @Component({

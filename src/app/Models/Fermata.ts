@@ -1,4 +1,4 @@
-import {Bambino} from '../Services/pedibus.attendance.service';
+import {Bambino} from './Bambino';
 
 export interface Fermata {
   id: string;

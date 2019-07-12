@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Bambino} from '../../Models/Bambino';
+import {UserService} from '../../Services/pedibus.user.service';
 
 /**
  * @title Stepper vertical
@@ -13,15 +15,34 @@ export class StepperComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  bambini: Bambino[] = [];
+  error: string;
+  selected: 'Children selected';
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder,
+              private userService: UserService) {
+
+  }
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
+    this.firstFormGroup = this.formBuilder.group({
+      childrenControl: ['', Validators.required]
     });
-    this.secondFormGroup = this._formBuilder.group({
+    this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
+
+    this.userService.getFigli().subscribe(res => {
+      this.bambini = res;
+    }, error1 => {
+      this.error = 'Operazione -getFigli- fallita';
+    });
+  }
+
+  get firstForm() { return this.firstFormGroup.controls; }
+  get secondForm() { return this.secondFormGroup.controls; }
+
+  prenotaFiglio() {
+
   }
 }

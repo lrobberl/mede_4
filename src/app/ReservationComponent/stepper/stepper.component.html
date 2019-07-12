@@ -2,16 +2,26 @@
   <mat-card-title>
     <h3> PRENOTAZIONI </h3>
   </mat-card-title>
-  <button mat-raised-button color="primary" (click)="isLinear = !isLinear" id="toggle-linear">
+  <button mat-raised-button class="styleColor" (click)="isLinear = !isLinear" id="toggle-linear">
   {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
   </button>
 
   <mat-card-content>
-    <mat-vertical-stepper [linear]="isLinear" #stepper>
-      <mat-step [stepControl]="firstFormGroup">
+    <mat-vertical-stepper [linear]="isLinear" #stepper >
+      <mat-step [stepControl]="firstFormGroup" class="styleColor">
         <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel>Seleziona un bambino</ng-template>
-          <app-select-children></app-select-children>
+          <ng-template matStepLabel class="styleColor">Seleziona un bambino</ng-template>
+            <mat-form-field>
+              <mat-label>Nome del bambino</mat-label>
+              <mat-select formControlName="childrenControl">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let bambino of bambini" [value]="bambino">
+                  {{bambino.nome}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="firstFormGroup.invalid">Seleziona un bambino</mat-error>
+              <mat-hint>{{selected}}</mat-hint>
+            </mat-form-field>
 
     <!--      <select class="custom-select" formControlName="firstCtrl" required>-->
     <!--        <option value="" disabled>Choose your city</option>-->
@@ -23,7 +33,7 @@
           <!--        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>-->
           <!--      </mat-form-field>-->
           <div>
-            <button mat-button matStepperNext >Avanti</button>
+            <button mat-button matStepperNext class="styleColor">Avanti</button>
           </div>
         </form>
       </mat-step>
@@ -41,18 +51,20 @@
     <!--      </mat-form-field>-->
 
           <div>
-            <button mat-button matStepperPrevious>Indietro</button>
-            <button mat-button matStepperNext>Avanti</button>
+            <button mat-button matStepperPrevious class="styleColor">Indietro</button><span>&nbsp;&nbsp;</span>
+            <button mat-button matStepperNext class="styleColor">Avanti</button>
           </div>
         </form>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Finito</ng-template>
-        Prenotazione eseguita
+        <ng-template matStepLabel class="styleColor">Riepilogo e Conferma</ng-template>
+        <h4>Data: &nbsp;&nbsp;</h4>
+        <h4>Bambino:&nbsp;&nbsp;{{firstForm.childrenControl.value}}</h4>
+        <h4>Corsa e Fermata: &nbsp;&nbsp;</h4>
         <div>
-          <button mat-button matStepperPrevious>Indietro</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
-          <button mat-button>Salva</button>
+          <button mat-button matStepperPrevious class="styleColor">Indietro</button><span>&nbsp;&nbsp;</span>
+          <button mat-button  class="styleColor" (click)="stepper.reset()">Reset</button><span>&nbsp;&nbsp;</span>
+          <button mat-button  class="styleColor" (click)="prenotaFiglio()">Prenota</button>
         </div>
       </mat-step>
     </mat-vertical-stepper>
