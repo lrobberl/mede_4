@@ -7,12 +7,12 @@
   text-align: center;
   align-content: center;
   justify-content: center;
-  width: 40%;
+  width: 50%;
   max-width: 60%;
   min-width: 15em;
   margin-top: 5em;
   margin-bottom: 5em;
-  margin-left: 33%;
+  margin-left: 25%;
 }
 
 .centeredContent {
@@ -20,8 +20,22 @@
   align-content: center;
 }
 
+.leftSide {
+  float: left;
+}
+
+.rightSide {
+  float: right;
+}
 
 .styleColor {
   background-color: darkslategrey;
-  color: azure;
+  color: white;
 }
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+

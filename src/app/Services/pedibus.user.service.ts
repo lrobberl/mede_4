@@ -130,6 +130,6 @@ export class UserService {
   getFigli(): Observable<Bambino[]> {
     console.log('UserService.getFigli');
 
-    return this.http.get<Bambino []>(REST_URL + 'figliUtente');
+    return this.http.get<Bambino []>(REST_URL + 'figli');
   }
 }

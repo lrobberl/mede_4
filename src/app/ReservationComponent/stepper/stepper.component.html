@@ -15,7 +15,7 @@
               <mat-label>Nome del bambino</mat-label>
               <mat-select formControlName="childrenControl">
                 <mat-option>--</mat-option>
-                <mat-option *ngFor="let bambino of bambini" [value]="bambino">
+                <mat-option *ngFor="let bambino of bambini" value="{{bambino.fermataDefault}}">
                   {{bambino.nome}}
                 </mat-option>
               </mat-select>
@@ -33,29 +33,69 @@
           <!--        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>-->
           <!--      </mat-form-field>-->
           <div>
-            <button mat-button matStepperNext class="styleColor">Avanti</button>
+            <button mat-button matStepperNext class="styleColor" (click)="getFermate()">Avanti</button>
           </div>
         </form>
+
       </mat-step>
+
       <mat-step [stepControl]="secondFormGroup">
+
+
+
         <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Seleziona una corsa</ng-template>
+          <ng-template matStepLabel>Seleziona una o più corse</ng-template>
 
-          <mat-tab-group>
-            <mat-tab label=" Andata "> <app-table-selection></app-table-selection></mat-tab>
-            <mat-tab label=" Ritorno "> <app-table-selection></app-table-selection></mat-tab>
-          </mat-tab-group>
+          <div vertical layout *ngFor="let giorno of next5Days">
+            <div class="wrapper">
+              <div><mat-checkbox ><strong>ANDATA</strong></mat-checkbox></div>
+              <div><strong>{{formatDate(giorno)}}</strong></div>
+              <div><mat-checkbox ><strong>RITORNO</strong></mat-checkbox></div>
+              <div>
+                <mat-form-field [formGroup]="secondFormGroup">
+                  <mat-label>Fermate</mat-label>
+                  <mat-select formControlName="fermateAndata">
+                    <!-- <mat-option>-- None --</mat-option> -->
+                    <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option>
+                    <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
+                                  [disabled]="group.disabled">
+                      <mat-option *ngFor="let fermata of group.fermate" [value]="fermataDefault">
+                        <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label>
+                        <label *ngIf="fermata.id !== fermataDefault.id">{{fermata.nome}}</label>
+                      </mat-option>
+                    </mat-optgroup>
+                  </mat-select>
+                </mat-form-field>
+              </div>
 
-    <!--      <mat-form-field>-->
-    <!--        <input matInput placeholder="Address" formControlName="secondCtrl" required>-->
-    <!--      </mat-form-field>-->
+              <div></div>
 
-          <div>
-            <button mat-button matStepperPrevious class="styleColor">Indietro</button><span>&nbsp;&nbsp;</span>
-            <button mat-button matStepperNext class="styleColor">Avanti</button>
+              <div>
+                <mat-form-field [formGroup]="secondFormGroup">
+                  <mat-label>Fermate</mat-label>
+                  <mat-select formControlName="fermateRitorno">
+                    <!-- <mat-option>-- None --</mat-option> -->
+                    <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option>
+                    <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
+                                  [disabled]="group.disabled">
+                      <mat-option *ngFor="let fermata of group.fermate" [value]="fermataDefault">
+                        <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label>
+                        <label *ngIf="fermata.id !== fermataDefault.id">{{fermata.nome}}</label>
+                      </mat-option>
+                    </mat-optgroup>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div><br><br>
           </div>
         </form>
+
+        <div>
+          <button mat-button matStepperPrevious class="styleColor" (click)="eraseFields()">Indietro</button><span>&nbsp;&nbsp;</span>
+          <button mat-button matStepperNext class="styleColor">Avanti</button>
+        </div>
       </mat-step>
+
       <mat-step>
         <ng-template matStepLabel class="styleColor">Riepilogo e Conferma</ng-template>
         <h4>Data: &nbsp;&nbsp;</h4>

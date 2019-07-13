@@ -14,12 +14,14 @@
         </mat-radio-group><br><br>
 
           <h4>Seleziona una data</h4>
+        <label><strong>Seleziona una data</strong><br>
           <input matInput [matDatepicker]="picker" formControlName="date">
+        </label>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker><br><br>
       </form>
       <mat-card-actions>
-        <button [disabled]="dateLineForm.invalid" mat-raised-button color="primary" (click)="getDisponibilitaCorsa()">
+        <button [disabled]="dateLineForm.invalid" mat-raised-button class="toolbar" (click)="getDisponibilitaCorsa()">
           Mostra Corsa
         </button>
       </mat-card-actions>
@@ -48,10 +50,10 @@
             </mat-list>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button color="primary" [disabled]="data.chiusoAndata" (click)="consolidaTurnoAndata()">
+            <button mat-raised-button class="toolbar" [disabled]="data.chiusoAndata" (click)="consolidaTurnoAndata()">
               Consolida Turno
             </button>
-            <button mat-raised-button color="primary" [disabled]="!data.chiusoAndata" (click)="riapriTurnoAndata()">
+            <button mat-raised-button class="toolbar" [disabled]="!data.chiusoAndata" (click)="riapriTurnoAndata()">
               Riapri Turno
             </button>
           </mat-card-actions>
@@ -74,10 +76,10 @@
             </mat-list>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button color="primary" [disabled]="data.chiusoRitorno" (click)="consolidaTurnoRitorno()">
+            <button mat-raised-button class="toolbar" [disabled]="data.chiusoRitorno" (click)="consolidaTurnoRitorno()">
               Consolida Turno
             </button>
-            <button mat-raised-button color="primary" [disabled]="!data.chiusoRitorno" (click)="riapriTurnoRitorno()">
+            <button mat-raised-button class="toolbar" [disabled]="!data.chiusoRitorno" (click)="riapriTurnoRitorno()">
               Riapri Turno
             </button>
           </mat-card-actions>

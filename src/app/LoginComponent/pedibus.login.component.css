@@ -47,8 +47,11 @@
 .input-form-container {
   display: flex;
   flex-direction: column;
+}
 
-
+.toolbar {
+  background-color: darkslategrey;
+  color: white;
 }
 
 .input-form-container > * {

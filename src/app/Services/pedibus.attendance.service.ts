@@ -8,6 +8,7 @@ import {CorsaWrapper} from '../Models/CorsaWrapper';
 import {Linea} from '../Models/Linea';
 import {Fermata} from '../Models/Fermata';
 import {FermataShort} from '../Models/FermataShort';
+import {FermataGroup} from '../Models/FermataGroup';
 
 
 
@@ -62,15 +63,11 @@ export class AttendanceService {
     return this.http.put(REST_URL + 'stato/' + bambino.id.toString(), body, httpoptions);
   }
 
-  getFermate(): Observable<FermataShort [] | string> {
+  getFermate(): Observable<FermataShort []> {
     console.log('AttendanceService.getFermate:');
     return this.http.get<FermataShort []>(REST_URL + 'fermate').pipe(
       // todo tenere fermate? Il server non le passa
-      map(arr => arr.map(x => ({nome: x.nome, id: x.id, linea: x.linea}) as FermataShort)),
-      catchError(err => {
-        console.error(err);
-        return '0';
-      })
+      map(arr => arr.map(x => ({nome: x.nome, id: x.id, linea: x.linea}) as FermataShort))
     );
   }
 
@@ -115,5 +112,14 @@ export class AttendanceService {
     const body = JSON.stringify(bodyObj);
 
     return this.http.put(REST_URL + 'riapri-turno', body, httpoptions);
+  }
+
+  getFermateGroupByLinea() {
+    console.log('AttendanceService.getFermateLinea');
+
+    return this.http.get<FermataGroup[]>(REST_URL + 'fermateGroupByLinea').pipe(
+      map(arr => arr.map(x => ({nome: x.nome, disabled: false, fermate: x.fermate}) as FermataGroup)),
+      retry(3)
+    );
   }
 }

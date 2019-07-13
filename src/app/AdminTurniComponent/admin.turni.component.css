@@ -48,7 +48,7 @@
 }
 
 .prenotato {
-  color: lightseagreen;
+  color: crimson;
 }
 
 .highlight {
@@ -56,4 +56,9 @@
   font-style: italic;
   font-family: "Arial Black";
   font-size: large;
+}
+
+.toolbar {
+  background-color: darkslategrey;
+  color: white;
 }
