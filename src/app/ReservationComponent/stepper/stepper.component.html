@@ -42,8 +42,55 @@
       <mat-step [stepControl]="secondFormGroup">
 
 
+        <ng-template matStepLabel>Seleziona una o più corse</ng-template>
+        <div>
+          <div vertical layout *ngFor="let giorno of next5Days; let i=index">
+            <form class="wrapper" [formGroup]="getGroup(i)">
+              <div><mat-checkbox (change)="setVersoAndata($event, i)"><strong>ANDATA</strong></mat-checkbox></div>
+              <div><strong>{{formatDate(giorno)}}</strong></div>
+              <div><mat-checkbox (change)="setVersoRitorno($event, i)"><strong>RITORNO</strong></mat-checkbox></div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Fermate</mat-label>
+                  <mat-select formControlName="fermateAndata">
+                    <!-- <mat-option>-- None --</mat-option> -->
+                    <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option>
+                    <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
+                                  [disabled]="group.disabled">
+                      <mat-option *ngFor="let fermata of group.fermate" [value]="fermata">
+                        <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label>
+                        <label *ngIf="fermata.id !== fermataDefault.id">{{fermata.nome}}</label>
+                      </mat-option>
+                    </mat-optgroup>
+                  </mat-select>
+                </mat-form-field>
+              </div>
 
-        <form [formGroup]="secondFormGroup">
+              <div></div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label>Fermate</mat-label>
+                  <mat-select formControlName="fermateRitorno">
+                    <!-- <mat-option>-- None --</mat-option> -->
+                    <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option>
+                    <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
+                                  [disabled]="group.disabled">
+                      <mat-option *ngFor="let fermata of group.fermate" [value]="fermata">
+                        <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label>
+                        <label *ngIf="fermata.id !== fermataDefault.id">{{fermata.nome}}</label>
+                      </mat-option>
+                    </mat-optgroup>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </form><br><br>
+          </div>
+        </div>
+
+
+
+        <!--<form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Seleziona una o più corse</ng-template>
 
           <div vertical layout *ngFor="let giorno of next5Days">
@@ -54,8 +101,8 @@
               <div>
                 <mat-form-field [formGroup]="secondFormGroup">
                   <mat-label>Fermate</mat-label>
-                  <mat-select formControlName="fermateAndata">
-                    <!-- <mat-option>-- None --</mat-option> -->
+                  <mat-select [(value)]="selected" formControlName="fermateAndata">
+                    &lt;!&ndash; <mat-option>&#45;&#45; None &#45;&#45;</mat-option> &ndash;&gt;
                     <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option>
                     <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
                                   [disabled]="group.disabled">
@@ -74,7 +121,7 @@
                 <mat-form-field [formGroup]="secondFormGroup">
                   <mat-label>Fermate</mat-label>
                   <mat-select formControlName="fermateRitorno">
-                    <!-- <mat-option>-- None --</mat-option> -->
+                    &lt;!&ndash; <mat-option>&#45;&#45; None &#45;&#45;</mat-option> &ndash;&gt;
                     <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option>
                     <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
                                   [disabled]="group.disabled">
@@ -88,7 +135,8 @@
               </div>
             </div><br><br>
           </div>
-        </form>
+        </form>-->
+
 
         <div>
           <button mat-button matStepperPrevious class="styleColor" (click)="eraseFields()">Indietro</button><span>&nbsp;&nbsp;</span>
