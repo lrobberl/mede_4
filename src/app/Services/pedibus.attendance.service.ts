@@ -9,6 +9,7 @@ import {Linea} from '../Models/Linea';
 import {Fermata} from '../Models/Fermata';
 import {FermataShort} from '../Models/FermataShort';
 import {FermataGroup} from '../Models/FermataGroup';
+import {Prenotazione} from '../Models/Prenotazione';
 
 
 
@@ -119,6 +120,16 @@ export class AttendanceService {
 
     return this.http.get<FermataGroup[]>(REST_URL + 'fermateGroupByLinea').pipe(
       map(arr => arr.map(x => ({nome: x.nome, disabled: false, fermate: x.fermate}) as FermataGroup)),
+      retry(3)
+    );
+  }
+
+  getPrenotazioniBambino(id: string) {
+    console.log('AttendanceService.getPrenotazioniBambino');
+
+    return this.http.get<Prenotazione[]>(REST_URL + 'reservations/' + id).pipe(
+      map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata,
+              data: new Date(x.data)}) as Prenotazione)),
       retry(3)
     );
   }
