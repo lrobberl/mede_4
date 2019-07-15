@@ -40,14 +40,14 @@
               <div>
                 <mat-form-field>
                   <mat-label>Fermate</mat-label>
-                  <mat-select formControlName="fermateAndata" [value]="checkFermataAndata(i)">
-                    <!-- <mat-option>-- None --</mat-option> -->
+                  <mat-select formControlName="fermateAndata" >
+                    <!-- <mat-option>-- None --</mat-option> [value]="checkFermataAndata(i)" -->
                     <!-- <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option> -->
                     <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
                                   [disabled]="group.disabled">
                       <mat-option *ngFor="let fermata of group.fermate" [value]="fermata">
                         <!-- <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label> -->
-                        <label>{{fermata.nome}}</label>
+                       {{fermata.nome}}
                       </mat-option>
                     </mat-optgroup>
                   </mat-select>

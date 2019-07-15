@@ -42,6 +42,7 @@ export class StepperComponent implements OnInit {
   fermateGroups: FermataGroup[] = [];
   fermataDefault: FermataShort;
   prenotazioniNext5Days: Prenotazione[] = [];
+  fermata: FermataShort;
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -61,8 +62,8 @@ export class StepperComponent implements OnInit {
       checkBoxRitorno : new FormControl([0]),
     });
     this.corsa2 = new FormGroup({
-      fermateAndata : new FormControl(['']),
-      fermateRitorno : new FormControl(['']),
+      fermateAndata : new FormControl([]),
+      fermateRitorno : new FormControl([]),
       checkBoxAndata : new FormControl([0]),
       checkBoxRitorno : new FormControl([0]),
     });
@@ -73,8 +74,8 @@ export class StepperComponent implements OnInit {
       checkBoxRitorno : new FormControl([0]),
     });
     this.corsa4 = new FormGroup({
-      fermateAndata : new FormControl(['']),
-      fermateRitorno : new FormControl(['']),
+      fermateAndata : new FormControl([]),
+      fermateRitorno : new FormControl([]),
       checkBoxAndata : new FormControl([0]),
       checkBoxRitorno : new FormControl([0]),
     });
@@ -116,9 +117,10 @@ export class StepperComponent implements OnInit {
       this.error = 'Operazione -getFermateGroupByLinea- fallita';
     });
 
-    this.attendanceService.getPrenotazioniBambino(this.firstForm.childrenControl.value.id as string).subscribe( res => {
-      this.prenotazioniNext5Days = res;
-      this.setPrenotazioniAttive();
+    this.attendanceService.getPrenotazioniBambino(this.firstForm.childrenControl.value.id as string).subscribe( result => {
+      this.prenotazioniNext5Days = result;
+      this.setPrenotazioniAttive(result);
+      this.secondStep = true;
     }, error1 => {
       this.error = 'Operazione -getPrenotazioniBambino- fallita';
     });
@@ -206,29 +208,64 @@ export class StepperComponent implements OnInit {
     }
   }
 
-  private setPrenotazioniAttive() {
+  private setPrenotazioniAttive(prenotazioni: Prenotazione[]) {
     const today = this.today;
     let i = 0;
-    this.prenotazioniNext5Days.forEach( prenotazione => {
+    prenotazioni.forEach( prenotazione => {
         const curDate = prenotazione.data;
         const a = curDate.getTime() - today.getTime();
         const diff = Math.abs(curDate.getTime() - today.getTime());
-        const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+        const diffDays = Math.floor(diff / (86400000));
 
         // Get del corrispondente form {corsa1, corsa2, ...} in base alla data
         this.prenotazioniNext5Days[i].corsaIndex = diffDays;
-        const form = this.getGroup(diffDays);
+        const id = prenotazione.fermata.id;
+
+        this.fermateGroups.forEach( group => {
+          group.fermate.forEach( f => {
+            if (f.id === id) {
+              this.fermata = f;
+            }
+          });
+        });
 
         if (prenotazione.verso === 'ANDATA') {
-          form.controls.fermateAndata.setValue(prenotazione.fermata);
-          form.controls.checkBoxAndata.setValue(1);
+          if (diffDays === 0) {
+            this.corsa1.controls.fermateAndata.setValue(this.fermata as FermataShort);
+            this.corsa1.controls.checkBoxAndata.setValue(1);
+          } else if (diffDays === 1) {
+            this.corsa2.controls.fermateAndata.setValue(this.fermata as FermataShort);
+            this.corsa2.controls.checkBoxAndata.setValue(1);
+          } else if (diffDays === 2) {
+            this.corsa3.controls.fermateAndata.setValue(this.fermata as FermataShort);
+            this.corsa3.controls.checkBoxAndata.setValue(1);
+          } else if (diffDays === 3) {
+            this.corsa4.controls.fermateAndata.setValue(this.fermata as FermataShort);
+            this.corsa4.controls.checkBoxAndata.setValue(1);
+          } else if (diffDays === 4) {
+            this.corsa5.controls.fermateAndata.setValue(this.fermata as FermataShort);
+            this.corsa5.controls.checkBoxAndata.setValue(1);
+          }
         } else if (prenotazione.verso === 'RITORNO') {
-          form.controls.fermateRitorno.setValue(prenotazione.fermata);
-          form.controls.checkBoxRitorno.setValue(1);
+          if (diffDays === 0) {
+            this.corsa1.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+            this.corsa1.controls.checkBoxRitorno.setValue(1);
+          } else if (diffDays === 1) {
+            this.corsa2.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+            this.corsa2.controls.checkBoxRitorno.setValue(1);
+          } else if (diffDays === 2) {
+            this.corsa3.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+            this.corsa3.controls.checkBoxRitorno.setValue(1);
+          } else if (diffDays === 3) {
+            this.corsa4.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+            this.corsa4.controls.checkBoxRitorno.setValue(1);
+          } else if (diffDays === 4) {
+            this.corsa5.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+            this.corsa5.controls.checkBoxRitorno.setValue(1);
+          }
         }
         i += 1;
     });
-    this.secondStep = true;
   }
 
   checkAndata(i: number) {
