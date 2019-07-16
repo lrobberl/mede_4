@@ -49,6 +49,7 @@ import {ReservationComponent} from './ReservationComponent/reservation.component
 import {StepperComponent} from './ReservationComponent/stepper/stepper.component';
 import {SelectChildrenComponent} from './ReservationComponent/select-children/select-children.component';
 import {TableSelectionComponent} from './ReservationComponent/table-selection/table-selection.component';
+import {PrenotazioneService} from './Services/prenotazione.service';
 // import {WebSocketService} from './Services/websocket.service';
 
 const appRoutes: Routes = [
@@ -116,7 +117,7 @@ const appRoutes: Routes = [
     MatNativeDateModule,
     MatStepperModule
   ],
-  providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule, // WebSocketService,
+  providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule, PrenotazioneService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

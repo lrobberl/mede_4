@@ -38,4 +38,10 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.highlight {
+  font-style: italic;
+  color: green;
+  width: 30%;
+}
+
 
