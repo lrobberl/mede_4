@@ -13,6 +13,8 @@ import {Prenotazione} from '../Models/Prenotazione';
 import {RegisterForm} from '../Models/RegisterForm';
 import {NewPrenotazione} from '../Models/NewPrenotazione';
 import {IdPrenotazione} from '../Models/IdPrenotazione';
+import {Disponibilita} from '../Models/Disponibilita';
+import {NewDisponibilita} from '../Models/NewDisponibilita';
 
 
 
@@ -41,9 +43,18 @@ export class PrenotazioneService {
   }
 
   getFermateGroupByLinea() {
-    console.log('AttendanceService.getFermateLinea');
+    console.log('AttendanceService.getFermateGroupByLinea');
 
     return this.http.get<FermataGroup[]>(REST_URL + 'fermateGroupByLinea').pipe(
+      map(arr => arr.map(x => ({nome: x.nome, disabled: false, fermate: x.fermate}) as FermataGroup)),
+      retry(3)
+    );
+  }
+
+  getFermateGroupByLineaWithScuola() {
+    console.log('AttendanceService.getFermateGroupByLineaWithScuola');
+
+    return this.http.get<FermataGroup[]>(REST_URL + 'fermateGroupByLineaWithScuola').pipe(
       map(arr => arr.map(x => ({nome: x.nome, disabled: false, fermate: x.fermate}) as FermataGroup)),
       retry(3)
     );
@@ -55,6 +66,16 @@ export class PrenotazioneService {
     return this.http.get<Prenotazione[]>(REST_URL + 'reservations/' + id).pipe(
       map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata,
         data: new Date(x.data), bambino: x.bambino}) as Prenotazione)),
+      retry(3)
+    );
+  }
+
+  getDisponibilitaAccompagnatore() {
+    console.log('AttendanceService.getDisponibilitaAccompagnatore');
+
+    return this.http.get<Disponibilita[]>(REST_URL + 'disponibilitaUtente/').pipe(
+      map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata,
+        data: new Date(x.data)}) as Disponibilita)),
       retry(3)
     );
   }
@@ -84,10 +105,43 @@ export class PrenotazioneService {
       }) as IdPrenotazione));
   }
 
+  prenotaDisponibilita(idFerm: string, d: Date, direction: string, line: string) {
+    console.log('PrenotazioneService.prenotaCorsa');
+
+    // tslint:disable-next-line:no-shadowed-variable
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+
+    const prenotazione: NewDisponibilita = {
+      linea: line,
+      fermata: idFerm,
+      data: d,
+      verso: direction
+    };
+
+    const body = JSON.stringify(prenotazione);
+
+    return this.http.post<IdPrenotazione>(REST_URL + 'disponibilita', body, httpOptions).pipe(
+      map( x => ({
+        id: x.id
+      }) as IdPrenotazione));
+  }
+
   deletePrenotazione(linea: string, fermata: string, id: string) {
     console.log('AttendanceService.deletePrenotazione');
 
     return this.http.delete(REST_URL + 'reservations/' + linea + '/' + fermata + '/' + id).pipe(
+      retry(3)
+    );
+  }
+
+  deleteDisponibilita(linea: string, fermata: string, id: string) {
+    console.log('AttendanceService.deletePrenotazione');
+
+    return this.http.delete(REST_URL + 'disponibilita/' + linea + '/' + fermata + '/' + id).pipe(
       retry(3)
     );
   }

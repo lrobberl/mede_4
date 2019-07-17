@@ -9,6 +9,7 @@ import {MatCheckboxChange} from '@angular/material';
 import {Prenotazione} from '../Models/Prenotazione';
 import {PrenotazioneService} from '../Services/prenotazione.service';
 import {Router} from '@angular/router';
+import {Disponibilita} from '../Models/Disponibilita';
 
 /**
  * @title Stepper vertical
@@ -23,24 +24,21 @@ export class DisponibiltaComponent implements OnInit {
   monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
   dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
   isLinear = false;
-  firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   corsa1: FormGroup;
   corsa2: FormGroup;
   corsa3: FormGroup;
   corsa4: FormGroup;
   corsa5: FormGroup;
-  bambini: Bambino[] = [];
   error: string;
   selected: string;
-  linee: Linea[];
   today: Date;
   i: string;
-  secondStep: boolean;
   next5Days: Date[] = [];
   fermateGroups: FermataGroup[] = [];
-  fermataDefault: FermataShort;
-  prenotazioniNext5Days: Prenotazione[] = [];
+  fermataRitornoDefault: FermataShort;
+  fermataAndataDefault: FermataShort;
+  disponibilitaNext5Days: Disponibilita[] = [];
   fermata: FermataShort;
   message: string;
   currentEvent: MatCheckboxChange;
@@ -53,9 +51,6 @@ export class DisponibiltaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.firstFormGroup = this.formBuilder.group({
-      childrenControl: ['', Validators.required]
-    });
 
     this.corsa1 = new FormGroup({
       fermateAndata : new FormControl([Validators.required]),
@@ -88,30 +83,17 @@ export class DisponibiltaComponent implements OnInit {
       checkBoxRitorno : new FormControl([0]),
     });
 
-    this.userService.getFigli().subscribe(res => {
-      this.bambini = res;
-    }, error1 => {
-      this.error = 'Operazione -getFigli- fallita';
-    });
-
-    this.createNext5Days();
-  }
-
-  get firstForm() {
-    return this.firstFormGroup.controls;
-  }
-
-  getFermateAndPrenotazioni() {
-    // console.log(this.firstForm.childrenControl.value);
-
-    this.prenotazioneService.getFermateGroupByLinea().subscribe(res => {
+    this.prenotazioneService.getFermateGroupByLineaWithScuola().subscribe(res => {
       this.fermateGroups = res;
       this.error = undefined;
       res.forEach(linea => {
         linea.fermate.forEach(fermata => {
-          if (fermata.id === this.firstForm.childrenControl.value.fermataDefault) {
-            this.fermataDefault = fermata;
-            this.setFermataDefault(fermata);
+          if (fermata.nome === 'Politecnico') {
+            this.fermataRitornoDefault = fermata;
+            this.setFermataRitornoDefault(fermata);
+          } else if (fermata.nome === 'Piazza Vittorio') {
+            this.fermataAndataDefault = fermata;
+            this.setFermataAndataDefault(fermata);
           }
         });
       });
@@ -119,13 +101,14 @@ export class DisponibiltaComponent implements OnInit {
       this.error = 'Operazione -getFermateGroupByLinea- fallita';
     });
 
-    this.prenotazioneService.getPrenotazioniBambino(this.firstForm.childrenControl.value.id as string).subscribe( result => {
-      this.prenotazioniNext5Days = result;
-      this.setPrenotazioniAttive(result);
-      this.secondStep = true;
+    this.prenotazioneService.getPrenotazioniBambino('a').subscribe( result => { // getDisponbilitaAccompagnatore
+      this.disponibilitaNext5Days = result;
+      this.setDisponibilitaAttive(result);
     }, error1 => {
       this.error = 'Operazione -getPrenotazioniBambino- fallita';
     });
+
+    this.createNext5Days();
   }
 
   getGroup(i: number) {
@@ -150,30 +133,28 @@ export class DisponibiltaComponent implements OnInit {
       let fermata = this.getGroup(i).controls.fermateAndata.value.nome as string;
       const linea = this.getGroup(i).controls.fermateAndata.value.linea as string;
       const data = this.next5Days[i];
-      const idBambino = this.firstForm.childrenControl.value.id as string;
       const verso = 'ANDATA';
 
       fermata = fermata.replace(' ', '_');
 
-      this.prenotazioneService.prenotaCorsa(fermata, data, idBambino, verso, linea).subscribe(
+      this.prenotazioneService.prenotaDisponibilita(fermata, data, verso, linea).subscribe(
         result => {
-          this.message = 'Prenotazione della corsa   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: '
+          this.message = 'Disponibilita per la corsa   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: '
           + linea + '  VERSO: ' + verso + ' FERMATA: ' + this.getGroup(i).controls.fermateAndata.value.nome as string
-            + ' \neffettuata con successo';
+            + ' \ninserita con successo';
 
-          const newPrenotazione: Prenotazione = {
+          const newDisponibilita: Disponibilita = {
             id: '',
-            bambino: this.firstForm.childrenControl.value.nome as string,
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateAndata.value
           };
-          this.prenotazioniNext5Days.push(newPrenotazione);
+          this.disponibilitaNext5Days.push(newDisponibilita);
 
           this.getGroup(i).controls.checkBoxAndata.setValue(1);
           this.currentEvent.source.checked = true;
         }, error1 => {
-          this.error = 'Operazione -prenotaCorsa- fallita';
+          this.error = 'Operazione -prenotaDisponibilita- fallita';
           this.currentEvent.source.checked = false;
         });
     } else {  // Triggera il cancellamento della prenotazione
@@ -182,28 +163,28 @@ export class DisponibiltaComponent implements OnInit {
       this.currentEvent = $event;
       const d = this.next5Days[i];
       const verso = 'ANDATA';
-      let prenotazioneDaCancellare: any;
+      let disponibilitaDaCancellare: any;
       // Aggiungere se serve qua la fermata
 
-      this.prenotazioniNext5Days.forEach( prenotazione => {
-        if (prenotazione.verso === verso && this.formatDate(prenotazione.data) === this.formatDate(d)) {
-          prenotazioneDaCancellare = prenotazione;
+      this.disponibilitaNext5Days.forEach( disponibilita => {
+        if (disponibilita.verso === verso && this.formatDate(disponibilita.data) === this.formatDate(d)) {
+          disponibilitaDaCancellare = disponibilita;
         }
       });
 
-      this.prenotazioneService.deletePrenotazione(prenotazioneDaCancellare.fermata.linea, prenotazioneDaCancellare.fermata.nome,
-        prenotazioneDaCancellare.id).subscribe(
+      this.prenotazioneService.deleteDisponibilita(disponibilitaDaCancellare.fermata.linea, disponibilitaDaCancellare.fermata.nome,
+        disponibilitaDaCancellare.id).subscribe(
         res => {
-          const index = this.prenotazioniNext5Days.indexOf(prenotazioneDaCancellare);
-          this.prenotazioniNext5Days.splice(index);
+          const index = this.disponibilitaNext5Days.indexOf(disponibilitaDaCancellare);
+          this.disponibilitaNext5Days.splice(index);
 
-          this.message = 'Prenotazione   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
-            prenotazioneDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
-            prenotazioneDaCancellare.fermata.nome + ' \ncancellata con successo';
+          this.message = 'Disponibilita   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
+            disponibilitaDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
+            disponibilitaDaCancellare.fermata.nome + ' \ncancellata con successo';
           this.getGroup(i).controls.checkBoxAndata.setValue(0);
           this.currentEvent.source.checked = false;
         }, error1 => {
-          this.error = 'Operazione -deletePrenotazione- fallita';
+          this.error = 'Operazione -deleteDisponibilita- fallita';
           this.currentEvent.source.checked = true;
         }
       );
@@ -218,29 +199,27 @@ export class DisponibiltaComponent implements OnInit {
       let fermata = this.getGroup(i).controls.fermateRitorno.value.nome as string;
       const linea = this.getGroup(i).controls.fermateRitorno.value.linea as string;
       const data = this.next5Days[i];
-      const idBambino = this.firstForm.childrenControl.value.id as string;
       const verso = 'RITORNO';
 
       fermata = fermata.replace(' ', '_');
 
-      this.prenotazioneService.prenotaCorsa(fermata, data, idBambino, verso, linea).subscribe(
+      this.prenotazioneService.prenotaDisponibilita(fermata, data, verso, linea).subscribe(
         result => {
-          this.message = 'Prenotazione della corsa   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' + linea +
-          '  VERSO: ' + verso + ' FERMATA: ' + this.getGroup(i).controls.fermateRitorno.value.nome as string + ' \neffettuata con successo';
+          this.message = 'Disponibilita della corsa   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' + linea +
+          '  VERSO: ' + verso + ' FERMATA: ' + this.getGroup(i).controls.fermateRitorno.value.nome as string + ' \ninserita con successo';
 
-          const newPrenotazione: Prenotazione = {
+          const newDisponibilita: Disponibilita = {
             id: result.id,
-            bambino: this.firstForm.childrenControl.value.nome as string,
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateRitorno.value
           };
-          this.prenotazioniNext5Days.push(newPrenotazione);
+          this.disponibilitaNext5Days.push(newDisponibilita);
 
           this.getGroup(i).controls.checkBoxRitorno.setValue(1);
           this.currentEvent.source.checked = true;
         }, error1 => {
-          this.error = 'Operazione -prenotaCorsa- fallita';
+          this.error = 'Operazione -prenotaDisponibilita- fallita';
           this.currentEvent.source.checked = false;
         });
     } else { // Triggera il cancellamento della prenotazione
@@ -249,28 +228,28 @@ export class DisponibiltaComponent implements OnInit {
       this.currentEvent = $event;
       const d = this.next5Days[i];
       const verso = 'RITORNO';
-      let prenotazioneDaCancellare: any;
+      let disponibilitaDaCancellare: any;
       // Aggiungere se serve qua la fermata
 
-      this.prenotazioniNext5Days.forEach( prenotazione => {
-        if (prenotazione.verso === verso && this.formatDate(prenotazione.data) === this.formatDate(d)) {
-          prenotazioneDaCancellare = prenotazione;
+      this.disponibilitaNext5Days.forEach( disponibilita => {
+        if (disponibilita.verso === verso && this.formatDate(disponibilita.data) === this.formatDate(d)) {
+          disponibilitaDaCancellare = disponibilita;
         }
       });
 
-      this.prenotazioneService.deletePrenotazione(prenotazioneDaCancellare.fermata.linea, prenotazioneDaCancellare.fermata.nome,
-        prenotazioneDaCancellare.id).subscribe(
+      this.prenotazioneService.deletePrenotazione(disponibilitaDaCancellare.fermata.linea, disponibilitaDaCancellare.fermata.nome,
+        disponibilitaDaCancellare.id).subscribe(
         res => {
-          const index = this.prenotazioniNext5Days.indexOf(prenotazioneDaCancellare);
-          this.prenotazioniNext5Days.splice(index);
+          const index = this.disponibilitaNext5Days.indexOf(disponibilitaDaCancellare);
+          this.disponibilitaNext5Days.splice(index);
 
-          this.message = 'Prenotazione   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
-            prenotazioneDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
-            prenotazioneDaCancellare.fermata.nome + ' \ncancellata con successo';
+          this.message = 'Disponibilita   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
+            disponibilitaDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
+            disponibilitaDaCancellare.fermata.nome + ' \ninserita con successo';
           this.getGroup(i).controls.checkBoxRitorno.setValue(0);
           this.currentEvent.source.checked = false;
         }, error1 => {
-          this.error = 'Operazione -deletePrenotazione- fallita';
+          this.error = 'Operazione -deleteDisponibilita- fallita';
           this.currentEvent.source.checked = true;
         }
       );
@@ -284,31 +263,34 @@ export class DisponibiltaComponent implements OnInit {
     return this.getGroup(i).controls.checkBoxRitorno.value === 1;
   }
 
-  setFermataDefault(fermata: FermataShort) {
+  setFermataAndataDefault(fermata: FermataShort) {
     this.corsa1.controls.fermateAndata.setValue(fermata);
-    this.corsa1.controls.fermateRitorno.setValue(fermata);
     this.corsa2.controls.fermateAndata.setValue(fermata);
-    this.corsa2.controls.fermateRitorno.setValue(fermata);
     this.corsa3.controls.fermateAndata.setValue(fermata);
-    this.corsa3.controls.fermateRitorno.setValue(fermata);
     this.corsa4.controls.fermateAndata.setValue(fermata);
-    this.corsa4.controls.fermateRitorno.setValue(fermata);
     this.corsa5.controls.fermateAndata.setValue(fermata);
+  }
+
+  setFermataRitornoDefault(fermata: FermataShort) {
+    this.corsa1.controls.fermateRitorno.setValue(fermata);
+    this.corsa2.controls.fermateRitorno.setValue(fermata);
+    this.corsa3.controls.fermateRitorno.setValue(fermata);
+    this.corsa4.controls.fermateRitorno.setValue(fermata);
     this.corsa5.controls.fermateRitorno.setValue(fermata);
   }
 
-  private setPrenotazioniAttive(prenotazioni: Prenotazione[]) {
+  private setDisponibilitaAttive(disponibilitas: Disponibilita[]) {
     const today = this.today;
     let i = 0;
-    prenotazioni.forEach( prenotazione => {
-      const curDate = prenotazione.data;
+    disponibilitas.forEach( disponibilita => {
+      const curDate = disponibilita.data;
       const a = curDate.getTime() - today.getTime();
       const diff = Math.abs(curDate.getTime() - today.getTime());
       const diffDays = Math.ceil(diff / (86400000));
 
       // Get del corrispondente form {corsa1, corsa2, ...} in base alla data
       // this.prenotazioniNext5Days[i].corsaIndex = diffDays;
-      const id = prenotazione.fermata.id;
+      const id = disponibilita.fermata.id;
 
       this.fermateGroups.forEach( group => {
         group.fermate.forEach( f => {
@@ -318,7 +300,7 @@ export class DisponibiltaComponent implements OnInit {
         });
       });
 
-      if (prenotazione.verso === 'ANDATA') {
+      if (disponibilita.verso === 'ANDATA') {
         if (diffDays === 0) {
           this.corsa1.controls.fermateAndata.setValue(this.fermata as FermataShort);
           this.corsa1.controls.checkBoxAndata.setValue(1);
@@ -335,7 +317,7 @@ export class DisponibiltaComponent implements OnInit {
           this.corsa5.controls.fermateAndata.setValue(this.fermata as FermataShort);
           this.corsa5.controls.checkBoxAndata.setValue(1);
         }
-      } else if (prenotazione.verso === 'RITORNO') {
+      } else if (disponibilita.verso === 'RITORNO') {
         if (diffDays === 0) {
           this.corsa1.controls.fermateRitorno.setValue(this.fermata as FermataShort);
           this.corsa1.controls.checkBoxRitorno.setValue(1);
@@ -403,7 +385,8 @@ export class DisponibiltaComponent implements OnInit {
 
   eraseFields() {
     this.fermateGroups = undefined;
-    this.fermataDefault = undefined;
+    this.fermataAndataDefault = undefined;
+    this.fermataRitornoDefault = undefined;
   }
 
   generateIdAndata(i: number) {
