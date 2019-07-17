@@ -46,9 +46,6 @@ import {ResetPasswordComponent} from './ResetPasswordComponent/resetPassword.com
 import {ComunicationComponent} from './ComunicationComponent/comunication.component';
 import {AdminTurniComponent} from './AdminTurniComponent/admin.turni.component';
 import {ReservationComponent} from './ReservationComponent/reservation.component';
-import {StepperComponent} from './ReservationComponent/stepper/stepper.component';
-import {SelectChildrenComponent} from './ReservationComponent/select-children/select-children.component';
-import {TableSelectionComponent} from './ReservationComponent/table-selection/table-selection.component';
 import {PrenotazioneService} from './Services/prenotazione.service';
 // import {WebSocketService} from './Services/websocket.service';
 
@@ -86,9 +83,6 @@ const appRoutes: Routes = [
     AdminTurniComponent,
     NotFoundComponent,
     ReservationComponent,
-    StepperComponent,
-    SelectChildrenComponent,
-    TableSelectionComponent
   ],
   imports: [
     BrowserModule,
