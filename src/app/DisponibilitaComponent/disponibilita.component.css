@@ -1,0 +1,47 @@
+.mat-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.centeredCard {
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  width: 50%;
+  max-width: 60%;
+  min-width: 15em;
+  margin-top: 5em;
+  margin-bottom: 5em;
+  margin-left: 25%;
+}
+
+.centeredContent {
+  margin-top: 3em;
+  align-content: center;
+}
+
+.leftSide {
+  float: left;
+}
+
+.rightSide {
+  float: right;
+}
+
+.styleColor {
+  background-color: darkslategrey;
+  color: white;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.highlight {
+  font-style: italic;
+  color: green;
+  width: 30%;
+}
+
+

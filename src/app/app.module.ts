@@ -47,6 +47,7 @@ import {ComunicationComponent} from './ComunicationComponent/comunication.compon
 import {AdminTurniComponent} from './AdminTurniComponent/admin.turni.component';
 import {ReservationComponent} from './ReservationComponent/reservation.component';
 import {PrenotazioneService} from './Services/prenotazione.service';
+import {DisponibiltaComponent} from './DisponibilitaComponent/disponibilita.component';
 // import {WebSocketService} from './Services/websocket.service';
 
 const appRoutes: Routes = [
@@ -55,6 +56,8 @@ const appRoutes: Routes = [
           Role.Accompagnatore] }},
   { path: 'login', component: PedibusLoginComponent},
   { path: 'prenotazioni', component: ReservationComponent, canActivate: [AuthGuard]},
+  { path: 'disponibilita', component: DisponibiltaComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin,
+        Role.Accompagnatore] }},
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'adminRegister', component: AdminRegisterComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] } },
   { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { roles: [Role.SystemAdmin] }},
@@ -83,6 +86,7 @@ const appRoutes: Routes = [
     AdminTurniComponent,
     NotFoundComponent,
     ReservationComponent,
+    DisponibiltaComponent
   ],
   imports: [
     BrowserModule,

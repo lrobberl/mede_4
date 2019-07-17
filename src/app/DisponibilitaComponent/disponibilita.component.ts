@@ -15,11 +15,11 @@ import {Router} from '@angular/router';
  */
 @Component({
   selector: 'app-stepper',
-  templateUrl: './reservation.component.html',
-  styleUrls: ['./reservation.component.css']
+  templateUrl: './disponibilita.component.html',
+  styleUrls: ['./disponibilita.component.css']
 })
 
-export class ReservationComponent implements OnInit {
+export class DisponibiltaComponent implements OnInit {
   monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
   dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
   isLinear = false;
@@ -157,24 +157,25 @@ export class ReservationComponent implements OnInit {
 
       this.prenotazioneService.prenotaCorsa(fermata, data, idBambino, verso, linea).subscribe(
         result => {
-        this.message = 'Prenotazione della corsa   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' + linea + '  VERSO: ' + verso +
-                          ' FERMATA: ' + this.getGroup(i).controls.fermateAndata.value.nome as string + ' \neffettuata con successo';
+          this.message = 'Prenotazione della corsa   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: '
+          + linea + '  VERSO: ' + verso + ' FERMATA: ' + this.getGroup(i).controls.fermateAndata.value.nome as string
+            + ' \neffettuata con successo';
 
-        const newPrenotazione: Prenotazione = {
+          const newPrenotazione: Prenotazione = {
             id: '',
             bambino: this.firstForm.childrenControl.value.nome as string,
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateAndata.value
-        };
-        this.prenotazioniNext5Days.push(newPrenotazione);
+          };
+          this.prenotazioniNext5Days.push(newPrenotazione);
 
-        this.getGroup(i).controls.checkBoxAndata.setValue(1);
-        this.currentEvent.source.checked = true;
-      }, error1 => {
-        this.error = 'Operazione -prenotaCorsa- fallita';
-        this.currentEvent.source.checked = false;
-      });
+          this.getGroup(i).controls.checkBoxAndata.setValue(1);
+          this.currentEvent.source.checked = true;
+        }, error1 => {
+          this.error = 'Operazione -prenotaCorsa- fallita';
+          this.currentEvent.source.checked = false;
+        });
     } else {  // Triggera il cancellamento della prenotazione
       this.error = undefined;
       this.message = undefined;
@@ -253,24 +254,24 @@ export class ReservationComponent implements OnInit {
 
       this.prenotazioniNext5Days.forEach( prenotazione => {
         if (prenotazione.verso === verso && this.formatDate(prenotazione.data) === this.formatDate(d)) {
-            prenotazioneDaCancellare = prenotazione;
+          prenotazioneDaCancellare = prenotazione;
         }
       });
 
       this.prenotazioneService.deletePrenotazione(prenotazioneDaCancellare.fermata.linea, prenotazioneDaCancellare.fermata.nome,
-              prenotazioneDaCancellare.id).subscribe(
-                res => {
-                  const index = this.prenotazioniNext5Days.indexOf(prenotazioneDaCancellare);
-                  this.prenotazioniNext5Days.splice(index);
+        prenotazioneDaCancellare.id).subscribe(
+        res => {
+          const index = this.prenotazioniNext5Days.indexOf(prenotazioneDaCancellare);
+          this.prenotazioniNext5Days.splice(index);
 
-                  this.message = 'Prenotazione   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
-                    prenotazioneDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
-                    prenotazioneDaCancellare.fermata.nome + ' \ncancellata con successo';
-                  this.getGroup(i).controls.checkBoxRitorno.setValue(0);
-                  this.currentEvent.source.checked = false;
-                }, error1 => {
-                  this.error = 'Operazione -deletePrenotazione- fallita';
-                  this.currentEvent.source.checked = true;
+          this.message = 'Prenotazione   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
+            prenotazioneDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
+            prenotazioneDaCancellare.fermata.nome + ' \ncancellata con successo';
+          this.getGroup(i).controls.checkBoxRitorno.setValue(0);
+          this.currentEvent.source.checked = false;
+        }, error1 => {
+          this.error = 'Operazione -deletePrenotazione- fallita';
+          this.currentEvent.source.checked = true;
         }
       );
     }
@@ -300,59 +301,59 @@ export class ReservationComponent implements OnInit {
     const today = this.today;
     let i = 0;
     prenotazioni.forEach( prenotazione => {
-        const curDate = prenotazione.data;
-        const a = curDate.getTime() - today.getTime();
-        const diff = Math.abs(curDate.getTime() - today.getTime());
-        const diffDays = Math.ceil(diff / (86400000));
+      const curDate = prenotazione.data;
+      const a = curDate.getTime() - today.getTime();
+      const diff = Math.abs(curDate.getTime() - today.getTime());
+      const diffDays = Math.ceil(diff / (86400000));
 
-        // Get del corrispondente form {corsa1, corsa2, ...} in base alla data
-        // this.prenotazioniNext5Days[i].corsaIndex = diffDays;
-        const id = prenotazione.fermata.id;
+      // Get del corrispondente form {corsa1, corsa2, ...} in base alla data
+      // this.prenotazioniNext5Days[i].corsaIndex = diffDays;
+      const id = prenotazione.fermata.id;
 
-        this.fermateGroups.forEach( group => {
-          group.fermate.forEach( f => {
-            if (f.id === id) {
-              this.fermata = f;
-            }
-          });
+      this.fermateGroups.forEach( group => {
+        group.fermate.forEach( f => {
+          if (f.id === id) {
+            this.fermata = f;
+          }
         });
+      });
 
-        if (prenotazione.verso === 'ANDATA') {
-          if (diffDays === 0) {
-            this.corsa1.controls.fermateAndata.setValue(this.fermata as FermataShort);
-            this.corsa1.controls.checkBoxAndata.setValue(1);
-          } else if (diffDays === 1) {
-            this.corsa2.controls.fermateAndata.setValue(this.fermata as FermataShort);
-            this.corsa2.controls.checkBoxAndata.setValue(1);
-          } else if (diffDays === 2) {
-            this.corsa3.controls.fermateAndata.setValue(this.fermata as FermataShort);
-            this.corsa3.controls.checkBoxAndata.setValue(1);
-          } else if (diffDays === 3) {
-            this.corsa4.controls.fermateAndata.setValue(this.fermata as FermataShort);
-            this.corsa4.controls.checkBoxAndata.setValue(1);
-          } else if (diffDays === 4) {
-            this.corsa5.controls.fermateAndata.setValue(this.fermata as FermataShort);
-            this.corsa5.controls.checkBoxAndata.setValue(1);
-          }
-        } else if (prenotazione.verso === 'RITORNO') {
-          if (diffDays === 0) {
-            this.corsa1.controls.fermateRitorno.setValue(this.fermata as FermataShort);
-            this.corsa1.controls.checkBoxRitorno.setValue(1);
-          } else if (diffDays === 1) {
-            this.corsa2.controls.fermateRitorno.setValue(this.fermata as FermataShort);
-            this.corsa2.controls.checkBoxRitorno.setValue(1);
-          } else if (diffDays === 2) {
-            this.corsa3.controls.fermateRitorno.setValue(this.fermata as FermataShort);
-            this.corsa3.controls.checkBoxRitorno.setValue(1);
-          } else if (diffDays === 3) {
-            this.corsa4.controls.fermateRitorno.setValue(this.fermata as FermataShort);
-            this.corsa4.controls.checkBoxRitorno.setValue(1);
-          } else if (diffDays === 4) {
-            this.corsa5.controls.fermateRitorno.setValue(this.fermata as FermataShort);
-            this.corsa5.controls.checkBoxRitorno.setValue(1);
-          }
+      if (prenotazione.verso === 'ANDATA') {
+        if (diffDays === 0) {
+          this.corsa1.controls.fermateAndata.setValue(this.fermata as FermataShort);
+          this.corsa1.controls.checkBoxAndata.setValue(1);
+        } else if (diffDays === 1) {
+          this.corsa2.controls.fermateAndata.setValue(this.fermata as FermataShort);
+          this.corsa2.controls.checkBoxAndata.setValue(1);
+        } else if (diffDays === 2) {
+          this.corsa3.controls.fermateAndata.setValue(this.fermata as FermataShort);
+          this.corsa3.controls.checkBoxAndata.setValue(1);
+        } else if (diffDays === 3) {
+          this.corsa4.controls.fermateAndata.setValue(this.fermata as FermataShort);
+          this.corsa4.controls.checkBoxAndata.setValue(1);
+        } else if (diffDays === 4) {
+          this.corsa5.controls.fermateAndata.setValue(this.fermata as FermataShort);
+          this.corsa5.controls.checkBoxAndata.setValue(1);
         }
-        i += 1;
+      } else if (prenotazione.verso === 'RITORNO') {
+        if (diffDays === 0) {
+          this.corsa1.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+          this.corsa1.controls.checkBoxRitorno.setValue(1);
+        } else if (diffDays === 1) {
+          this.corsa2.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+          this.corsa2.controls.checkBoxRitorno.setValue(1);
+        } else if (diffDays === 2) {
+          this.corsa3.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+          this.corsa3.controls.checkBoxRitorno.setValue(1);
+        } else if (diffDays === 3) {
+          this.corsa4.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+          this.corsa4.controls.checkBoxRitorno.setValue(1);
+        } else if (diffDays === 4) {
+          this.corsa5.controls.fermateRitorno.setValue(this.fermata as FermataShort);
+          this.corsa5.controls.checkBoxRitorno.setValue(1);
+        }
+      }
+      i += 1;
     });
   }
 
