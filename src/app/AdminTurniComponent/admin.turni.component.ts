@@ -4,8 +4,9 @@ import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
-import {MatCheckboxChange} from '@angular/material';
+import {MatRadioChange} from '@angular/material';
 import {Linea} from '../Models/Linea';
+import {AccompagnatoreFermata} from '../Models/AccompagnatoreFermata';
 
 @Component({
   selector: 'app-pedibus-turni',
@@ -15,6 +16,8 @@ import {Linea} from '../Models/Linea';
 
 
 export class AdminTurniComponent implements OnInit {
+  monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+  dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
   data: DisponibilitaCorsa;
   linee: Linea[];
   selectedData: string;
@@ -22,10 +25,12 @@ export class AdminTurniComponent implements OnInit {
   errorLeft: string;
   errorRight: string;
   dateLineForm: FormGroup;
-  accompagnatoriAndata: Array<string> = [];
-  accompagnatoriRitorno: Array<string> = [];
+  accompagnatoreAndata: AccompagnatoreFermata;
+  accompagnatoreRitorno: AccompagnatoreFermata;
   message: string;
   classType = 'centeredCard';
+  selectedAndata = false;
+  selectedRitorno = false;
 
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,
@@ -81,28 +86,28 @@ export class AdminTurniComponent implements OnInit {
     });
   }
 
-  segnaAccompagnatoreAndata($event: MatCheckboxChange, accompagnatore: string) {
-    if ($event.checked) {
-      this.accompagnatoriAndata.push(accompagnatore);
+  segnaAccompagnatoreAndata($event: MatRadioChange, accompagnatore: AccompagnatoreFermata) {
+    if ($event.source.checked) {
+      this.accompagnatoreAndata = accompagnatore;
+      this.selectedAndata = true;
     } else {
-      const index = this.accompagnatoriAndata.indexOf(accompagnatore);
-      this.accompagnatoriAndata.splice(index);
+      this.accompagnatoreAndata = undefined;
     }
   }
 
-  segnaAccompagnatoreRitorno($event: MatCheckboxChange, accompagnatore: string) {
-    if ($event.checked) {
-      this.accompagnatoriRitorno.push(accompagnatore);
+  segnaAccompagnatoreRitorno($event: MatRadioChange, accompagnatore: AccompagnatoreFermata) {
+    if ($event.source.checked) {
+      this.accompagnatoreRitorno = accompagnatore;
+      this.selectedRitorno = true;
     } else {
-      const index = this.accompagnatoriRitorno.indexOf(accompagnatore);
-      this.accompagnatoriRitorno.splice(index);
+      this.accompagnatoreAndata = undefined;
     }
   }
 
   consolidaTurnoAndata() {
-    console.log(this.accompagnatoriAndata);
+    console.log(this.accompagnatoreAndata);
 
-    this.attendanceService.consolidaTurno(this.data.linea, this.formatDate(this.data.date), 'ANDATA', this.accompagnatoriAndata)
+    this.attendanceService.consolidaTurno(this.data.linea, this.formatDate(this.data.date), 'ANDATA', this.accompagnatoreAndata)
       .subscribe(x => {
       this.errorRight = undefined;
       this.data.chiusoAndata = true;
@@ -114,9 +119,9 @@ export class AdminTurniComponent implements OnInit {
   }
 
   consolidaTurnoRitorno() {
-    console.log(this.accompagnatoriRitorno);
+    console.log(this.accompagnatoreRitorno);
 
-    this.attendanceService.consolidaTurno(this.data.linea, this.formatDate(this.data.date), 'RITORNO', this.accompagnatoriRitorno)
+    this.attendanceService.consolidaTurno(this.data.linea, this.formatDate(this.data.date), 'RITORNO', this.accompagnatoreRitorno)
       .subscribe(x => {
       this.errorRight = undefined;
       this.data.chiusoRitorno = true;
@@ -127,18 +132,26 @@ export class AdminTurniComponent implements OnInit {
     });
   }
 
-  private formatDate(data: Date) {
+  formatDate(data: Date) {
     const dd = String(data.getDate()).padStart(2, '0');
     const mm = String(data.getMonth() + 1).padStart(2, '0'); // January is 0!
     const yyyy = data.getFullYear();
     return dd + mm + yyyy;
   }
 
-  private formatDateDashed(data: Date) {
+  formatDateDashed(data: Date) {
     const dd = String(data.getDate()).padStart(2, '0');
     const mm = String(data.getMonth() + 1).padStart(2, '0'); // January is 0!
     const yyyy = data.getFullYear();
     return dd + '-' + mm + '-' + yyyy;
+  }
+
+  formatDateNames(data: Date) {
+    const day = data.getDate();
+    const monthIndex = data.getMonth();
+    const dayIndex = data.getDay();
+
+    return '' + this.dayNames[dayIndex] + '-' + day + '-' + this.monthNames[monthIndex];
   }
 
   riapriTurnoRitorno() {

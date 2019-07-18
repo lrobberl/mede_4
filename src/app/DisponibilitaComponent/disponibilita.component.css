@@ -44,4 +44,10 @@
   width: 30%;
 }
 
+.highlightNOT {
+  font-style: italic;
+  color: darkred;
+  width: 30%;
+}
+
 

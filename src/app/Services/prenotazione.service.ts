@@ -73,8 +73,8 @@ export class PrenotazioneService {
   getDisponibilitaAccompagnatore() {
     console.log('AttendanceService.getDisponibilitaAccompagnatore');
 
-    return this.http.get<Disponibilita[]>(REST_URL + 'disponibilitaUtente/').pipe(
-      map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata,
+    return this.http.get<Disponibilita[]>(REST_URL + 'disponibilita/').pipe(
+      map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata, confermata: x.confermata,
         data: new Date(x.data)}) as Disponibilita)),
       retry(3)
     );

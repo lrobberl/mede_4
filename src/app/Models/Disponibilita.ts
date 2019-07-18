@@ -5,4 +5,5 @@ export interface Disponibilita {
   data: Date;
   fermata: FermataShort;
   verso: string;
+  confermata: boolean;
 }

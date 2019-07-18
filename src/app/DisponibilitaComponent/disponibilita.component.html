@@ -20,14 +20,13 @@
               <div>
                 <mat-form-field>
                   <mat-label>Fermate</mat-label>
-                  <mat-select formControlName="fermateAndata" >
-                    <mat-option>-- None --</mat-option>
+                  <mat-select formControlName="fermateAndata">
                     <!-- <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option> -->
                     <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
                                   [disabled]="group.disabled">
                       <mat-option *ngFor="let fermata of group.fermate" [value]="fermata">
                         <!-- <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label> -->
-                        {{fermata.nome}}
+                        <span>{{fermata.nome}}</span>
                       </mat-option>
                     </mat-optgroup>
                   </mat-select>
@@ -40,13 +39,12 @@
                 <mat-form-field>
                   <mat-label>Fermate</mat-label>
                   <mat-select formControlName="fermateRitorno" >
-                    <mat-option>-- None --</mat-option>
                     <!-- <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option> -->
                     <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
                                   [disabled]="group.disabled">
                       <mat-option *ngFor="let fermata of group.fermate" [value]="fermata">
                         <!-- <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label> -->
-                        <label>{{fermata.nome}}</label>
+                        <span>{{fermata.nome}}</span>
                       </mat-option>
                     </mat-optgroup>
                   </mat-select>
@@ -65,24 +63,25 @@
         </div>
       </mat-step>
 
-      <mat-step *ngIf="firstFormGroup.valid">
-        <ng-template matStepLabel class="styleColor">Riepilogo Prenotazioni Attive</ng-template>
-        <div *ngIf="prenotazioniNext5Days.length !== 0">
-          <h4>Prenotazioni attive</h4>
-          <div *ngFor="let prenotazione of prenotazioniNext5Days">
+      <mat-step>
+        <ng-template matStepLabel class="styleColor">Riepilogo Disponibilita</ng-template>
+        <div *ngIf="disponibilitaNext5Days.length !== 0">
+          <h4>Disponibilita - Corse</h4>
+          <div *ngFor="let prenotazione of disponibilitaNext5Days">
             <div style="text-align: left">
               <span><strong>Data:</strong>&nbsp;&nbsp;{{formatDate(prenotazione.data)}}</span><br>
-              <span><strong>Bambino:</strong>&nbsp;&nbsp;{{prenotazione.bambino}}</span><br>
               <span><strong>Linea:</strong>&nbsp;&nbsp;{{prenotazione.fermata.linea}}</span><br>
               <span><strong>Fermata:</strong>&nbsp;&nbsp;{{prenotazione.fermata.nome}}&nbsp;&nbsp;<strong>Verso:</strong>
                       &nbsp;&nbsp;{{prenotazione.verso}}</span><br>
+              <strong>Stato: &nbsp &nbsp<span *ngIf="prenotazione.confermata" class="highlight">confermata</span>
+                <span *ngIf="!prenotazione.confermata" class="highlightNOT">In attesa</span></strong><br>
               <div></div>
               <mat-divider></mat-divider>
             </div>
           </div>
         </div>
-        <div *ngIf="prenotazioniNext5Days.length === 0">
-          <h4>Nessuna prenotazione attiva</h4>
+        <div *ngIf="disponibilitaNext5Days.length === 0">
+          <h4>Nessuna Disponibilita</h4>
         </div>
         <div>
           <button mat-button matStepperPrevious class="styleColor">Indietro</button><span>&nbsp;&nbsp;</span>

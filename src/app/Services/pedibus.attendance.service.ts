@@ -10,11 +10,7 @@ import {Fermata} from '../Models/Fermata';
 import {FermataShort} from '../Models/FermataShort';
 import {FermataGroup} from '../Models/FermataGroup';
 import {Prenotazione} from '../Models/Prenotazione';
-
-
-
-
-
+import {AccompagnatoreFermata} from '../Models/AccompagnatoreFermata';
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -82,7 +78,7 @@ export class AttendanceService {
     );
   }
 
-  consolidaTurno(line: string, date: string, direction: string, accomp: Array<string>) {
+  consolidaTurno(line: string, date: string, direction: string, accomp: AccompagnatoreFermata) {
     console.log('AttendanceService.consolidaTurno' + direction);
 
     const httpoptions = { headers: new HttpHeaders({
@@ -91,7 +87,8 @@ export class AttendanceService {
     };
 
     const bodyObj = {
-      emailAccompagnatori: accomp
+      email: accomp.email,
+      idFermata: accomp.idFermata
     };
 
     const body = JSON.stringify(bodyObj);

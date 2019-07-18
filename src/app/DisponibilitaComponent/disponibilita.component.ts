@@ -83,29 +83,26 @@ export class DisponibiltaComponent implements OnInit {
       checkBoxRitorno : new FormControl([0]),
     });
 
-    this.prenotazioneService.getFermateGroupByLineaWithScuola().subscribe(res => {
+    this.prenotazioneService.getFermateGroupByLinea().subscribe(res => {
       this.fermateGroups = res;
       this.error = undefined;
       res.forEach(linea => {
         linea.fermate.forEach(fermata => {
-          if (fermata.nome === 'Politecnico') {
-            this.fermataRitornoDefault = fermata;
-            this.setFermataRitornoDefault(fermata);
-          } else if (fermata.nome === 'Piazza Vittorio') {
+          if (fermata.nome === 'Piazza Vittorio') {
             this.fermataAndataDefault = fermata;
             this.setFermataAndataDefault(fermata);
           }
         });
       });
     }, error1 => {
-      this.error = 'Operazione -getFermateGroupByLinea- fallita';
+      this.error = 'Operazione -getFermateGroupByLineaWithScuola- fallita';
     });
 
-    this.prenotazioneService.getPrenotazioniBambino('a').subscribe( result => { // getDisponbilitaAccompagnatore
+    this.prenotazioneService.getDisponibilitaAccompagnatore().subscribe( result => { // getDisponbilitaAccompagnatore
       this.disponibilitaNext5Days = result;
       this.setDisponibilitaAttive(result);
     }, error1 => {
-      this.error = 'Operazione -getPrenotazioniBambino- fallita';
+      this.error = 'Operazione -getDisponibilitaAccompagnatore- fallita';
     });
 
     this.createNext5Days();
@@ -147,7 +144,8 @@ export class DisponibiltaComponent implements OnInit {
             id: '',
             data,
             verso,
-            fermata: this.getGroup(i).controls.fermateAndata.value
+            fermata: this.getGroup(i).controls.fermateAndata.value,
+            confermata: false
           };
           this.disponibilitaNext5Days.push(newDisponibilita);
 
@@ -212,7 +210,8 @@ export class DisponibiltaComponent implements OnInit {
             id: result.id,
             data,
             verso,
-            fermata: this.getGroup(i).controls.fermateRitorno.value
+            fermata: this.getGroup(i).controls.fermateRitorno.value,
+            confermata: false
           };
           this.disponibilitaNext5Days.push(newDisponibilita);
 
@@ -269,9 +268,6 @@ export class DisponibiltaComponent implements OnInit {
     this.corsa3.controls.fermateAndata.setValue(fermata);
     this.corsa4.controls.fermateAndata.setValue(fermata);
     this.corsa5.controls.fermateAndata.setValue(fermata);
-  }
-
-  setFermataRitornoDefault(fermata: FermataShort) {
     this.corsa1.controls.fermateRitorno.setValue(fermata);
     this.corsa2.controls.fermateRitorno.setValue(fermata);
     this.corsa3.controls.fermateRitorno.setValue(fermata);

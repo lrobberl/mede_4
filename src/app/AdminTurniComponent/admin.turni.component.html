@@ -14,9 +14,7 @@
         </mat-radio-group><br><br>
 
           <h4>Seleziona una data</h4>
-        <label><strong>Seleziona una data</strong><br>
           <input matInput [matDatepicker]="picker" formControlName="date">
-        </label>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker><br><br>
       </form>
@@ -35,7 +33,7 @@
 <mat-card class="rightCard" *ngIf="data">
   <mat-card-title>
     <h3>Dettagli Corsa</h3>
-    <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
+    <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateNames(data.date)}}</h4>
   </mat-card-title>
 
   <div>
@@ -44,13 +42,14 @@
         <div class="example-large-box mat-elevation-z4">
           <mat-card-content style="text-align: center">
             <mat-list>
-              <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriAndata; last as isLast">
-                <mat-checkbox (change)="segnaAccompagnatoreAndata($event, accompagnatore)">{{accompagnatore}}</mat-checkbox>
+              <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriAndata">
+                <mat-radio-button (change)="segnaAccompagnatoreAndata($event, accompagnatore)">
+                    {{accompagnatore.email}} - {{accompagnatore.nomeFermata}}</mat-radio-button>
               </mat-list-item>
             </mat-list>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button class="toolbar" [disabled]="data.chiusoAndata" (click)="consolidaTurnoAndata()">
+            <button mat-raised-button class="toolbar" [disabled]="data.chiusoAndata || !selectedAndata" (click)="consolidaTurnoAndata()">
               Consolida Turno
             </button>
             <button mat-raised-button class="toolbar" [disabled]="!data.chiusoAndata" (click)="riapriTurnoAndata()">
@@ -70,13 +69,14 @@
         <div class="example-large-box mat-elevation-z4">
           <mat-card-content style="text-align: center">
             <mat-list>
-              <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriRitorno; last as isLast">
-                <mat-checkbox (change)="segnaAccompagnatoreRitorno($event, accompagnatore)">{{accompagnatore}}</mat-checkbox>
+              <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriRitorno">
+                <mat-radio-button (change)="segnaAccompagnatoreRitorno($event, accompagnatore)">
+                  {{accompagnatore.email}} - {{accompagnatore.nomeFermata}}</mat-radio-button>
               </mat-list-item>
             </mat-list>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button class="toolbar" [disabled]="data.chiusoRitorno" (click)="consolidaTurnoRitorno()">
+            <button mat-raised-button class="toolbar" [disabled]="data.chiusoRitorno || !selectedRitorno" (click)="consolidaTurnoRitorno()">
               Consolida Turno
             </button>
             <button mat-raised-button class="toolbar" [disabled]="!data.chiusoRitorno" (click)="riapriTurnoRitorno()">

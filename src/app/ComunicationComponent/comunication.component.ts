@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../Models/User';
 import {AuthenticationService} from '../Services/authentication.service';
-import {Role} from '../Models/Role';
 import {Router} from '@angular/router';
 import {Message} from '../Models/Message';
 import {UserService} from '../Services/pedibus.user.service';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   templateUrl: 'comunication.component.html',
   styleUrls: ['comunication.component.css']
 })
-export class ComunicationComponent implements OnInit {
+export class ComunicationComponent implements OnInit, OnDestroy {
   currentUser: User;
   displayedColumns: string[] = ['data', 'messaggio'];
   messages: Message[];
@@ -28,6 +29,7 @@ export class ComunicationComponent implements OnInit {
   error: string;
   table = true;
   resultsLength: 10;
+  private stompClient: any;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -53,13 +55,15 @@ export class ComunicationComponent implements OnInit {
     // this.users$ = this.adminService.getAllUsers();
     // console.log(this.users$);
 
-this.userService.getAllMessages().subscribe( messages => {
-          this.messages = messages as Message[];
-          this.table = true;
-    }, error1 => {
-          this.error = 'Operazione -getAllMessages- fallita';
-          this.table = false;
-});
+    this.userService.getAllMessages().subscribe( messages => {
+              this.messages = messages as Message[];
+              this.table = true;
+        }, error1 => {
+              this.error = 'Operazione -getAllMessages- fallita';
+              this.table = false;
+    });
+
+    this.WSconnect();
   }
 
   segnaLetto(element: Message) {
@@ -70,5 +74,33 @@ this.userService.getAllMessages().subscribe( messages => {
           this.error = 'Operazione -segnaLetto- fallita';
       }
     );
+  }
+
+  WSconnect() {
+    const socket = new SockJS('http://localhost:8080/pedibus-stomp-endpoint');
+    this.stompClient = Stomp.over(socket);
+
+    const questo = this;
+    this.stompClient.connect({}, frame => {
+      questo.stompClient.subscribe('/topic', notifica => {
+        questo.userService.getAllMessages().subscribe( messages => {
+          this.messages = messages as Message[];
+          this.table = true;
+        }, error1 => {
+          this.error = 'Operazione -getAllMessages- fallita';
+          this.table = false;
+        });
+      });
+    });
+  }
+
+  WSClose() {
+      if (this.stompClient != null) {
+      this.stompClient.disconnect();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.WSClose();
   }
 }
