@@ -9,10 +9,11 @@
   justify-content: center;
   width: 50%;
   max-width: 60%;
-  min-width: 15em;
+  min-width: 35em;
   margin-top: 5em;
   margin-bottom: 5em;
   margin-left: 25%;
+  margin-right: 25%;
 }
 
 .centeredContent {

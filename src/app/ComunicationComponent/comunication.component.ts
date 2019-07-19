@@ -77,12 +77,14 @@ export class ComunicationComponent implements OnInit, OnDestroy {
   }
 
   WSconnect() {
-    const socket = new SockJS('http://localhost:8080/pedibus-stomp-endpoint');
+    const socket = new SockJS('http://localhost:8080/pedibus');
     this.stompClient = Stomp.over(socket);
 
     const questo = this;
     this.stompClient.connect({}, frame => {
-      questo.stompClient.subscribe('/topic', notifica => {
+      questo.stompClient.subscribe('/topic/comunicazioni', handler);
+
+      function handler() {
         questo.userService.getAllMessages().subscribe( messages => {
           this.messages = messages as Message[];
           this.table = true;
@@ -90,8 +92,11 @@ export class ComunicationComponent implements OnInit, OnDestroy {
           this.error = 'Operazione -getAllMessages- fallita';
           this.table = false;
         });
-      });
+      }
     });
+
+    this.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
+    this.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
   }
 
   WSClose() {

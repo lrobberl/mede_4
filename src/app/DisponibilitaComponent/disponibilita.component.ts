@@ -1,19 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Bambino} from '../Models/Bambino';
 import {UserService} from '../Services/pedibus.user.service';
 import {Linea} from '../Models/Linea';
 import {FermataShort} from '../Models/FermataShort';
-import {FermataGroup} from '../Models/FermataGroup';
 import {MatCheckboxChange} from '@angular/material';
-import {Prenotazione} from '../Models/Prenotazione';
 import {PrenotazioneService} from '../Services/prenotazione.service';
 import {Router} from '@angular/router';
 import {Disponibilita} from '../Models/Disponibilita';
+import {AttendanceService} from '../Services/pedibus.attendance.service';
 
-/**
- * @title Stepper vertical
- */
 @Component({
   selector: 'app-stepper',
   templateUrl: './disponibilita.component.html',
@@ -24,6 +19,7 @@ export class DisponibiltaComponent implements OnInit {
   monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
   dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
   isLinear = false;
+  firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   corsa1: FormGroup;
   corsa2: FormGroup;
@@ -31,26 +27,32 @@ export class DisponibiltaComponent implements OnInit {
   corsa4: FormGroup;
   corsa5: FormGroup;
   error: string;
+  errorFirstStep: string;
   selected: string;
   today: Date;
   i: string;
   next5Days: Date[] = [];
-  fermateGroups: FermataGroup[] = [];
-  fermataRitornoDefault: FermataShort;
+  fermateLinea: FermataShort[] = [];
   fermataAndataDefault: FermataShort;
   disponibilitaNext5Days: Disponibilita[] = [];
   fermata: FermataShort;
   message: string;
   currentEvent: MatCheckboxChange;
+  linee: Linea[] = [];
+  secondStep = false;
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private prenotazioneService: PrenotazioneService,
+              private attendanceService: AttendanceService,
               private router: Router) {
 
   }
 
   ngOnInit() {
+    this.firstFormGroup = this.formBuilder.group({
+      linee: ['', Validators.required]
+    });
 
     this.corsa1 = new FormGroup({
       fermateAndata : new FormControl([Validators.required]),
@@ -83,26 +85,10 @@ export class DisponibiltaComponent implements OnInit {
       checkBoxRitorno : new FormControl([0]),
     });
 
-    this.prenotazioneService.getFermateGroupByLinea().subscribe(res => {
-      this.fermateGroups = res;
-      this.error = undefined;
-      res.forEach(linea => {
-        linea.fermate.forEach(fermata => {
-          if (fermata.nome === 'Piazza Vittorio') {
-            this.fermataAndataDefault = fermata;
-            this.setFermataAndataDefault(fermata);
-          }
-        });
-      });
+    this.attendanceService.getLines().subscribe(res => {
+      this.linee = res;
     }, error1 => {
-      this.error = 'Operazione -getFermateGroupByLineaWithScuola- fallita';
-    });
-
-    this.prenotazioneService.getDisponibilitaAccompagnatore().subscribe( result => { // getDisponbilitaAccompagnatore
-      this.disponibilitaNext5Days = result;
-      this.setDisponibilitaAttive(result);
-    }, error1 => {
-      this.error = 'Operazione -getDisponibilitaAccompagnatore- fallita';
+      this.errorFirstStep = 'Operazione -getLineeAccompagnatore- fallita';
     });
 
     this.createNext5Days();
@@ -122,13 +108,37 @@ export class DisponibiltaComponent implements OnInit {
     }
   }
 
+  getFermateAndDisponibilitaLinea() {
+    this.secondStep = true;
+    this.prenotazioneService.getFermateOfLinea(this.firstFormGroup.controls.linee.value.nome).subscribe(res => {
+      this.fermateLinea = res;
+      this.error = undefined;
+      res.forEach(fermata => {
+          if (fermata.nome === res[0].nome) {  // Set della prima fermata della linea come DEFAULT
+            this.fermataAndataDefault = fermata;
+            this.setFermataAndataDefault(fermata);
+          }
+      });
+    }, error1 => {
+      this.error = 'Operazione -getFermateGroupByLineaWithScuola- fallita';
+    });
+
+    this.prenotazioneService.getDisponibilitaAccompagnatore(this.firstFormGroup.controls.linee.value.nome).subscribe(
+      result => { // getDisponbilitaAccompagnatore
+      this.disponibilitaNext5Days = result;
+      this.setDisponibilitaAttive(result);
+    }, error1 => {
+      this.error = 'Operazione -getDisponibilitaAccompagnatore- fallita';
+    });
+  }
+
   setVersoAndata($event: MatCheckboxChange, i: number) {
     if ($event.checked) { // Triggera la prenotazione
       this.error = undefined;
       this.message = undefined;
       this.currentEvent = $event;
-      let fermata = this.getGroup(i).controls.fermateAndata.value.nome as string;
-      const linea = this.getGroup(i).controls.fermateAndata.value.linea as string;
+      let fermata = this.getGroup(i).controls.fermateAndata.value.id as string;
+      const linea = this.firstFormGroup.controls.linee.value.nome as string;
       const data = this.next5Days[i];
       const verso = 'ANDATA';
 
@@ -141,7 +151,7 @@ export class DisponibiltaComponent implements OnInit {
             + ' \ninserita con successo';
 
           const newDisponibilita: Disponibilita = {
-            id: '',
+            id: '',  // todo: Occorre dare un ID alle disponibilita??
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateAndata.value,
@@ -194,8 +204,8 @@ export class DisponibiltaComponent implements OnInit {
       this.error = undefined;
       this.message = undefined;
       this.currentEvent = $event;
-      let fermata = this.getGroup(i).controls.fermateRitorno.value.nome as string;
-      const linea = this.getGroup(i).controls.fermateRitorno.value.linea as string;
+      let fermata = this.getGroup(i).controls.fermateRitorno.value.id as string;
+      const linea = this.firstFormGroup.controls.linee.value.nome as string;
       const data = this.next5Days[i];
       const verso = 'RITORNO';
 
@@ -207,7 +217,7 @@ export class DisponibiltaComponent implements OnInit {
           '  VERSO: ' + verso + ' FERMATA: ' + this.getGroup(i).controls.fermateRitorno.value.nome as string + ' \ninserita con successo';
 
           const newDisponibilita: Disponibilita = {
-            id: result.id,
+            id: '',  // todo: Occorre dare un ID alle disponibilita??
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateRitorno.value,
@@ -230,6 +240,7 @@ export class DisponibiltaComponent implements OnInit {
       let disponibilitaDaCancellare: any;
       // Aggiungere se serve qua la fermata
 
+      // Cercare grazie alla data e verso la disponibilità da eliminare
       this.disponibilitaNext5Days.forEach( disponibilita => {
         if (disponibilita.verso === verso && this.formatDate(disponibilita.data) === this.formatDate(d)) {
           disponibilitaDaCancellare = disponibilita;
@@ -288,12 +299,10 @@ export class DisponibiltaComponent implements OnInit {
       // this.prenotazioniNext5Days[i].corsaIndex = diffDays;
       const id = disponibilita.fermata.id;
 
-      this.fermateGroups.forEach( group => {
-        group.fermate.forEach( f => {
-          if (f.id === id) {
-            this.fermata = f;
+      this.fermateLinea.forEach( fermata => {
+          if (fermata.id === id) {
+            this.fermata = fermata;
           }
-        });
       });
 
       if (disponibilita.verso === 'ANDATA') {
@@ -380,9 +389,8 @@ export class DisponibiltaComponent implements OnInit {
   }
 
   eraseFields() {
-    this.fermateGroups = undefined;
+    this.fermateLinea = undefined;
     this.fermataAndataDefault = undefined;
-    this.fermataRitornoDefault = undefined;
   }
 
   generateIdAndata(i: number) {

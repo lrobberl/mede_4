@@ -51,11 +51,29 @@ export class PrenotazioneService {
     );
   }
 
+  getFermateOfLinea(linea: string) {
+    console.log('AttendanceService.getFermateOfLinea');
+
+    return this.http.get<FermataShort[]>(REST_URL + 'fermate/' + linea).pipe(
+      map(arr => arr.map(x => ({nome: x.nome, id: x.id}) as FermataShort)),
+      retry(3)
+    );
+  }
+
   getFermateGroupByLineaWithScuola() {
     console.log('AttendanceService.getFermateGroupByLineaWithScuola');
 
     return this.http.get<FermataGroup[]>(REST_URL + 'fermateGroupByLineaWithScuola').pipe(
       map(arr => arr.map(x => ({nome: x.nome, disabled: false, fermate: x.fermate}) as FermataGroup)),
+      retry(3)
+    );
+  }
+
+  getLineeAccompagnatore() {
+    console.log('AttendanceService.getLineeAccompagnatore');
+
+    return this.http.get<Linea[]>(REST_URL + 'linee-accompagnatore').pipe(
+      map(arr => arr.map(x => ({nome: x.nome, id: x.id, aaccompagnatori: [], fermate: []}) as Linea)),
       retry(3)
     );
   }
@@ -70,11 +88,11 @@ export class PrenotazioneService {
     );
   }
 
-  getDisponibilitaAccompagnatore() {
+  getDisponibilitaAccompagnatore(linea: string) {
     console.log('AttendanceService.getDisponibilitaAccompagnatore');
 
-    return this.http.get<Disponibilita[]>(REST_URL + 'disponibilita/').pipe(
-      map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata, confermata: x.confermata,
+    return this.http.get<Disponibilita[]>(REST_URL + 'disponibilita5giorni/' + linea).pipe(
+      map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata,
         data: new Date(x.data)}) as Disponibilita)),
       retry(3)
     );
@@ -105,7 +123,7 @@ export class PrenotazioneService {
       }) as IdPrenotazione));
   }
 
-  prenotaDisponibilita(idFerm: string, d: Date, direction: string, line: string) {
+  prenotaDisponibilita(fermataID: string, d: Date, direction: string, line: string) {
     console.log('PrenotazioneService.prenotaCorsa');
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -117,17 +135,20 @@ export class PrenotazioneService {
 
     const prenotazione: NewDisponibilita = {
       linea: line,
-      fermata: idFerm,
       data: d,
-      verso: direction
+      verso: direction,
+      idFermata: fermataID
     };
 
     const body = JSON.stringify(prenotazione);
 
-    return this.http.post<IdPrenotazione>(REST_URL + 'disponibilita', body, httpOptions).pipe(
+    return this.http.post<IdPrenotazione>(REST_URL + 'disponibilita', body, httpOptions);
+    /*
+    .pipe(
       map( x => ({
         id: x.id
       }) as IdPrenotazione));
+     */
   }
 
   deletePrenotazione(linea: string, fermata: string, id: string) {
