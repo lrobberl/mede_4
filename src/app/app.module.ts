@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {MatListModule} from '@angular/material/list';
 // tslint:disable-next-line:max-line-length
 import {
+  MatBadgeModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule, MatDatepickerModule,
@@ -113,7 +114,8 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatStepperModule
+    MatStepperModule,
+    MatBadgeModule
   ],
   providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule, PrenotazioneService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],

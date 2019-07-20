@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -6,6 +6,7 @@ import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
 import {User} from '../Models/User';
 import {Role} from '../Models/Role';
+import {UserService} from '../Services/pedibus.user.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -13,7 +14,7 @@ import {Role} from '../Models/Role';
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.css']
 })
-export class MainNavComponent {
+export class MainNavComponent implements OnInit {
   currentUser: User;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -21,11 +22,26 @@ export class MainNavComponent {
     );
 
   title = 'PIEDIBUS';
+  newMessages: number;
+  error: string;
 
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private userService: UserService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+  }
+
+  ngOnInit(): void {
+    this.userService.getNumberNewMessages();
+    this.newMessages = this.userService.newCommunicationsSource.getValue();
+    /*
+    this.userService.getNumberNewMessages().subscribe( res => {
+      this.newCommunications = res;
+    }, error1 => {
+      this.error = 'Operazione -getNumberNewMessages- fallita';
+    });
+     */
   }
   /*
   get isAdmin() {
@@ -49,5 +65,12 @@ export class MainNavComponent {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+
+  goTo(page: string) {
+    if (page === 'comunicazioni') {
+      this.router.navigate(['comunications']);
+    }
   }
 }

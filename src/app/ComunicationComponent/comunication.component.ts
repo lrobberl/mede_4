@@ -70,6 +70,7 @@ export class ComunicationComponent implements OnInit, OnDestroy {
     this.userService.segnaMessaggioLetto(element).subscribe(
       res => {
         element.letto = true;
+        this.userService.getNumberNewMessages();
         }, error1 => {
           this.error = 'Operazione -segnaLetto- fallita';
       }

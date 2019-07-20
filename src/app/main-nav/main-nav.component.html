@@ -19,9 +19,13 @@
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/prenotazioni" routerLinkActive="active">Prenotazioni</a><br>
       <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/disponibilita" routerLinkActive="active">Disponibilita</a><br>
       <a *ngIf="!(isHandset$ | async) && isLogged && isSystemAdminOrAccompagnatore" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
-      <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/comunications" routerLinkActive="active">Comunicazioni</a><br>
-      <button *ngIf="!(isHandset$ | async) && isSystemAdmin" mat-button [matMenuTriggerFor]="menu">Admin</button>
-      <mat-menu #menu="matMenu"> <!-- <button mat-menu-item>Item 2</button> -->
+      <!-- <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/comunications" routerLinkActive="active">Comunicazioni</a><br> -->
+      <button mat-button *ngIf="!(isHandset$ | async) && isLogged && newMessages !== 0" matBadge="{{newMessages}}" matBadgeColor="warn"
+              style="font-size: large" (click)="goTo('comunicazioni')">Comunicazioni</button><br>
+      <button mat-button *ngIf="!(isHandset$ | async) && isLogged && newMessages === 0"
+              style="font-size: large" (click)="goTo('comunicazioni')">Comunicazioni</button><br>
+      <button *ngIf="!(isHandset$ | async) && isSystemAdmin" mat-button [matMenuTriggerFor]="menu" style="font-size: large">Admin</button>
+      <mat-menu #menu="matMenu"> <!-- <button mat-menu-t-bu>Item 2</button> -->
         <a *ngIf="!(isHandset$ | async)" routerLink="/adminRegister" routerLinkActive="active">Nuovo Utente</a><br>
         <a *ngIf="!(isHandset$ | async)" routerLink="/users" routerLinkActive="active">Utenti</a><br>
         <a *ngIf="!(isHandset$ | async)" routerLink="/turni" routerLinkActive="active">Turni Corse</a><br>

@@ -1,11 +1,12 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
 import {Message} from '../Models/Message';
 import {BambinoRegistration} from '../Models/BambinoRegistration';
 import {RegisterForm} from '../Models/RegisterForm';
 import {Bambino} from '../Models/Bambino';
+import {numbers} from '@material/list/constants';
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -21,7 +22,7 @@ export interface CheckEmailPresent {
 export class UserService {
   user: RegisterForm;
   userLogged: string;
-
+  newCommunicationsSource = new BehaviorSubject<number>(0);
   constructor(private http: HttpClient) {
   }
 
@@ -104,10 +105,13 @@ export class UserService {
     return this.http.get<Message []>(REST_URL + 'comunicazioni');
   }
   // Get from the server the number of incoming messages for a certain USER specified in the URL path
-  getNumberNewMessages(user: string): Observable<number> {
+  getNumberNewMessages() {
     console.log('UserService.getNumberNewMessages');
+    this.newCommunicationsSource.next(4);
 
-    return this.http.get<number>(REST_URL + 'comunicazioni/' + user);
+    return this.http.get<number>(REST_URL + 'comunicazioni/').subscribe( res => {
+      this.newCommunicationsSource.next(res);
+    });
   }
 
   segnaMessaggioLetto(element: Message) {
