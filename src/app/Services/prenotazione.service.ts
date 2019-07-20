@@ -93,7 +93,7 @@ export class PrenotazioneService {
 
     return this.http.get<Disponibilita[]>(REST_URL + 'disponibilita5giorni/' + linea).pipe(
       map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata,
-        data: new Date(x.data)}) as Disponibilita)),
+        data: new Date(x.data), confermata: x.confermata}) as Disponibilita)),
       retry(3)
     );
   }

@@ -80,11 +80,13 @@ export class ComunicationComponent implements OnInit, OnDestroy {
     const socket = new SockJS('http://localhost:8080/pedibus');
     this.stompClient = Stomp.over(socket);
 
-    const questo = this;
-    this.stompClient.connect({}, frame => {
-      questo.stompClient.subscribe('/topic/comunicazioni', handler);
+    console.log('Tentativo connessione WS...');
 
-      function handler() {
+    const questo = this;
+    this.stompClient.connect({}, () => {
+      questo.stompClient.subscribe('/topic/comunicazioni', message => {
+        const messageString = JSON.stringify(message);
+        console.log('Nuovo messaggio ricevuto ' + messageString);
         questo.userService.getAllMessages().subscribe( messages => {
           this.messages = messages as Message[];
           this.table = true;
@@ -92,7 +94,7 @@ export class ComunicationComponent implements OnInit, OnDestroy {
           this.error = 'Operazione -getAllMessages- fallita';
           this.table = false;
         });
-      }
+      });
     });
 
     this.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms

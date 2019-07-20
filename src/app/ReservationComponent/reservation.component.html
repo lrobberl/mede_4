@@ -98,8 +98,8 @@
               <span><strong>Linea:</strong>&nbsp;&nbsp;{{prenotazione.fermata.linea}}</span><br>
               <span><strong>Fermata:</strong>&nbsp;&nbsp;{{prenotazione.fermata.nome}}&nbsp;&nbsp;<strong>Verso:</strong>
                       &nbsp;&nbsp;{{prenotazione.verso}}</span><br>
-              <div></div>
-              <mat-divider></mat-divider>
+              <div></div><br>
+              <mat-divider></mat-divider><br>
             </div>
           </div>
         </div>
@@ -115,55 +115,3 @@
     </mat-vertical-stepper>
   </mat-card-content>
 </mat-card>
-
-<!--
-<button mat-raised-button class="styleColor" (click)="isLinear = !isLinear" id="toggle-linear">
-  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-  </button>
-
-<form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Seleziona una o più corse</ng-template>
-
-          <div vertical layout *ngFor="let giorno of next5Days">
-            <div class="wrapper">
-              <div><mat-checkbox ><strong>ANDATA</strong></mat-checkbox></div>
-              <div><strong>{{formatDate(giorno)}}</strong></div>
-              <div><mat-checkbox ><strong>RITORNO</strong></mat-checkbox></div>
-              <div>
-                <mat-form-field [formGroup]="secondFormGroup">
-                  <mat-label>Fermate</mat-label>
-                  <mat-select [(value)]="selected" formControlName="fermateAndata">
-                    &lt;!&ndash; <mat-option>&#45;&#45; None &#45;&#45;</mat-option> &ndash;&gt;
-                    <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option>
-                    <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
-                                  [disabled]="group.disabled">
-                      <mat-option *ngFor="let fermata of group.fermate" [value]="fermataDefault">
-                        <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label>
-                        <label *ngIf="fermata.id !== fermataDefault.id">{{fermata.nome}}</label>
-                      </mat-option>
-                    </mat-optgroup>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-
-              <div></div>
-
-              <div>
-                <mat-form-field [formGroup]="secondFormGroup">
-                  <mat-label>Fermate</mat-label>
-                  <mat-select formControlName="fermateRitorno">
-                    &lt;!&ndash; <mat-option>&#45;&#45; None &#45;&#45;</mat-option> &ndash;&gt;
-                    <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option>
-                    <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
-                                  [disabled]="group.disabled">
-                      <mat-option *ngFor="let fermata of group.fermate" [value]="fermataDefault">
-                        <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label>
-                        <label *ngIf="fermata.id !== fermataDefault.id">{{fermata.nome}}</label>
-                      </mat-option>
-                    </mat-optgroup>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div><br><br>
-          </div>
-        </form>-->

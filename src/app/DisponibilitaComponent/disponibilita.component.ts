@@ -293,7 +293,11 @@ export class DisponibiltaComponent implements OnInit {
       const curDate = disponibilita.data;
       const a = curDate.getTime() - today.getTime();
       const diff = Math.abs(curDate.getTime() - today.getTime());
-      const diffDays = Math.ceil(diff / (86400000));
+      let diffDays = Math.ceil(diff / (86400000));
+
+      if (this.dayNames[this.today.getDay()] === 'Sabato') {
+        diffDays -= 1;
+      }
 
       // Get del corrispondente form {corsa1, corsa2, ...} in base alla data
       // this.prenotazioniNext5Days[i].corsaIndex = diffDays;

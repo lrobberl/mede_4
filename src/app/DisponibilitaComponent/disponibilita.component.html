@@ -89,13 +89,13 @@
             <div *ngFor="let prenotazione of disponibilitaNext5Days">
               <div style="text-align: left">
                 <span><strong>Data:</strong>&nbsp;&nbsp;{{formatDate(prenotazione.data)}}</span><br>
-                <span><strong>Linea:</strong>&nbsp;&nbsp;{{prenotazione.fermata.linea}}</span><br>
+                <span><strong>Linea:</strong>&nbsp;&nbsp;{{firstFormGroup.controls.linee.value.nome}}</span><br>
                 <span><strong>Fermata:</strong>&nbsp;&nbsp;{{prenotazione.fermata.nome}}&nbsp;&nbsp;<strong>Verso:</strong>
                         &nbsp;&nbsp;{{prenotazione.verso}}</span><br>
-                <strong>Stato: &nbsp &nbsp<span *ngIf="prenotazione.confermata" class="highlight">confermata</span>
+                <strong>Stato:&nbsp;&nbsp;<span *ngIf="prenotazione.confermata" class="highlight">confermata</span>
                   <span *ngIf="!prenotazione.confermata" class="highlightNOT">In attesa</span></strong><br>
-                <div></div>
-                <mat-divider></mat-divider>
+                <div></div><br>
+                <mat-divider></mat-divider><br>
               </div>
             </div>
           </div>
