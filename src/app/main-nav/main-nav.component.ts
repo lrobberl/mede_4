@@ -34,7 +34,9 @@ export class MainNavComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getNumberNewMessages();
-    this.newMessages = this.userService.newCommunicationsSource.getValue();
+    this.userService.newCommunicationsSource.subscribe( x => {
+      this.newMessages = x;
+    });
     /*
     this.userService.getNumberNewMessages().subscribe( res => {
       this.newCommunications = res;
