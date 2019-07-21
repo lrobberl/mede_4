@@ -88,7 +88,7 @@ export class DisponibiltaComponent implements OnInit {
     this.attendanceService.getLines().subscribe(res => {
       this.linee = res;
     }, error1 => {
-      this.errorFirstStep = 'Operazione -getLineeAccompagnatore- fallita';
+      this.errorFirstStep = 'Operazione -getLinee- fallita';
     });
 
     this.createNext5Days();
@@ -171,7 +171,7 @@ export class DisponibiltaComponent implements OnInit {
       this.currentEvent = $event;
       const d = this.next5Days[i];
       const verso = 'ANDATA';
-      let disponibilitaDaCancellare: any;
+      let disponibilitaDaCancellare: Disponibilita;
       // Aggiungere se serve qua la fermata
 
       this.disponibilitaNext5Days.forEach( disponibilita => {
@@ -180,14 +180,14 @@ export class DisponibiltaComponent implements OnInit {
         }
       });
 
-      this.prenotazioneService.deleteDisponibilita(disponibilitaDaCancellare.fermata.linea, disponibilitaDaCancellare.fermata.nome,
-        disponibilitaDaCancellare.id).subscribe(
+      this.prenotazioneService.deleteDisponibilita(this.firstFormGroup.controls.linee.value.nome, this.formatDateToServer(d),
+        verso).subscribe(
         res => {
           const index = this.disponibilitaNext5Days.indexOf(disponibilitaDaCancellare);
           this.disponibilitaNext5Days.splice(index);
 
           this.message = 'Disponibilita   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
-            disponibilitaDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
+            this.firstFormGroup.controls.linee.value.nome + '  VERSO: ' + verso + ' FERMATA: ' +
             disponibilitaDaCancellare.fermata.nome + ' \ncancellata con successo';
           this.getGroup(i).controls.checkBoxAndata.setValue(0);
           this.currentEvent.source.checked = false;
@@ -247,14 +247,14 @@ export class DisponibiltaComponent implements OnInit {
         }
       });
 
-      this.prenotazioneService.deletePrenotazione(disponibilitaDaCancellare.fermata.linea, disponibilitaDaCancellare.fermata.nome,
-        disponibilitaDaCancellare.id).subscribe(
+      this.prenotazioneService.deleteDisponibilita(this.firstFormGroup.controls.linee.value.nome, this.formatDateToServer(d),
+        verso).subscribe(
         res => {
           const index = this.disponibilitaNext5Days.indexOf(disponibilitaDaCancellare);
           this.disponibilitaNext5Days.splice(index);
 
           this.message = 'Disponibilita   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
-            disponibilitaDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
+            this.firstFormGroup.controls.linee.value.nome + '  VERSO: ' + verso + ' FERMATA: ' +
             disponibilitaDaCancellare.fermata.nome + ' \ninserita con successo';
           this.getGroup(i).controls.checkBoxRitorno.setValue(0);
           this.currentEvent.source.checked = false;
