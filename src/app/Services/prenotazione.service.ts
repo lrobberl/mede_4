@@ -91,13 +91,14 @@ export class PrenotazioneService {
   getDisponibilitaAccompagnatore(linea: string) {
     console.log('AttendanceService.getDisponibilitaAccompagnatore');
 
-    return this.http.get<Disponibilita[]>(REST_URL + 'disponibilita-accompagnatore/' + linea).pipe(
-      map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata,
-        data: new Date(x.data.getTime() + 7200001), confermata: x.confermata}) as Disponibilita)),
-      retry(3)
-    );
+    return this.http.get<Disponibilita[]>(REST_URL + 'disponibilita-accompagnatore/' + linea);
   }
-
+  /*
+  .pipe(
+      map(arr => arr.map(x => ({verso: x.verso, fermata: x.fermata,
+        data: new Date(x.data.getTime() + 7200001), confermata: false}) as Disponibilita))
+    )
+   */
   prenotaCorsa(idFerm: string, d: Date, idBamb: string, direction: string, linea: string) {
     console.log('PrenotazioneService.prenotaCorsa');
 

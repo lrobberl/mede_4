@@ -125,8 +125,12 @@ export class DisponibiltaComponent implements OnInit {
 
     this.prenotazioneService.getDisponibilitaAccompagnatore(this.firstFormGroup.controls.linee.value.nome).subscribe(
       result => { // getDisponbilitaAccompagnatore
-      this.disponibilitaNext5Days = result;
-      this.setDisponibilitaAttive(result);
+        this.disponibilitaNext5Days = result;
+        this.disponibilitaNext5Days.forEach( r => {
+          r.data = new Date(r.dataStr);
+          r.confermata = false;
+        });
+        this.setDisponibilitaAttive(this.disponibilitaNext5Days);
     }, error1 => {
       this.error = 'Operazione -getDisponibilitaAccompagnatore- fallita';
     });
@@ -155,7 +159,8 @@ export class DisponibiltaComponent implements OnInit {
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateAndata.value,
-            confermata: false
+            confermata: false,
+            dataStr: ''
           };
           this.disponibilitaNext5Days.push(newDisponibilita);
 
@@ -184,7 +189,7 @@ export class DisponibiltaComponent implements OnInit {
         verso).subscribe(
         res => {
           const index = this.disponibilitaNext5Days.indexOf(disponibilitaDaCancellare);
-          this.disponibilitaNext5Days.splice(index);
+          this.disponibilitaNext5Days.splice(index, 1);
 
           this.message = 'Disponibilita   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
             this.firstFormGroup.controls.linee.value.nome + '  VERSO: ' + verso + ' FERMATA: ' +
@@ -221,7 +226,8 @@ export class DisponibiltaComponent implements OnInit {
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateRitorno.value,
-            confermata: false
+            confermata: false,
+            dataStr: ''
           };
           this.disponibilitaNext5Days.push(newDisponibilita);
 
@@ -251,7 +257,7 @@ export class DisponibiltaComponent implements OnInit {
         verso).subscribe(
         res => {
           const index = this.disponibilitaNext5Days.indexOf(disponibilitaDaCancellare);
-          this.disponibilitaNext5Days.splice(index);
+          this.disponibilitaNext5Days.splice(index, 1);
 
           this.message = 'Disponibilita   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
             this.firstFormGroup.controls.linee.value.nome + '  VERSO: ' + verso + ' FERMATA: ' +

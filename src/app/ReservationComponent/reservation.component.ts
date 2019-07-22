@@ -161,7 +161,7 @@ export class ReservationComponent implements OnInit {
                           ' FERMATA: ' + this.getGroup(i).controls.fermateAndata.value.nome as string + ' \neffettuata con successo';
 
         const newPrenotazione: Prenotazione = {
-            id: '',
+            id: result.id,
             bambino: this.firstForm.childrenControl.value.nome as string,
             data,
             verso,
@@ -194,7 +194,7 @@ export class ReservationComponent implements OnInit {
         prenotazioneDaCancellare.id).subscribe(
         res => {
           const index = this.prenotazioniNext5Days.indexOf(prenotazioneDaCancellare);
-          this.prenotazioniNext5Days.splice(index);
+          this.prenotazioniNext5Days.splice(index, 1);
 
           this.message = 'Prenotazione   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
             prenotazioneDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
@@ -261,7 +261,7 @@ export class ReservationComponent implements OnInit {
               prenotazioneDaCancellare.id).subscribe(
                 res => {
                   const index = this.prenotazioniNext5Days.indexOf(prenotazioneDaCancellare);
-                  this.prenotazioniNext5Days.splice(index);
+                  this.prenotazioniNext5Days.splice(index, 1);
 
                   this.message = 'Prenotazione   DATA: ' + this.formatDate(this.next5Days[i]) + ' LINEA: ' +
                     prenotazioneDaCancellare.fermata.linea + '  VERSO: ' + verso + ' FERMATA: ' +
