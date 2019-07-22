@@ -7,6 +7,8 @@ import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
 import {MatRadioChange} from '@angular/material';
 import {Linea} from '../Models/Linea';
 import {AccompagnatoreFermata} from '../Models/AccompagnatoreFermata';
+import {Message} from '../Models/Message';
+import {WebSocketService} from '../Services/websocket.service';
 
 @Component({
   selector: 'app-pedibus-turni',
@@ -31,11 +33,13 @@ export class AdminTurniComponent implements OnInit {
   classType = 'centeredCard';
   selectedAndata = false;
   selectedRitorno = false;
+  private stompClient: any;
 
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,
               private router: Router,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private websocketService: WebSocketService) {
 
     if (!this.authenticationService.isLoggedIn()) {
       this.authenticationService.logout();
@@ -58,6 +62,40 @@ export class AdminTurniComponent implements OnInit {
       date: ['', [Validators.required]],
       line: ['', [Validators.required]]
     });
+
+    // this.stompClient = this.websocketService.connect();
+    this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
+      const username = JSON.parse(localStorage.getItem('currentUser')).username;
+      // console.log(username);
+
+      this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
+        const messageString = JSON.stringify(message);
+        // console.log('Nuovo messaggio ricevuto ' + messageString);
+        if (this.dateLineForm.invalid) {
+          this.errorLeft = 'I valori inseriti sono errati';
+          return;
+        }
+
+        this.data = undefined;
+        this.message = undefined;
+
+        const linea = this.f.line.value;
+        const dataSelezionata = this.formatDate(this.f.date.value);
+
+        this.attendanceService.getAccompagnatori(linea as string, dataSelezionata).subscribe(x => {
+          this.data = x;
+          this.errorLeft = undefined;
+          this.classType = 'leftCard';
+          this.selectedData = this.formatDateDashed(this.f.date.value);
+        }, error1 => {
+          this.errorLeft = 'Operazione Fallita.\n Hai i privilegi necessari per gestire la linea specificata?';
+          this.classType = 'centeredCard';
+        });
+        // this.userService.updateUnreadMessages(message.body);
+      });
+    });
+    this.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
+    this.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
   }
 
   get f() { return this.dateLineForm.controls; }

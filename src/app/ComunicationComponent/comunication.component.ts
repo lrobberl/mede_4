@@ -6,26 +6,16 @@ import {Message} from '../Models/Message';
 import {UserService} from '../Services/pedibus.user.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import {WebSocketService} from '../Services/websocket.service';
 
 @Component({
   templateUrl: 'comunication.component.html',
   styleUrls: ['comunication.component.css']
 })
-export class ComunicationComponent implements OnInit, OnDestroy {
+export class ComunicationComponent implements OnInit {
   currentUser: User;
   displayedColumns: string[] = ['data', 'messaggio'];
   messages: Message[];
-  /*
-  messaggio: Message[] = [{
-    id: '1234',
-    utente: 'pippo',
-    messaggio: 'Buongiorno, \n, volevo informale che l utente Pippo ha confermato la disponibilità per la corsa del 22/07/2019 per la ' +
-      'linea Rossa. \n\n Grazie della visione',
-    data: '30/06/2019',
-    letto: false,
-  }];
-   */
-
   error: string;
   table = true;
   resultsLength: 10;
@@ -34,16 +24,11 @@ export class ComunicationComponent implements OnInit, OnDestroy {
   constructor(
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private websocketService: WebSocketService
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
 
-    // Se per caso il login non va a buon fine, rimando alla pagina di login prima di mostrare i contenuti della homepage
-    /*if (!this.authenticationService.isLoggedIn()) {
-      this.authenticationService.logout();
-      this.router.navigate(['/login'], );
-    }
-     */
     if (!this.currentUser) {
       this.authenticationService.logout();
       this.router.navigate(['/login']);
@@ -63,7 +48,24 @@ export class ComunicationComponent implements OnInit, OnDestroy {
               this.table = false;
     });
 
-    this.WSconnect();
+    // this.stompClient = this.websocketService.connect();
+    this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
+      const username = JSON.parse(localStorage.getItem('currentUser')).username;
+      // console.log(username);
+
+      this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
+        const messageString = JSON.stringify(message);
+        // console.log('Nuovo messaggio ricevuto ' + messageString);
+        this.userService.getAllMessages().subscribe( messages => {
+          this.messages = messages as Message[];
+          this.table = true;
+        }, error1 => {
+          this.error = 'Operazione -getAllMessages- fallita';
+          this.table = false;
+        });
+        this.userService.updateUnreadMessages(message.body);
+      });
+    });
   }
 
   segnaLetto(element: Message) {
@@ -75,40 +77,5 @@ export class ComunicationComponent implements OnInit, OnDestroy {
           this.error = 'Operazione -segnaLetto- fallita';
       }
     );
-  }
-
-  WSconnect() {
-    const socket = new SockJS('http://localhost:8080/pedibus');
-    this.stompClient = Stomp.over(socket);
-
-    console.log('Tentativo connessione WS...');
-
-    const questo = this;
-    this.stompClient.connect({}, () => {
-      questo.stompClient.subscribe('/topic/comunicazioni', message => {
-        const messageString = JSON.stringify(message);
-        console.log('Nuovo messaggio ricevuto ' + messageString);
-        questo.userService.getAllMessages().subscribe( messages => {
-          this.messages = messages as Message[];
-          this.table = true;
-        }, error1 => {
-          this.error = 'Operazione -getAllMessages- fallita';
-          this.table = false;
-        });
-      });
-    });
-
-    this.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
-    this.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
-  }
-
-  WSClose() {
-      if (this.stompClient != null) {
-      this.stompClient.disconnect();
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.WSClose();
   }
 }

@@ -1,47 +1,31 @@
-import {Injectable} from '@angular/core';
-import * as Rx from 'rxjs';
+import { Injectable } from '@angular/core';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
-/*
-// @Injectable
+
+
+
+const REST_URL = 'http://localhost:8080/';
+
+
+
+@Injectable()
 export class WebSocketService {
-
-  private subject: Rx.Subject<MessageEvent>;
+  public stompClient: any;
   constructor() {
   }
 
-  public connect(url): Rx.Subject<MessageEvent> {
-    if (this.subject) {
-      this.subject = this.create(url);
-      console.log('Connessione creata correttamente: ' + url);
+  public connect() {
+    const socket = new SockJS('http://localhost:8080/pedibus');
+    this.stompClient = Stomp.over(socket);
+
+    console.log('Tentativo connessione WS...');
+  }
+
+  public disconnect() {
+      if (this.stompClient != null) {
+        this.stompClient.disconnect();
+      }
     }
-    return this.subject;
-  }
-
-
-  private create(url): Rx.Subject<MessageEvent> {
-    const ws = new WebSocket(url);
-
-    const observable = Rx.Observable.create(
-      (obs: Rx.Observer<MessageEvent>) => {
-        ws.onmessage = obs.next.bind(obs);
-        ws.onerror = obs.error.bind(obs);
-        ws.onclose = obs.complete.bind(obs);
-        return ws.close.bind(ws);
-      }
-    );
-
-
-    const observer = {
-      next: (data: Object) => {
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify(data));
-        }
-      }
-    };
-
-
-    return Rx.Subject.create(observer, observable);
-  }
-
 }
-*/
+

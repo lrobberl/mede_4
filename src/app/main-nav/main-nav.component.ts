@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 import {User} from '../Models/User';
 import {Role} from '../Models/Role';
 import {UserService} from '../Services/pedibus.user.service';
+import {WebSocketService} from '../Services/websocket.service';
+import {Message} from '../Models/Message';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -28,22 +30,32 @@ export class MainNavComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private userService: UserService) {
+              private userService: UserService,
+              private websocketService: WebSocketService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit(): void {
+    this.websocketService.connect();
+    this.websocketService.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
+    this.websocketService.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
+
+    this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
+      const username = JSON.parse(localStorage.getItem('currentUser')).username;
+      // console.log(username);
+
+      this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
+        const messageString = JSON.stringify(message);
+        // console.log('Nuovo messaggio ricevuto ' + messageString);
+        this.userService.getNumberNewMessages();
+        // this.userService.updateUnreadMessages(message.body);
+      });
+    });
+
     this.userService.getNumberNewMessages();
     this.userService.newCommunicationsSource.subscribe( x => {
       this.newMessages = x;
     });
-    /*
-    this.userService.getNumberNewMessages().subscribe( res => {
-      this.newCommunications = res;
-    }, error1 => {
-      this.error = 'Operazione -getNumberNewMessages- fallita';
-    });
-     */
   }
   /*
   get isAdmin() {

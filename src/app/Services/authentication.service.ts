@@ -6,6 +6,7 @@ import {TokenData} from './pedibus.user.service';
 import {User} from '../Models/User';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {Role} from '../Models/Role';
+import {WebSocketService} from './websocket.service';
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -15,7 +16,8 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
   public error = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private websocketService: WebSocketService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -56,6 +58,7 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.websocketService.disconnect();
   }
 
   isLoggedIn() {

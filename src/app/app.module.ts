@@ -49,6 +49,7 @@ import {AdminTurniComponent} from './AdminTurniComponent/admin.turni.component';
 import {ReservationComponent} from './ReservationComponent/reservation.component';
 import {PrenotazioneService} from './Services/prenotazione.service';
 import {DisponibiltaComponent} from './DisponibilitaComponent/disponibilita.component';
+import {WebSocketService} from './Services/websocket.service';
 // import {WebSocketService} from './Services/websocket.service';
 
 const appRoutes: Routes = [
@@ -117,7 +118,7 @@ const appRoutes: Routes = [
     MatStepperModule,
     MatBadgeModule
   ],
-  providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule, PrenotazioneService,
+  providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule, PrenotazioneService, WebSocketService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

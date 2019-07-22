@@ -136,4 +136,8 @@ export class UserService {
 
     return this.http.get<Bambino []>(REST_URL + 'figli');
   }
+
+  updateUnreadMessages(message: number) {
+    this.newCommunicationsSource.next(message);
+  }
 }
