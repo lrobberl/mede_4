@@ -10,7 +10,7 @@ import {UserService} from '../Services/pedibus.user.service';
       templateUrl: 'home.component.html',
       styleUrls: ['home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   currentUser: User;
   error: string;
 
@@ -31,6 +31,10 @@ export class HomeComponent {
       this.authenticationService.logout();
       this.router.navigate(['/login']);
     }
+  }
+
+  ngOnInit(): void {
+    this.userService.getNumberNewMessages();
   }
 
   get isLogged() {
