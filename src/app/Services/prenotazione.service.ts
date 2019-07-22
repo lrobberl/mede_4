@@ -91,9 +91,9 @@ export class PrenotazioneService {
   getDisponibilitaAccompagnatore(linea: string) {
     console.log('AttendanceService.getDisponibilitaAccompagnatore');
 
-    return this.http.get<Disponibilita[]>(REST_URL + 'disponibilita5giorni/' + linea).pipe(
+    return this.http.get<Disponibilita[]>(REST_URL + 'disponibilita-accompagnatore/' + linea).pipe(
       map(arr => arr.map(x => ({id: x.id, verso: x.verso, fermata: x.fermata,
-        data: new Date(x.data), confermata: x.confermata}) as Disponibilita)),
+        data: new Date(x.data.getTime() + 7200001), confermata: x.confermata}) as Disponibilita)),
       retry(3)
     );
   }
@@ -159,10 +159,10 @@ export class PrenotazioneService {
     );
   }
 
-  deleteDisponibilita(linea: string, fermata: string, id: string) {
+  deleteDisponibilita(linea: string, data: string, verso: string) {
     console.log('AttendanceService.deletePrenotazione');
 
-    return this.http.delete(REST_URL + 'disponibilita/' + linea + '/' + fermata + '/' + id).pipe(
+    return this.http.delete(REST_URL + 'disponibilita/' + linea + '/' + data + '/' + verso).pipe(
       retry(3)
     );
   }
