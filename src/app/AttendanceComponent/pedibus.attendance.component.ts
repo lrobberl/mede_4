@@ -73,8 +73,29 @@ export class PedibusAttendanceComponent implements OnInit, OnDestroy {
       this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
         const messageString = JSON.stringify(message);
         // console.log('Nuovo messaggio ricevuto ' + messageString);
-        this.userService.getNumberNewMessages();
-        // this.userService.updateUnreadMessages(message.body);
+        this.userService.updateUnreadMessages(message.body);
+        this.websocketService.showBanner();
+
+        if (this.dateLineForm.invalid) {
+          this.error = 'I valori inseriti sono errati';
+          return;
+        }
+        this.data = undefined;
+        this.message = undefined;
+        this.classType = 'leftCard';
+
+        const linea = this.f.line.value;
+        const dataSelezionata = this.formatDate(this.f.date.value);
+
+        this.attendanceService.getCorsa(linea as string, dataSelezionata).subscribe(x => {
+          this.data = x;
+          this.error = undefined;
+          this.selectedData = this.formatDateDashed(this.f.date.value);
+        }, error1 => {
+          this.error = 'Operazione -getCorsa- Fallita';
+          this.classType = 'centeredCard';
+        });
+        // this.userService.getNumberNewMessages();
       });
     });
   }

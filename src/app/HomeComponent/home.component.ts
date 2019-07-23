@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {Message} from '../Models/Message';
 import {UserService} from '../Services/pedibus.user.service';
 import {WebSocketService} from '../Services/websocket.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
       templateUrl: 'home.component.html',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private router: Router,
-    private websocketService: WebSocketService
+    private websocketService: WebSocketService,
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
 
@@ -49,8 +50,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
         const messageString = JSON.stringify(message);
         // console.log('Nuovo messaggio ricevuto ' + messageString);
-        this.userService.getNumberNewMessages();
-        // this.userService.updateUnreadMessages(message.body);
+        this.userService.updateUnreadMessages(message.body);
+        this.websocketService.showBanner();
       });
     });
   }

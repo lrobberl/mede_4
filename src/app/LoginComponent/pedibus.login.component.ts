@@ -23,8 +23,7 @@ export class PedibusLoginComponent implements OnInit {
               private router: Router,
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
-              private websocketService: WebSocketService) {
+              private formBuilder: FormBuilder) {
     // redirect to home if already logged in
     if (this.authenticationService.isLoggedIn()) {
       this.router.navigate(['/']);

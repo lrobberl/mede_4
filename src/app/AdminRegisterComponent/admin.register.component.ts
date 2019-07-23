@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../Services/pedibus.user.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -9,6 +9,7 @@ import {Line} from 'tslint/lib/verify/lines';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {MatCheckboxChange, PageEvent} from '@angular/material';
 import {Linea} from '../Models/Linea';
+import {WebSocketService} from '../Services/websocket.service';
 
 @Component({
   selector: 'app-pedibus-admin-registraton',
@@ -16,7 +17,7 @@ import {Linea} from '../Models/Linea';
   styleUrls: ['./admin.register.component.css']
 })
 
-export class AdminRegisterComponent implements OnInit {
+export class AdminRegisterComponent implements OnInit, OnDestroy {
   adminRegisterForm: FormGroup;
   error: string;
   // submitted = false;
@@ -32,7 +33,9 @@ export class AdminRegisterComponent implements OnInit {
               private formBuilder: FormBuilder,
               private adminService: AdminService,
               private authenticationService: AuthenticationService,
-              private attendanceService: AttendanceService) {
+              private attendanceService: AttendanceService,
+              private websocketService: WebSocketService,
+              private userService: UserService) {
     if (!this.authenticationService.isLoggedIn()) {
       this.authenticationService.logout();
       this.router.navigate(['/login'], );
@@ -52,6 +55,24 @@ export class AdminRegisterComponent implements OnInit {
 
     // get all lines
     this.linee$ = this.attendanceService.getLines();
+
+    this.websocketService.disconnect();
+    this.websocketService.connect();
+    this.websocketService.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
+    this.websocketService.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
+
+    this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
+      const username = JSON.parse(localStorage.getItem('currentUser')).username;
+      // console.log(username);
+
+      this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
+        const messageString = JSON.stringify(message);
+        // console.log('Nuovo messaggio ricevuto ' + messageString);
+        this.userService.getNumberNewMessages();
+        this.websocketService.showBanner();
+        // this.userService.updateUnreadMessages(message.body);
+      });
+    });
   }
 
   // convenience getter for easy access to form fields
@@ -109,5 +130,9 @@ export class AdminRegisterComponent implements OnInit {
       }
     }
 
+  }
+
+  ngOnDestroy(): void {
+    this.websocketService.stompClient.unsubscribe();
   }
 }

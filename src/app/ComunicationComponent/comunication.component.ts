@@ -66,6 +66,7 @@ export class ComunicationComponent implements OnInit, OnDestroy {
           this.table = false;
         });
         this.userService.updateUnreadMessages(message.body);
+        this.websocketService.showBanner();
       });
     });
   }

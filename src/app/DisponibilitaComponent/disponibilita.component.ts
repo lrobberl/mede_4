@@ -107,8 +107,9 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
       this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
         const messageString = JSON.stringify(message);
         // console.log('Nuovo messaggio ricevuto ' + messageString);
-        this.userService.getNumberNewMessages();
-        // this.userService.updateUnreadMessages(message.body);
+        this.userService.updateUnreadMessages(message.body);
+        this.websocketService.showBanner();
+        //this.userService.getNumberNewMessages();
       });
     });
   }

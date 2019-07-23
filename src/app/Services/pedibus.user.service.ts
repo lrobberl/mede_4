@@ -107,7 +107,6 @@ export class UserService {
   // Get from the server the number of incoming messages for a certain USER specified in the URL path
   getNumberNewMessages() {
     console.log('UserService.getNumberNewMessages');
-    // this.newCommunicationsSource.next(4);
 
     return this.http.get<number>(REST_URL + 'unread-comunicazioni').subscribe( res => {
       this.newCommunicationsSource.next(res);

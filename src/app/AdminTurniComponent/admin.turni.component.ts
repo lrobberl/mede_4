@@ -76,6 +76,7 @@ export class AdminTurniComponent implements OnInit, OnDestroy {
         const messageString = JSON.stringify(message);
         // console.log('Nuovo messaggio ricevuto ' + messageString);
         this.userService.updateUnreadMessages(message.body);
+        this.websocketService.showBanner();
         if (this.dateLineForm.invalid) {
           this.errorLeft = 'I valori inseriti sono errati';
           return;

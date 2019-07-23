@@ -30,22 +30,16 @@ export class MainNavComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private userService: UserService,
-              private websocketService: WebSocketService) {
+              private userService: UserService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit(): void {
-    this.userService.getNumberNewMessages();
+    // this.userService.getNumberNewMessages();
     this.userService.newCommunicationsSource.subscribe( x => {
       this.newMessages = x;
     });
   }
-  /*
-  get isAdmin() {
-    return this.currentUser && this.currentUser.listaRuoli.includes(Role.Accompagnatore);
-  }
-   */
 
   get isSystemAdmin() {
     return this.currentUser && this.currentUser.listaRuoli.includes(Role.SystemAdmin);

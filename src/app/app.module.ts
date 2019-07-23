@@ -15,7 +15,7 @@ import {
   MatPaginatorModule,
   MatRadioModule,
   MatSelectModule,
-  MatSidenavModule, MatStepperModule,
+  MatSidenavModule, MatSnackBarModule, MatStepperModule,
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
@@ -116,7 +116,8 @@ const appRoutes: Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatStepperModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSnackBarModule
   ],
   providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule, PrenotazioneService, WebSocketService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
