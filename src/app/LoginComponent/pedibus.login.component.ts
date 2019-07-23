@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../Services/pedibus.user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../Services/authentication.service';
+import {WebSocketService} from '../Services/websocket.service';
 
 @Component({
   selector: 'app-pedibus-login',
@@ -22,7 +23,8 @@ export class PedibusLoginComponent implements OnInit {
               private router: Router,
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private websocketService: WebSocketService) {
     // redirect to home if already logged in
     if (this.authenticationService.isLoggedIn()) {
       this.router.navigate(['/']);
@@ -55,7 +57,7 @@ export class PedibusLoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .subscribe(res => {
-          this.router.navigate(['/']);
+        this.router.navigate(['/']);
         }, error1 => {
          this.loading = false;
          this.error = 'Operazione di Login fallita';

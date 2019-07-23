@@ -18,8 +18,6 @@ export class WebSocketService {
   public connect() {
     const socket = new SockJS('http://localhost:8080/pedibus');
     this.stompClient = Stomp.over(socket);
-
-    console.log('Tentativo connessione WS...');
   }
 
   public disconnect() {

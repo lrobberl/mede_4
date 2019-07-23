@@ -36,22 +36,6 @@ export class MainNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.websocketService.connect();
-    this.websocketService.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
-    this.websocketService.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
-
-    this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
-      const username = JSON.parse(localStorage.getItem('currentUser')).username;
-      // console.log(username);
-
-      this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
-        const messageString = JSON.stringify(message);
-        // console.log('Nuovo messaggio ricevuto ' + messageString);
-        this.userService.getNumberNewMessages();
-        // this.userService.updateUnreadMessages(message.body);
-      });
-    });
-
     this.userService.getNumberNewMessages();
     this.userService.newCommunicationsSource.subscribe( x => {
       this.newMessages = x;

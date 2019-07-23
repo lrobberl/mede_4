@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Bambino} from '../Models/Bambino';
 import {UserService} from '../Services/pedibus.user.service';
@@ -9,6 +9,8 @@ import {MatCheckboxChange} from '@angular/material';
 import {Prenotazione} from '../Models/Prenotazione';
 import {PrenotazioneService} from '../Services/prenotazione.service';
 import {Router} from '@angular/router';
+import {Message} from '../Models/Message';
+import {WebSocketService} from '../Services/websocket.service';
 
 /**
  * @title Stepper vertical
@@ -19,7 +21,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./reservation.component.css']
 })
 
-export class ReservationComponent implements OnInit {
+export class ReservationComponent implements OnInit, OnDestroy {
   monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
   dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
   isLinear = false;
@@ -48,7 +50,8 @@ export class ReservationComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private prenotazioneService: PrenotazioneService,
-              private router: Router) {
+              private router: Router,
+              private websocketService: WebSocketService) {
 
   }
 
@@ -95,6 +98,23 @@ export class ReservationComponent implements OnInit {
     });
 
     this.createNext5Days();
+
+    this.websocketService.disconnect();
+    this.websocketService.connect();
+    this.websocketService.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
+    this.websocketService.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
+
+    this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
+      const username = JSON.parse(localStorage.getItem('currentUser')).username;
+      // console.log(username);
+
+      this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
+        const messageString = JSON.stringify(message);
+        // console.log('Nuovo messaggio ricevuto ' + messageString);
+        this.userService.getNumberNewMessages();
+        // this.userService.updateUnreadMessages(message.body);
+      });
+    });
   }
 
   get firstForm() {
@@ -414,5 +434,9 @@ export class ReservationComponent implements OnInit {
 
   generateIdRitorno(i: number) {
     return 'checkBoxRitorno' + i.toString();
+  }
+
+  ngOnDestroy(): void {
+    this.websocketService.stompClient.unsubscribe();
   }
 }

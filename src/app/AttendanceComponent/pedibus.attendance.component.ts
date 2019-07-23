@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
@@ -10,6 +10,8 @@ import {Bambino} from '../Models/Bambino';
 import {Fermata} from '../Models/Fermata';
 import {CorsaWrapper} from '../Models/CorsaWrapper';
 import {Linea} from '../Models/Linea';
+import {WebSocketService} from '../Services/websocket.service';
+import {UserService} from '../Services/pedibus.user.service';
 
 @Component({
   selector: 'app-pedibus-attendance',
@@ -18,7 +20,7 @@ import {Linea} from '../Models/Linea';
 })
 
 
-export class PedibusAttendanceComponent implements OnInit {
+export class PedibusAttendanceComponent implements OnInit, OnDestroy {
   data: CorsaWrapper;
   linee: Linea[] = [];
   error: string;
@@ -32,7 +34,9 @@ export class PedibusAttendanceComponent implements OnInit {
   constructor(private attendanceService: AttendanceService,
               private authenticationService: AuthenticationService,
               private router: Router,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private websocketService: WebSocketService,
+              private userService: UserService) {
 
     if (!this.authenticationService.isLoggedIn()) {
       this.authenticationService.logout();
@@ -55,6 +59,23 @@ export class PedibusAttendanceComponent implements OnInit {
     this.dateLineForm = this.formBuilder.group({
       date: ['', [Validators.required]],
       line: ['', [Validators.required]]
+    });
+
+    this.websocketService.disconnect();
+    this.websocketService.connect();
+    this.websocketService.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
+    this.websocketService.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
+
+    this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
+      const username = JSON.parse(localStorage.getItem('currentUser')).username;
+      // console.log(username);
+
+      this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
+        const messageString = JSON.stringify(message);
+        // console.log('Nuovo messaggio ricevuto ' + messageString);
+        this.userService.getNumberNewMessages();
+        // this.userService.updateUnreadMessages(message.body);
+      });
     });
   }
 
@@ -129,6 +150,10 @@ export class PedibusAttendanceComponent implements OnInit {
     } else {
       this.error = 'Errore nel formato di download del file ' + format;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.websocketService.stompClient.unsubscribe();
   }
 }
 

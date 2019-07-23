@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
@@ -9,6 +9,7 @@ import {Linea} from '../Models/Linea';
 import {AccompagnatoreFermata} from '../Models/AccompagnatoreFermata';
 import {Message} from '../Models/Message';
 import {WebSocketService} from '../Services/websocket.service';
+import {UserService} from '../Services/pedibus.user.service';
 
 @Component({
   selector: 'app-pedibus-turni',
@@ -17,7 +18,7 @@ import {WebSocketService} from '../Services/websocket.service';
 })
 
 
-export class AdminTurniComponent implements OnInit {
+export class AdminTurniComponent implements OnInit, OnDestroy {
   monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
   dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
   data: DisponibilitaCorsa;
@@ -39,7 +40,8 @@ export class AdminTurniComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private router: Router,
               private formBuilder: FormBuilder,
-              private websocketService: WebSocketService) {
+              private websocketService: WebSocketService,
+              private userService: UserService) {
 
     if (!this.authenticationService.isLoggedIn()) {
       this.authenticationService.logout();
@@ -63,7 +65,9 @@ export class AdminTurniComponent implements OnInit {
       line: ['', [Validators.required]]
     });
 
-    // this.stompClient = this.websocketService.connect();
+    this.userService.getNumberNewMessages();
+    this.websocketService.disconnect();
+    this.websocketService.connect();
     this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
       const username = JSON.parse(localStorage.getItem('currentUser')).username;
       // console.log(username);
@@ -71,6 +75,7 @@ export class AdminTurniComponent implements OnInit {
       this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
         const messageString = JSON.stringify(message);
         // console.log('Nuovo messaggio ricevuto ' + messageString);
+        this.userService.updateUnreadMessages(message.body);
         if (this.dateLineForm.invalid) {
           this.errorLeft = 'I valori inseriti sono errati';
           return;
@@ -94,8 +99,6 @@ export class AdminTurniComponent implements OnInit {
         // this.userService.updateUnreadMessages(message.body);
       });
     });
-    this.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
-    this.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
   }
 
   get f() { return this.dateLineForm.controls; }
@@ -215,6 +218,10 @@ export class AdminTurniComponent implements OnInit {
         this.errorRight = 'Operazione -riapriTurno- Fallita';
         this.data.chiusoAndata = true;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.websocketService.stompClient.unsubscribe();
   }
 }
 

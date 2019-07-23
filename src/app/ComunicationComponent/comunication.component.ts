@@ -12,7 +12,7 @@ import {WebSocketService} from '../Services/websocket.service';
   templateUrl: 'comunication.component.html',
   styleUrls: ['comunication.component.css']
 })
-export class ComunicationComponent implements OnInit {
+export class ComunicationComponent implements OnInit, OnDestroy {
   currentUser: User;
   displayedColumns: string[] = ['data', 'messaggio'];
   messages: Message[];
@@ -47,11 +47,13 @@ export class ComunicationComponent implements OnInit {
               this.error = 'Operazione -getAllMessages- fallita';
               this.table = false;
     });
+    this.userService.getNumberNewMessages();
 
-    // this.stompClient = this.websocketService.connect();
+    this.websocketService.disconnect();
+    this.websocketService.connect();
     this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
       const username = JSON.parse(localStorage.getItem('currentUser')).username;
-      // console.log(username);
+      console.log(username);
 
       this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
         const messageString = JSON.stringify(message);
@@ -77,5 +79,9 @@ export class ComunicationComponent implements OnInit {
           this.error = 'Operazione -segnaLetto- fallita';
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.websocketService.stompClient.unsubscribe();
   }
 }

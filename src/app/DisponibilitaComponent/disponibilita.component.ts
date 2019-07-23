@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../Services/pedibus.user.service';
 import {Linea} from '../Models/Linea';
@@ -8,6 +8,7 @@ import {PrenotazioneService} from '../Services/prenotazione.service';
 import {Router} from '@angular/router';
 import {Disponibilita} from '../Models/Disponibilita';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
+import {WebSocketService} from '../Services/websocket.service';
 
 @Component({
   selector: 'app-stepper',
@@ -15,7 +16,7 @@ import {AttendanceService} from '../Services/pedibus.attendance.service';
   styleUrls: ['./disponibilita.component.css']
 })
 
-export class DisponibiltaComponent implements OnInit {
+export class DisponibiltaComponent implements OnInit, OnDestroy {
   monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
   dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
   isLinear = false;
@@ -42,10 +43,11 @@ export class DisponibiltaComponent implements OnInit {
   secondStep = false;
 
   constructor(private formBuilder: FormBuilder,
-              private userService: UserService,
               private prenotazioneService: PrenotazioneService,
               private attendanceService: AttendanceService,
-              private router: Router) {
+              private router: Router,
+              private websocketService: WebSocketService,
+              private userService: UserService) {
 
   }
 
@@ -92,6 +94,23 @@ export class DisponibiltaComponent implements OnInit {
     });
 
     this.createNext5Days();
+
+    this.websocketService.disconnect();
+    this.websocketService.connect();
+    this.websocketService.stompClient.heartbeat.outgoing = 20000; // client will send heartbeats every 20000ms
+    this.websocketService.stompClient.heartbeat.incoming = 0;     // client does not want to receive heartbeats from the server
+
+    this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
+      const username = JSON.parse(localStorage.getItem('currentUser')).username;
+      // console.log(username);
+
+      this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
+        const messageString = JSON.stringify(message);
+        // console.log('Nuovo messaggio ricevuto ' + messageString);
+        this.userService.getNumberNewMessages();
+        // this.userService.updateUnreadMessages(message.body);
+      });
+    });
   }
 
   getGroup(i: number) {
@@ -409,5 +428,9 @@ export class DisponibiltaComponent implements OnInit {
 
   generateIdRitorno(i: number) {
     return 'checkBoxRitorno' + i.toString();
+  }
+
+  ngOnDestroy(): void {
+    this.websocketService.stompClient.unsubscribe();
   }
 }
