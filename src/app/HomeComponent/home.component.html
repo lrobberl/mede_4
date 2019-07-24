@@ -1,8 +1,14 @@
 <header>
+  <div class="h-presentation">
   <h1>Home</h1>
   <p *ngIf="isLogged">You are authenticated as: <strong>{{currentUser.username}}</strong></p>
   <p *ngIf="isLogged"> Your role is: <strong>{{currentUser.role}}</strong></p>
   <p *ngIf="!isLogged">You are not authenticated</p>
+  </div>
+  <div layout="column">
+    <div flex="">First item in column</div>
+    <div flex="">Second item in column</div>
+  </div>
 </header>
 
 

@@ -20,6 +20,8 @@ export class MainNavComponent {
       map(result => result.matches)
     );
 
+  isClicked = false;
+
   title = 'PIEDIBUS';
 
   constructor(private breakpointObserver: BreakpointObserver,
@@ -32,6 +34,10 @@ export class MainNavComponent {
     return this.currentUser && this.currentUser.listaRuoli.includes(Role.Accompagnatore);
   }
    */
+
+  get grClick() {
+    return this.isClicked = !this.isClicked;
+  }
 
   get isSystemAdmin() {
     return this.currentUser && this.currentUser.listaRuoli.includes(Role.SystemAdmin);
