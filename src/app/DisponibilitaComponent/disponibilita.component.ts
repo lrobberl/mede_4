@@ -186,6 +186,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
 
           this.getGroup(i).controls.checkBoxAndata.setValue(1);
           this.currentEvent.source.checked = true;
+          // this.userService.updateUnreadMessages();
         }, error1 => {
           this.error = 'Operazione -prenotaDisponibilita- fallita';
           this.currentEvent.source.checked = false;

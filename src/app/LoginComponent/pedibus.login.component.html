@@ -56,17 +56,16 @@
 
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" matInput placeholder="Email address" formControlName="username"
-               required autofocus>
-        <mat-error *ngIf="f.username.invalid"> {{getErrorMessage('username')}}</mat-error>
+               autofocus>
+        <!-- <mat-error *ngIf="f.username.invalid"> {{getErrorMessage('username')}}</mat-error> -->
 
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" matInput placeholder="Password" formControlName="password"
-               required>
+        <input type="password" id="inputPassword" class="form-control" matInput placeholder="Password" formControlName="password">
         <!--      <button mat-icon-button matSuffix (click)="hidepass = !hidepass" [attr.aria-label]="'Hide password'"-->
         <!--              [attr.aria-pressed]="hidepass">-->
         <!--        <mat-icon>{{hidepass ? 'visibility_off' : 'visibility'}}</mat-icon>-->
-        <!--      </button>-->
-        <mat-error *ngIf="f.password.invalid"> {{getErrorMessage('password')}}</mat-error>
+        <!--      </button>
+        <mat-error *ngIf="f.password.invalid"> {{getErrorMessage('password')}}</mat-error> -->
         <!-- todo: Da controllare la pwd sul login? Se si, aggiungere cosa non va bene della pwd -->
         <!-- <mat-error *ngIf="password.invalid">{{getErrorMessage('password')}}</mat-error> -->
         <!--      <div class="checkbox">-->
