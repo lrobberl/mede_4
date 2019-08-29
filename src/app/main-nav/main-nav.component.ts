@@ -23,6 +23,8 @@ export class MainNavComponent implements OnInit {
       map(result => result.matches)
     );
 
+  isClicked = false;
+
   title = 'PIEDIBUS';
   newMessages: number;
   error: string;
@@ -39,6 +41,10 @@ export class MainNavComponent implements OnInit {
     this.userService.newCommunicationsSource.subscribe( x => {
       this.newMessages = x;
     });
+  }
+
+  get grClick() {
+    return this.isClicked = !this.isClicked;
   }
 
   get isSystemAdmin() {

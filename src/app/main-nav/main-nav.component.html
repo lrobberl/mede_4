@@ -6,35 +6,30 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
+        *ngIf="isHandset$ | async"> <!-- && isLogged -->
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span [ngClass]="{spacer: (isHandset$ | async)}"></span>
-      <div class="toolbar">
+      <div class="toolbar-m">
         <h1 style="font-size: larger">{{ title }}</h1>
         <h5 *ngIf="isLogged" style="font-size: small">{{currentUser.username}}</h5>
       </div>
       <span class="spacer"></span>
-      <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/" routerLinkActive="active">Home</a><br>
-      <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/prenotazioni" routerLinkActive="active">Prenotazioni</a><br>
-      <a *ngIf="!(isHandset$ | async) && isLogged && isSystemAdminOrAccompagnatore" routerLink="/disponibilita" routerLinkActive="active">Disponibilita</a><br>
-      <a *ngIf="!(isHandset$ | async) && isLogged && isSystemAdminOrAccompagnatore" routerLink="/attendance" routerLinkActive="active">Corse</a><br>
-      <!-- <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/comunications" routerLinkActive="active">Comunicazioni</a><br> -->
-      <button mat-button *ngIf="!(isHandset$ | async) && isLogged && newMessages !== 0" matBadge="{{newMessages}}" matBadgeColor="warn"
-              style="font-size: large" (click)="goTo('comunicazioni')">Comunicazioni</button><br>
-      <button mat-button *ngIf="!(isHandset$ | async) && isLogged && newMessages === 0"
-              style="font-size: large" (click)="goTo('comunicazioni')">Comunicazioni</button><br>
-      <button *ngIf="!(isHandset$ | async) && isSystemAdmin" mat-button [matMenuTriggerFor]="menu" style="font-size: large">Admin</button>
-      <mat-menu #menu="matMenu"> <!-- <button mat-menu-t-bu>Item 2</button> -->
-        <a *ngIf="!(isHandset$ | async)" routerLink="/adminRegister" routerLinkActive="active">Nuovo Utente</a><br>
-        <a *ngIf="!(isHandset$ | async)" routerLink="/users" routerLinkActive="active">Utenti</a><br>
-        <a *ngIf="!(isHandset$ | async)" routerLink="/turni" routerLinkActive="active">Turni Corse</a><br>
-        <a *ngIf="!(isHandset$ | async)" routerLink="/changeUserRole" routerLinkActive="active">Cambia Ruolo Utente</a><br>
+      <a *ngIf="!(isHandset$ | async) && isLogged" mat-button routerLink="/" routerLinkActive="active">Home</a><br>
+      <a *ngIf="!(isHandset$ | async) && isLogged" mat-button routerLink="/prenotazioni" routerLinkActive="active">Prenotazioni</a><br>
+      <a *ngIf="!(isHandset$ | async) && isLogged && isSystemAdminOrAccompagnatore" mat-button routerLink="/attendance" routerLinkActive="active">Corse</a><br>
+      <a *ngIf="!(isHandset$ | async) && isLogged" mat-button routerLink="/comunications" routerLinkActive="active">Comunicazioni</a><br>
+      <a *ngIf="!(isHandset$ | async) && isSystemAdmin" mat-button [matMenuTriggerFor]="menu">Admin</a>
+      <mat-menu #menu="matMenu"> <!-- <button mat-menu-item>Item 2</button> -->
+        <button *ngIf="!(isHandset$ | async)" mat-menu-item routerLink="/adminRegister" routerLinkActive="active">Nuovo Utente</button><br>
+        <button *ngIf="!(isHandset$ | async)" mat-menu-item routerLink="/users" routerLinkActive="active">Utenti</button><br>
+        <button *ngIf="!(isHandset$ | async)" mat-menu-item routerLink="/turni" routerLinkActive="active">Turni Corse</button><br>
+        <button *ngIf="!(isHandset$ | async)" mat-menu-item routerLink="/changeUserRole" routerLinkActive="active">Cambia Ruolo Utente</button><br>
       </mat-menu>
 
       <!-- <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/register" routerLinkActive="active">Registrazione</a><br> -->
       <!-- <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/login" routerLinkActive="active">Login</a><br> -->
-      <a *ngIf="!(isHandset$ | async) && isLogged" routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
+      <a *ngIf="!(isHandset$ | async) && isLogged" mat-button routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
 
     </mat-toolbar>
     <!-- Add Content Here -->
@@ -52,17 +47,16 @@
 
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a *ngIf="isLogged" routerLink="/" routerLinkActive="active">Home</a><br>
-      <a *ngIf="isLogged" routerLink="/prenotazioni" routerLinkActive="active">Prenotazioni</a><br>
-      <a *ngIf="isLogged && isSystemAdminOrAccompagnatore" routerLink="/disponibilita" routerLinkActive="active">Disponibilita</a><br>
-      <a *ngIf="isLogged && isSystemAdminOrAccompagnatore" mat-list-item routerLink="/attendance" routerLinkActive="active">Corse</a><br>
-      <a *ngIf="isLogged" routerLink="/comunications" routerLinkActive="active">Comunicazioni</a><br>
-      <button *ngIf="isSystemAdmin" mat-button [matMenuTriggerFor]="menu">Admin</button>
-      <mat-menu #menu="matMenu"> <!-- <button mat-menu-item>Item 2</button> -->
-        <a routerLink="/adminRegister" routerLinkActive="active">Nuovo Utente</a><br>
-        <a routerLink="/users" routerLinkActive="active">Utenti</a><br>
-        <a routerLink="/turni" routerLinkActive="active">Turni Corse</a><br>
-        <a routerLink="/changeUserRole" routerLinkActive="active">Cambia Ruolo Utente</a><br>
+      <a *ngIf="isLogged" mat-list-item routerLink="/" routerLinkActive="active">Home</a>
+      <a *ngIf="isLogged" mat-list-item routerLink="/prenotazioni" routerLinkActive="active">Prenotazioni</a>
+      <a *ngIf="isLogged && isSystemAdminOrAccompagnatore" mat-list-item routerLink="/attendance" routerLinkActive="active">Corse</a>
+      <a *ngIf="isLogged && isSystemAdminOrAccompagnatore" mat-list-item routerLink="/comunications" routerLinkActive="active">Comunicazioni</a>
+      <a *ngIf="isSystemAdmin" mat-list-item [matMenuTriggerFor]="menu">Admin</a>
+      <mat-menu #menu="matMenu" xPosition="after"> <!-- <button mat-menu-item>Item 2</button> -->
+        <button class="matM" mat-menu-item routerLink="/adminRegister" routerLinkActive="active">Nuovo Utente</button>
+        <button class="matM" mat-menu-item routerLink="/users" routerLinkActive="active">Utenti</button>
+        <button class="matM" mat-menu-item routerLink="/turni" routerLinkActive="active">Turni Corse</button>
+        <button class="matM" mat-menu-item routerLink="/changeUserRole" routerLinkActive="active">Cambia Ruolo Utente</button>
       </mat-menu>
 
       <a *ngIf="isLogged" mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
