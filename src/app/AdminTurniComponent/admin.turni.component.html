@@ -47,7 +47,7 @@
                     {{accompagnatore.email}} - {{accompagnatore.nomeFermata}}</mat-radio-button>
               </mat-list-item>
             </mat-list>
-            <div *ngIf="data.accompagnatoriAndata.length == 0"><strong>Nessun accompagnatore disponibilie</strong></div>
+            <div *ngIf="data.accompagnatoriAndata.length == 0"><strong>Nessun accompagnatore disponibile</strong></div>
           </mat-card-content>
           <mat-card-actions>
             <button mat-raised-button class="toolbar" [disabled]="data.chiusoAndata || !selectedAndata" (click)="consolidaTurnoAndata()">
@@ -75,7 +75,7 @@
                   {{accompagnatore.email}} - {{accompagnatore.nomeFermata}}</mat-radio-button>
               </mat-list-item>
             </mat-list>
-            <div *ngIf="data.accompagnatoriRitorno.length == 0"><strong>Nessun accompagnatore disponibilie</strong></div>
+            <div *ngIf="data.accompagnatoriRitorno.length == 0"><strong>Nessun accompagnatore disponibile</strong></div>
           </mat-card-content>
           <mat-card-actions>
             <button mat-raised-button class="toolbar" [disabled]="data.chiusoRitorno || !selectedRitorno" (click)="consolidaTurnoRitorno()">
