@@ -56,7 +56,7 @@ export class AdminTurniComponent implements OnInit, OnDestroy {
         this.errorLeft = undefined;
       },
       error1 => {
-        this.errorLeft = 'Operazione -getLines OnInit- Fallita';
+        this.errorLeft = 'Operazione Fallita';
       }
     );
 
@@ -94,7 +94,7 @@ export class AdminTurniComponent implements OnInit, OnDestroy {
           this.classType = 'leftCard';
           this.selectedData = this.formatDateDashed(this.f.date.value);
         }, error1 => {
-          this.errorLeft = 'Operazione Fallita.\n Hai i privilegi necessari per gestire la linea specificata?';
+          this.errorLeft = 'Operazione Fallita';
           this.classType = 'centeredCard';
         });
         // this.userService.updateUnreadMessages(message.body);
@@ -123,7 +123,7 @@ export class AdminTurniComponent implements OnInit, OnDestroy {
       this.classType = 'leftCard';
       this.selectedData = this.formatDateDashed(this.f.date.value);
     }, error1 => {
-      this.errorLeft = 'Operazione Fallita.\n Hai i privilegi necessari per gestire la linea specificata?';
+      this.errorLeft = 'Operazione Fallita';
       this.classType = 'centeredCard';
     });
   }
@@ -155,7 +155,7 @@ export class AdminTurniComponent implements OnInit, OnDestroy {
       this.data.chiusoAndata = true;
       this.message = 'Turno consolidato con successo';
     }, error1 => {
-      this.errorRight = 'Operazione -consolidaTurno- Fallita';
+      this.errorRight = 'Operazione Fallita';
       this.data.chiusoAndata = false;
     });
   }
@@ -169,7 +169,7 @@ export class AdminTurniComponent implements OnInit, OnDestroy {
       this.data.chiusoRitorno = true;
       this.message = 'Turno consolidato con successo';
     }, error1 => {
-      this.errorRight = 'Operazione -consolidaTurno- Fallita';
+      this.errorRight = 'Operazione Fallita';
       this.data.chiusoRitorno = false;
     });
   }
@@ -204,7 +204,7 @@ export class AdminTurniComponent implements OnInit, OnDestroy {
         this.data.chiusoRitorno = false;
         this.message = 'Turno riaperto con successo';
       }, error1 => {
-        this.errorRight = 'Operazione -riapriTurno- Fallita';
+        this.errorRight = 'Operazione Fallita';
         this.data.chiusoRitorno = true;
       });
   }
@@ -216,7 +216,7 @@ export class AdminTurniComponent implements OnInit, OnDestroy {
         this.data.chiusoAndata = false;
         this.message = 'Turno riaperto con successo';
       }, error1 => {
-        this.errorRight = 'Operazione -riapriTurno- Fallita';
+        this.errorRight = 'Operazione Fallita';
         this.data.chiusoAndata = true;
       });
   }

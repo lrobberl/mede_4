@@ -67,7 +67,7 @@ export class ResetPasswordComponent implements OnInit {
           // Upon success, navigate to homepage
           this.router.navigate(['/'], { queryParams: { resetPassword: true }});
         }, error1 => {
-        this.error = 'Operazione -resetPassword- fallita';
+        this.error = 'Operazione fallita';
         this.loading = false;
       });
   }

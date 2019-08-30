@@ -90,7 +90,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
     this.attendanceService.getLines().subscribe(res => {
       this.linee = res;
     }, error1 => {
-      this.errorFirstStep = 'Operazione -getLinee- fallita';
+      this.errorFirstStep = 'Operazione fallita';
     });
 
     this.createNext5Days();
@@ -140,7 +140,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
           }
       });
     }, error1 => {
-      this.error = 'Operazione -getFermateGroupByLineaWithScuola- fallita';
+      this.error = 'Operazione fallita';
     });
 
     this.prenotazioneService.getDisponibilitaAccompagnatore(this.firstFormGroup.controls.linee.value.nome).subscribe(
@@ -152,7 +152,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
         });
         this.setDisponibilitaAttive(this.disponibilitaNext5Days);
     }, error1 => {
-      this.error = 'Operazione -getDisponibilitaAccompagnatore- fallita';
+      this.error = 'Operazione fallita';
     });
   }
 
@@ -188,7 +188,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
           this.currentEvent.source.checked = true;
           // this.userService.updateUnreadMessages();
         }, error1 => {
-          this.error = 'Operazione -prenotaDisponibilita- fallita';
+          this.error = 'Operazione fallita';
           this.currentEvent.source.checked = false;
         });
     } else {  // Triggera il cancellamento della prenotazione
@@ -218,7 +218,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
           this.getGroup(i).controls.checkBoxAndata.setValue(0);
           this.currentEvent.source.checked = false;
         }, error1 => {
-          this.error = 'Operazione -deleteDisponibilita- fallita';
+          this.error = 'Operazione fallita';
           this.currentEvent.source.checked = true;
         }
       );
@@ -255,7 +255,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
           this.getGroup(i).controls.checkBoxRitorno.setValue(1);
           this.currentEvent.source.checked = true;
         }, error1 => {
-          this.error = 'Operazione -prenotaDisponibilita- fallita';
+          this.error = 'Operazione fallita';
           this.currentEvent.source.checked = false;
         });
     } else { // Triggera il cancellamento della prenotazione
@@ -286,7 +286,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
           this.getGroup(i).controls.checkBoxRitorno.setValue(0);
           this.currentEvent.source.checked = false;
         }, error1 => {
-          this.error = 'Operazione -deleteDisponibilita- fallita';
+          this.error = 'Operazione fallita';
           this.currentEvent.source.checked = true;
         }
       );

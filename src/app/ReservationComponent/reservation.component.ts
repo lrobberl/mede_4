@@ -94,7 +94,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
     this.userService.getFigli().subscribe(res => {
       this.bambini = res;
     }, error1 => {
-      this.error = 'Operazione -getFigli- fallita';
+      this.error = 'Operazione fallita';
     });
 
     this.createNext5Days();
@@ -138,7 +138,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
         });
       });
     }, error1 => {
-      this.error = 'Operazione -getFermateGroupByLinea- fallita';
+      this.error = 'Operazione fallita';
     });
 
     this.prenotazioneService.getPrenotazioniBambino(this.firstForm.childrenControl.value.id as string).subscribe( result => {
@@ -146,7 +146,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
       this.setPrenotazioniAttive(result);
       this.secondStep = true;
     }, error1 => {
-      this.error = 'Operazione -getPrenotazioniBambino- fallita';
+      this.error = 'Operazione fallita';
     });
   }
 
@@ -194,7 +194,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
         this.getGroup(i).controls.checkBoxAndata.setValue(1);
         this.currentEvent.source.checked = true;
       }, error1 => {
-        this.error = 'Operazione -prenotaCorsa- fallita';
+        this.error = 'Operazione fallita';
         this.currentEvent.source.checked = false;
       });
     } else {  // Triggera il cancellamento della prenotazione
@@ -224,7 +224,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
           this.getGroup(i).controls.checkBoxAndata.setValue(0);
           this.currentEvent.source.checked = false;
         }, error1 => {
-          this.error = 'Operazione -deletePrenotazione- fallita';
+          this.error = 'Operazione fallita';
           this.currentEvent.source.checked = true;
         }
       );
@@ -261,7 +261,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
           this.getGroup(i).controls.checkBoxRitorno.setValue(1);
           this.currentEvent.source.checked = true;
         }, error1 => {
-          this.error = 'Operazione -prenotaCorsa- fallita';
+          this.error = 'Operazione fallita';
           this.currentEvent.source.checked = false;
         });
     } else { // Triggera il cancellamento della prenotazione
@@ -291,7 +291,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
                   this.getGroup(i).controls.checkBoxRitorno.setValue(0);
                   this.currentEvent.source.checked = false;
                 }, error1 => {
-                  this.error = 'Operazione -deletePrenotazione- fallita';
+                  this.error = 'Operazione fallita';
                   this.currentEvent.source.checked = true;
         }
       );

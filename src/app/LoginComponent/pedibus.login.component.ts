@@ -59,7 +59,7 @@ export class PedibusLoginComponent implements OnInit {
         this.router.navigate(['/']);
         }, error1 => {
          this.loading = false;
-         this.error = 'Operazione di Login fallita';
+         this.error = 'Operazione fallita';
       });
   }
 

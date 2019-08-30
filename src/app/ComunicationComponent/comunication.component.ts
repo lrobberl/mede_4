@@ -44,7 +44,7 @@ export class ComunicationComponent implements OnInit, OnDestroy {
               this.messages = messages as Message[];
               this.table = true;
         }, error1 => {
-              this.error = 'Operazione -getAllMessages- fallita';
+              this.error = 'Operazione fallita';
               this.table = false;
     });
     this.userService.getNumberNewMessages();
@@ -62,7 +62,7 @@ export class ComunicationComponent implements OnInit, OnDestroy {
           this.messages = messages as Message[];
           this.table = true;
         }, error1 => {
-          this.error = 'Operazione -getAllMessages- fallita';
+          this.error = 'Operazione fallita';
           this.table = false;
         });
         this.userService.updateUnreadMessages(message.body);
@@ -77,7 +77,7 @@ export class ComunicationComponent implements OnInit, OnDestroy {
         element.letto = true;
         this.userService.getNumberNewMessages();
         }, error1 => {
-          this.error = 'Operazione -segnaLetto- fallita';
+          this.error = 'Operazione fallita';
       }
     );
   }

@@ -51,7 +51,7 @@ export class PedibusAttendanceComponent implements OnInit, OnDestroy {
                   this.error = undefined;
                   },
       error1 => {
-        this.error = 'Operazione -getLines OnInit- Fallita';
+        this.error = 'Operazione Fallita';
       }
       );
 
@@ -92,7 +92,7 @@ export class PedibusAttendanceComponent implements OnInit, OnDestroy {
           this.error = undefined;
           this.selectedData = this.formatDateDashed(this.f.date.value);
         }, error1 => {
-          this.error = 'Operazione -getCorsa- Fallita';
+          this.error = 'Operazione Fallita';
           this.classType = 'centeredCard';
         });
         // this.userService.getNumberNewMessages();
@@ -121,7 +121,7 @@ export class PedibusAttendanceComponent implements OnInit, OnDestroy {
       this.error = undefined;
       this.selectedData = this.formatDateDashed(this.f.date.value);
     }, error1 => {
-      this.error = 'Operazione -getCorsa- Fallita';
+      this.error = 'Operazione Fallita';
       this.classType = 'centeredCard';
     });
   }
@@ -141,7 +141,7 @@ export class PedibusAttendanceComponent implements OnInit, OnDestroy {
       },
       (error) => {
         // catch the error
-        this.error = 'Operazione -segnaPresente- fallita';
+        this.error = 'Operazione fallita';
       }
 
     );

@@ -41,7 +41,7 @@ export class UserListComponent implements OnInit, OnDestroy {
         this.users = users as User[];
         this.error = '';
     }, error1 => {
-        this.error = 'Operazione -getAllUsers- fallita';
+        this.error = 'Operazione fallita';
       });
     // console.log(this.users$);
     this.websocketService.disconnect();

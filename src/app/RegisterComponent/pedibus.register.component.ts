@@ -70,7 +70,7 @@ export class PedibusRegisterComponent implements OnInit {
       res => {
         this.fermate = res as FermataShort[];
       }, error1 => {
-        this.error = 'Operazione -getAllFermate- Fallita';
+        this.error = 'Operazione Fallita';
       }
     );
   }
@@ -139,7 +139,7 @@ export class PedibusRegisterComponent implements OnInit {
         // tslint:disable-next-line:no-shadowed-variable
           error => {
           this.loading = false;
-          this.error = 'Operazione di registrazione fallita';
+          this.error = 'Operazione fallita';
         });
   }
 
