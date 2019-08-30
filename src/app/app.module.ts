@@ -22,7 +22,7 @@ import {
 import {MatTabsModule} from '@angular/material/tabs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppComponent} from './app.component';
-import {MainNavComponent} from './main-nav/main-nav.component';
+import {MainNavComponent} from './Layout/main-nav/main-nav.component';
 import {LayoutModule} from '@angular/cdk/layout';
 import {AttendanceService} from './Services/pedibus.attendance.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -50,6 +50,7 @@ import {ReservationComponent} from './ReservationComponent/reservation.component
 import {PrenotazioneService} from './Services/prenotazione.service';
 import {DisponibiltaComponent} from './DisponibilitaComponent/disponibilita.component';
 import {WebSocketService} from './Services/websocket.service';
+import { FooterComponent } from './Layout/footer/footer.component';
 // import {WebSocketService} from './Services/websocket.service';
 
 const appRoutes: Routes = [
@@ -88,7 +89,8 @@ const appRoutes: Routes = [
     AdminTurniComponent,
     NotFoundComponent,
     ReservationComponent,
-    DisponibiltaComponent
+    DisponibiltaComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
