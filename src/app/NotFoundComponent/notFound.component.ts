@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {take} from 'rxjs/operators';
+import {AuthenticationService} from '../Services/authentication.service';
 
 @Component({
   selector: 'app-not-found',
@@ -11,7 +12,8 @@ import {take} from 'rxjs/operators';
 export class NotFoundComponent {
   // path: string;
 
-  constructor(private router: Router
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService
               // private route: ActivatedRoute)
   ) {}
 
@@ -25,5 +27,9 @@ export class NotFoundComponent {
    */
   goto(page: string) {
     this.router.navigate([page]);
+  }
+
+  get isLogged() {
+    return this.authenticationService.isLoggedIn();
   }
 }

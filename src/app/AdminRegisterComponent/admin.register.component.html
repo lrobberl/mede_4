@@ -39,7 +39,7 @@
           <mat-list-item role="listitem">
             <section *ngIf="f.role.value === 'SYSTEM_ADMIN'" class="example-section">
               <mat-checkbox *ngFor="let linea of linee$ | async" class="example-margin" (change)="onChangeCategory($event, linea.Nome)"
-                            value="{{linea.Nome}}"> {{linea.Nome}}</mat-checkbox>
+                            value="{{linea.nome}}">{{linea.nome}}&nbsp;&nbsp;&nbsp;</mat-checkbox>
             </section>
           </mat-list-item>
         </mat-list>

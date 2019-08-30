@@ -120,13 +120,13 @@ export class AdminRegisterComponent implements OnInit, OnDestroy {
     if ($event.checked) {
       this.lineeSelezionate.push(linea);
       this.lineeCount += 1;
-      console.log(this.lineeCount);
+      // console.log(this.lineeCount);
     } else {
       const index = this.lineeSelezionate.indexOf(linea, 0);
       if (index > -1) {
         this.lineeSelezionate.splice(index, 1);
         this.lineeCount -= 1;
-        console.log(this.lineeCount);
+        // console.log(this.lineeCount);
       }
     }
 
