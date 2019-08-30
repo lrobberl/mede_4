@@ -4,7 +4,7 @@
     <mat-card class="form-container">
 
       <mat-card-header>
-        <h1>Register Page</h1>
+        <h1>Pagina di Register</h1>
       </mat-card-header>
 
       <mat-card-content>
@@ -14,7 +14,7 @@
             <div class="input-form-container">
               <mat-form-field>
                 <label>
-                  <input matInput placeholder="Enter your first name" formControlName="firstName">
+                  <input matInput placeholder="Inserisci il tuo nome" formControlName="firstName">
                 </label>
                 <mat-error *ngIf="f.firstName.invalid">{{getErrorMessage('firstName')}}</mat-error>
               </mat-form-field>
@@ -26,7 +26,7 @@
             <div class="input-form-container">
               <mat-form-field>
                 <label>
-                  <input matInput placeholder="Enter your last name" formControlName="lastName">
+                  <input matInput placeholder="Inserisci il tuo cognome" formControlName="lastName">
                 </label>
                 <mat-error *ngIf="f.lastName.invalid">{{getErrorMessage('lastName')}}</mat-error>
               </mat-form-field>
@@ -38,7 +38,7 @@
             <div class="input-form-container">
               <mat-form-field>
                 <label> <!-- (blur)="isEmailPresent()" -->
-                  <input #emailField matInput placeholder="Enter your email" formControlName="username">
+                  <input #emailField matInput placeholder="Inserisci il tuo indirizzo email" formControlName="username">
                 </label>
                 <mat-error *ngIf="f.username.invalid">{{getErrorMessage('username')}}</mat-error>
 
@@ -50,7 +50,7 @@
             <div class="input-form-container">
               <mat-form-field>
                 <label>
-                  <input matInput placeholder="Enter your password" [type]="hidepass1 ? 'password' : 'text'"
+                  <input matInput placeholder="Inserisci la tua password" [type]="hidepass1 ? 'password' : 'text'"
                          formControlName="password">
                 </label>
                 <button mat-icon-button matSuffix (click)="hidepass1 = !hidepass1" [attr.aria-label]="'Hide password'"
@@ -67,7 +67,7 @@
             <div class="input-form-container">
               <mat-form-field>
                 <label>
-                  <input matInput placeholder="Confirm your password" [type]="hidepass2 ? 'password' : 'text'"
+                  <input matInput placeholder="Conferma la tua password" [type]="hidepass2 ? 'password' : 'text'"
                          formControlName="confermaPassword">
                 </label>
                 <button mat-icon-button matSuffix (click)="hidepass2 = !hidepass2" [attr.aria-label]="'Hide password'"
@@ -84,17 +84,17 @@
             <div *ngFor="let item of getFigli.controls; let pointIndex=index" [formGroupName]="pointIndex">
               <mat-form-field>
               <label>
-                <input matInput placeholder="Name" formControlName="nome" />
+                <input matInput placeholder="Nome" formControlName="nome" />
               </label>
               </mat-form-field><br><br>
               <mat-form-field>
                 <label>
-                  <input matInput placeholder="Surame" formControlName="cognome" />
+                  <input matInput placeholder="Cognome" formControlName="cognome" />
                 </label>
               </mat-form-field><br><br>
-              <button type="button" (click)="deleteFiglio(pointIndex)">Delete Figlio</button>
+              <button type="button" (click)="deleteFiglio(pointIndex)">Rimuovi Figlio</button>
             </div>
-            <button type="button" (click)="addFiglio()">Add Figlio</button>
+            <button type="button" (click)="addFiglio()">Aggiungi Figlio</button>
           </div><br><br>
 
           <mat-list-item role="listitem">

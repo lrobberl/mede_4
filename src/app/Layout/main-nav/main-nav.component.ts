@@ -2,13 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {AuthenticationService} from '../Services/authentication.service';
+import {AuthenticationService} from '../../Services/authentication.service';
 import {Router} from '@angular/router';
-import {User} from '../Models/User';
-import {Role} from '../Models/Role';
-import {UserService} from '../Services/pedibus.user.service';
-import {WebSocketService} from '../Services/websocket.service';
-import {Message} from '../Models/Message';
+import {User} from '../../Models/User';
+import {Role} from '../../Models/Role';
+import {UserService} from '../../Services/pedibus.user.service';
+import {WebSocketService} from '../../Services/websocket.service';
+import {Message} from '../../Models/Message';
 
 @Component({
   // tslint:disable-next-line:component-selector
