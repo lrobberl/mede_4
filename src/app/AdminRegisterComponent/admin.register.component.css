@@ -98,3 +98,9 @@ button:focus {
   background-image: -webkit-linear-gradient(to left, #6184A2, #AC686B);
   background-image: linear-gradient(to left, #6184A2, #AC686B);
 }
+
+.highlight {
+  font-style: italic;
+  color: green;
+  width: 30%;
+}

@@ -26,6 +26,7 @@ export class AdminRegisterComponent implements OnInit, OnDestroy {
   linee$: Observable<Linea []>;
   // tempArr: any = { lineeSelezionate: [] };
   public lineeSelezionate: string[] = [];
+  checkIfUserCreated = false;
   lineeCount = 0;
 
   constructor(private router: Router,
@@ -52,7 +53,10 @@ export class AdminRegisterComponent implements OnInit, OnDestroy {
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-
+    if (this.router.url === '/adminRegister?newUserCreated:true=') {
+      this.checkIfUserCreated = true;
+    }
+    console.log(this.checkIfUserCreated);
     // get all lines
     this.linee$ = this.attendanceService.getLines();
 
@@ -89,7 +93,8 @@ export class AdminRegisterComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.adminService.registerUser(this.f.username.value, this.f.role.value, this.lineeSelezionate)
        .subscribe(res => {
-             this.router.navigate(['/'], { queryParams: { newUserCreated: true }});
+              // this.router.navigate(['/adminRegister'], { queryParams: { newUserCreated: true }});
+              window.location.assign('/adminRegister?newUserCreated:true');
         },
          error1 => {
            this.error = 'Operazione Fallita';

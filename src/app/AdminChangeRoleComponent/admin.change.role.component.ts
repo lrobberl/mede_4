@@ -7,6 +7,9 @@ import {AdminService} from '../Services/admin.service';
 import {Observable} from 'rxjs';
 import {User} from '../Models/User';
 import {SystemAdminService} from '../Services/systemAdmin.service';
+import {Linea} from '../Models/Linea';
+import {AttendanceService} from '../Services/pedibus.attendance.service';
+import {MatCheckboxChange} from '@angular/material';
 
 @Component({
   selector: 'app-pedibus-admin-user-list',
@@ -22,11 +25,16 @@ export class ChangeRoleComponent implements OnInit {
   returnUrl: string;
   // urlParam: string;
   users$: Observable<User[]>;
+  linee$: Observable<Linea []>;
+  public lineeSelezionate: string[] = [];
+  lineeCount = 0;
+  checkIfRoleChanged = false;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder,
               private systemAdminService: SystemAdminService,
+              private attendanceService: AttendanceService,
               private adminService: AdminService,
               private authenticationService: AuthenticationService) {
     if (!this.authenticationService.isLoggedIn()) {
@@ -44,9 +52,12 @@ export class ChangeRoleComponent implements OnInit {
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-
+    if (this.router.url === '/changeUserRole?changedRole:true=') {
+      this.checkIfRoleChanged = true;
+    }
+    this.linee$ = this.attendanceService.getLines();
     // Get all users
-    // this.users$ = this.adminService.getAllUsers() as User[];
+    this.users$ = this.adminService.getAllUsers();
     // this.urlParam = this.route.snapshot.paramMap.get('id');
   }
 
@@ -64,7 +75,8 @@ export class ChangeRoleComponent implements OnInit {
     this.loading = true;
     this.systemAdminService.changeUserRole(this.f.username.value, this.f.role.value)
       .subscribe(user => {
-          this.router.navigate(['/'], { queryParams: { newUserCreated: true }});
+          // this.router.navigate(['/'], { queryParams: { newUserCreated: true }});
+          window.location.assign('/changeUserRole?changedRole:true');
         },
         error => {
           this.error = error;
@@ -82,4 +94,22 @@ export class ChangeRoleComponent implements OnInit {
         '';
     }
   }
+
+  onChangeCategory($event: MatCheckboxChange, linea: string) { // Use appropriate model type instead of any
+    // this.tempArr.lineeSelezionate.push(linea);
+    if ($event.checked) {
+      this.lineeSelezionate.push(linea);
+      this.lineeCount += 1;
+      // console.log(this.lineeCount);
+    } else {
+      const index = this.lineeSelezionate.indexOf(linea, 0);
+      if (index > -1) {
+        this.lineeSelezionate.splice(index, 1);
+        this.lineeCount -= 1;
+        // console.log(this.lineeCount);
+      }
+    }
+
+  }
 }
+
