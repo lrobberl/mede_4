@@ -144,27 +144,17 @@ export class PrenotazioneService {
     const body = JSON.stringify(prenotazione);
 
     return this.http.post<IdPrenotazione>(REST_URL + 'disponibilita', body, httpOptions);
-    /*
-    .pipe(
-      map( x => ({
-        id: x.id
-      }) as IdPrenotazione));
-     */
   }
 
   deletePrenotazione(linea: string, fermata: string, id: string) {
     console.log('AttendanceService.deletePrenotazione');
 
-    return this.http.delete(REST_URL + 'reservations/' + linea + '/' + fermata + '/' + id).pipe(
-      retry(3)
-    );
+    return this.http.delete(REST_URL + 'reservations/' + linea + '/' + fermata + '/' + id);
   }
 
   deleteDisponibilita(linea: string, data: string, verso: string) {
     console.log('AttendanceService.deletePrenotazione');
 
-    return this.http.delete(REST_URL + 'disponibilita/' + linea + '/' + data + '/' + verso).pipe(
-      retry(3)
-    );
+    return this.http.delete(REST_URL + 'disponibilita/' + linea + '/' + data + '/' + verso);
   }
 }

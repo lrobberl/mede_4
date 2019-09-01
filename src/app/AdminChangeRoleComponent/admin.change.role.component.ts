@@ -6,7 +6,6 @@ import {AuthenticationService} from '../Services/authentication.service';
 import {AdminService} from '../Services/admin.service';
 import {Observable} from 'rxjs';
 import {User} from '../Models/User';
-import {SystemAdminService} from '../Services/systemAdmin.service';
 import {Linea} from '../Models/Linea';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {MatCheckboxChange} from '@angular/material';
@@ -33,7 +32,6 @@ export class ChangeRoleComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder,
-              private systemAdminService: SystemAdminService,
               private attendanceService: AttendanceService,
               private adminService: AdminService,
               private authenticationService: AuthenticationService) {
@@ -66,14 +64,13 @@ export class ChangeRoleComponent implements OnInit {
 
   onSubmit() {
     // this.submitted = true;
-
     // stop here if form is invalid
     if (this.changeRoleForm.invalid) {
       return;
     }
 
     this.loading = true;
-    this.systemAdminService.changeUserRole(this.f.username.value, this.f.role.value)
+    this.adminService.changeUserRole(this.f.username.value, this.f.role.value, this.lineeSelezionate)
       .subscribe(user => {
           // this.router.navigate(['/'], { queryParams: { newUserCreated: true }});
           window.location.assign('/changeUserRole?changedRole:true');

@@ -44,6 +44,27 @@ export class AdminService {
      */
   }
 
+  changeUserRole(usrn: string, ruolo: string, linee: string[]) {
+    console.log('SystemAdminService.changeUserRole');
+
+    // tslint:disable-next-line:no-shadowed-variable
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+
+    const newUser = {
+      username: usrn,
+      role: ruolo,
+      lineeAdminUtente: linee
+    };
+
+    const body = JSON.stringify(newUser);
+
+    return this.http.put<any>(REST_URL + 'users/' + usrn, body, httpOptions);
+  }
+
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(REST_URL + 'users').pipe(
       // todo tenere fermate? Il server non le passa

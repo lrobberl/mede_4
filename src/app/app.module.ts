@@ -41,7 +41,6 @@ import {Role} from './Models/Role';
 import {NotFoundComponent} from './NotFoundComponent/notFound.component';
 import {UserListComponent} from './AdminUserListComponent/user.list.component';
 import {ChangeRoleComponent} from './AdminChangeRoleComponent/admin.change.role.component';
-import {SystemAdminService} from './Services/systemAdmin.service';
 import {RecoverPasswordComponent} from './RecoverPasswordComponent/recoverPassword.component';
 import {ResetPasswordComponent} from './ResetPasswordComponent/resetPassword.component';
 import {ComunicationComponent} from './ComunicationComponent/comunication.component';
@@ -121,7 +120,7 @@ const appRoutes: Routes = [
     MatBadgeModule,
     MatSnackBarModule
   ],
-  providers: [UserService, AttendanceService, AdminService, SystemAdminService, MatDatepickerModule, PrenotazioneService, WebSocketService,
+  providers: [UserService, AttendanceService, AdminService, MatDatepickerModule, PrenotazioneService, WebSocketService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
