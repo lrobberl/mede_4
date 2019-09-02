@@ -44,7 +44,7 @@ export class AdminService {
      */
   }
 
-  changeUserRole(usrn: string, ruolo: string, linee: string[]) {
+  changeUserRole(id: string, ruolo: string, lines: string[]) {
     console.log('SystemAdminService.changeUserRole');
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -55,14 +55,13 @@ export class AdminService {
     };
 
     const newUser = {
-      username: usrn,
-      role: ruolo,
-      lineeAdminUtente: linee
+      newRuolo: ruolo,
+      linee: lines
     };
 
     const body = JSON.stringify(newUser);
 
-    return this.http.put<any>(REST_URL + 'users/' + usrn, body, httpOptions);
+    return this.http.put<any>(REST_URL + 'users/' + id, body, httpOptions);
   }
 
   getAllUsers(): Observable<User[]> {
@@ -70,6 +69,14 @@ export class AdminService {
       // todo tenere fermate? Il server non le passa
       map(arr => arr.map(x => ({id: x.id, username: x.username,
       firstName: x.firstName, lastName: x.lastName, role: x.role, listaRuoli: x.listaRuoli, status: x.status}) as User)),
+    );
+  }
+
+  getAllAdminsAndAccompagnatori(): Observable<User[]> {
+    return this.http.get<User[]>(REST_URL + 'accompagnatori-admins').pipe(
+      // todo tenere fermate? Il server non le passa
+      map(arr => arr.map(x => ({id: x.id, username: x.username,
+        firstName: x.firstName, lastName: x.lastName, role: x.role, listaRuoli: x.listaRuoli, status: x.status}) as User)),
     );
   }
 }

@@ -19,7 +19,7 @@
               </mat-form-field>
             </div>
           </mat-list-item>
-          <br><br>
+          <br>
 
           <mat-list-item role="listitem">
             <div class="input-form-container">
@@ -31,15 +31,12 @@
               </mat-form-field>
             </div>
           </mat-list-item>
-          <br>
-          <!--
           <mat-list-item role="listitem">
             <section *ngIf="f.role.value === 'SYSTEM_ADMIN'" class="example-section">
               <mat-checkbox *ngFor="let linea of linee$ | async" class="example-margin" (change)="onChangeCategory($event, linea.nome)"
                             value="{{linea.nome}}"> {{linea.nome}}&nbsp;&nbsp;&nbsp;</mat-checkbox>
             </section>
           </mat-list-item>
-           -->
         </mat-list>
         <div class="form-group">
           <button [disabled]="loading || changeRoleForm.invalid" class="btn btn-primary">Cambia Ruolo</button>

@@ -43,7 +43,7 @@ export class ChangeRoleComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeRoleForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       // tslint:disable-next-line:max-line-length
       role: ['', [Validators.required]]
     });
@@ -55,7 +55,7 @@ export class ChangeRoleComponent implements OnInit {
     }
     this.linee$ = this.attendanceService.getLines();
     // Get all users
-    this.users$ = this.adminService.getAllUsers();
+    this.users$ = this.adminService.getAllAdminsAndAccompagnatori();
     // this.urlParam = this.route.snapshot.paramMap.get('id');
   }
 
