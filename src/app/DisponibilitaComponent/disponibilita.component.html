@@ -92,8 +92,8 @@
                 <span><strong>Linea:</strong>&nbsp;&nbsp;{{firstFormGroup.controls.linee.value.nome}}</span><br>
                 <span><strong>Fermata:</strong>&nbsp;&nbsp;{{prenotazione.fermata.nome}}&nbsp;&nbsp;<strong>Verso:</strong>
                         &nbsp;&nbsp;{{prenotazione.verso}}</span><br>
-                <strong>Stato:&nbsp;&nbsp;<span *ngIf="prenotazione.confermata" class="highlight">confermata</span>
-                  <span *ngIf="!prenotazione.confermata" class="highlightNOT">In attesa</span></strong><br>
+                <strong>Stato:&nbsp;&nbsp;<span *ngIf="prenotazione.chiuso" class="highlight">confermata</span>
+                  <span *ngIf="!prenotazione.chiuso" class="highlightNOT">In attesa</span></strong><br>
                 <div></div><br>
                 <mat-divider></mat-divider><br>
               </div>

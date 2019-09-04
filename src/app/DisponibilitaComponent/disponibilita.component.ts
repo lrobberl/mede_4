@@ -109,7 +109,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
         // console.log('Nuovo messaggio ricevuto ' + messageString);
         this.userService.updateUnreadMessages(message.body);
         this.websocketService.showBanner();
-        //this.userService.getNumberNewMessages();
+        // this.userService.getNumberNewMessages();
       });
     });
   }
@@ -148,7 +148,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
         this.disponibilitaNext5Days = result;
         this.disponibilitaNext5Days.forEach( r => {
           r.data = new Date(r.dataStr);
-          r.confermata = false;
+          // r.chiuso = false;
         });
         this.setDisponibilitaAttive(this.disponibilitaNext5Days);
     }, error1 => {
@@ -179,7 +179,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateAndata.value,
-            confermata: false,
+            chiuso: false,
             dataStr: ''
           };
           this.disponibilitaNext5Days.push(newDisponibilita);
@@ -247,7 +247,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateRitorno.value,
-            confermata: false,
+            chiuso: false,
             dataStr: ''
           };
           this.disponibilitaNext5Days.push(newDisponibilita);

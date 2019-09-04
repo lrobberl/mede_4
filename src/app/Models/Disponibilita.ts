@@ -6,5 +6,5 @@ export interface Disponibilita {
   dataStr: string;
   fermata: FermataShort;
   verso: string;
-  confermata: boolean;
+  chiuso: boolean;
 }
