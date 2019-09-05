@@ -25,7 +25,7 @@ export class MainNavComponent implements OnInit {
 
   isClicked = false;
 
-  title = 'PIEDIBUS';
+  title = 'PEDIBUS';
   newMessages: number;
   error: string;
 

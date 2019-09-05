@@ -1,4 +1,6 @@
-  <mat-card class="{{classType}} mat-card ng-star-inserted">
+<div class="bg">
+  <div class="firstrow">
+    <mat-card class="{{classType}} mat-card ng-star-inserted">
       <mat-card-title>
         <h3> ACCOMPAGNATORE - PRESENZE </h3>
       </mat-card-title>
@@ -32,57 +34,61 @@
           <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
           <span class="highlight">{{message}}</span>
         </div>
-  </mat-card>
+    </mat-card>
 
-  <mat-card class="rightCard" *ngIf="data">
-    <mat-card-title>
-      <h3>Dettagli Corsa</h3>
-      <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
-    </mat-card-title>
-      <mat-tab-group dynamicHeight>
-        <mat-tab label="Andata">
-            <mat-card-content style="text-align: center">
-              <section>
-                <mat-list>
-                  <mat-list-item *ngFor="let fermata of data.corse[0].fermate">
-                    <mat-icon>trip_origin</mat-icon>
-                    <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span *ngFor="let bambino of fermata.bambini; last as isLast"
-                          (click)="segnaPresente($event, bambino, 'Andata', fermata)">
-                      <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>
-                      {{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
-                      </span>
-                  </mat-list-item>
-                </mat-list>
-              </section>
-            </mat-card-content>
-        </mat-tab>
-        <mat-tab label="Ritorno">
-            <mat-card-content style="text-align: center">
-              <section>
-                <mat-list>
-                  <mat-list-item *ngFor="let fermata of data.corse[1].fermate">
-                    <mat-icon>trip_origin</mat-icon>
-                    <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span *ngFor="let bambino of fermata.bambini; last as isLast"
-                          (click)="segnaPresente($event, bambino, 'Ritorno', fermata)">
-                      <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>{{bambino.nome}}
-                          <span *ngIf="!isLast">,&nbsp;</span></span></span>
-                  </mat-list-item>
-                </mat-list>
-              </section>
-            </mat-card-content>
-        </mat-tab>
-      </mat-tab-group>
-  </mat-card>
+    <mat-card class="rightCard" *ngIf="data">
+      <mat-card-title>
+        <h3>Dettagli Corsa</h3>
+        <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateDashed(data.date)}}</h4>
+      </mat-card-title>
+        <mat-tab-group dynamicHeight>
+          <mat-tab label="Andata">
+              <mat-card-content style="text-align: center">
+                <section>
+                  <mat-list>
+                    <mat-list-item *ngFor="let fermata of data.corse[0].fermate">
+                      <mat-icon>trip_origin</mat-icon>
+                      <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <span *ngFor="let bambino of fermata.bambini; last as isLast"
+                            (click)="segnaPresente($event, bambino, 'Andata', fermata)">
+                        <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>
+                        {{bambino.nome}}<span *ngIf="!isLast">,&nbsp;</span></span>
+                        </span>
+                    </mat-list-item>
+                  </mat-list>
+                </section>
+              </mat-card-content>
+          </mat-tab>
+          <mat-tab label="Ritorno">
+              <mat-card-content style="text-align: center">
+                <section>
+                  <mat-list>
+                    <mat-list-item *ngFor="let fermata of data.corse[1].fermate">
+                      <mat-icon>trip_origin</mat-icon>
+                      <span class="highlight">{{fermata.orario}}&nbsp;&nbsp;{{fermata.nome}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <span *ngFor="let bambino of fermata.bambini; last as isLast"
+                            (click)="segnaPresente($event, bambino, 'Ritorno', fermata)">
+                        <span [class.selected] = bambino.presente [class.prenotato] = bambino.prenotato>{{bambino.nome}}
+                            <span *ngIf="!isLast">,&nbsp;</span></span></span>
+                    </mat-list-item>
+                  </mat-list>
+                </section>
+              </mat-card-content>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+  </div>
 
-  <footer *ngIf="data" class="bottom">
-    <mat-form-field>
-      <mat-label>Formato Download</mat-label>
-      <select matNativeControl [formControl]="exportControl">
-        <!-- <option value="csv">CSV</option> -->
-        <option value="json">JSON</option>
-      </select>
-    </mat-form-field>
-    <button [disabled]="fExport.invalid" mat-raised-button class="toolbar" (click)="esportaFile()">Esporta file</button>
-  </footer>
+  <div *ngIf="data" class="secondrow">
+    <mat-card *ngIf="data" class="bottom">
+      <mat-form-field>
+        <mat-label>Formato Download</mat-label>
+        <select matNativeControl [formControl]="exportControl">
+          <!-- <option value="csv">CSV</option> -->
+          <option value="json">JSON</option>
+        </select>
+      </mat-form-field>
+      <button [disabled]="fExport.invalid" mat-raised-button class="toolbar" (click)="esportaFile()">Esporta file</button>
+    </mat-card>
+  </div>
+</div>

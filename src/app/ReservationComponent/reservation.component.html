@@ -1,4 +1,5 @@
-<mat-card class="centeredCard">
+<div class="bg">
+  <mat-card class="centeredCard">
   <mat-card-title>
     <h3> PRENOTAZIONI </h3>
   </mat-card-title>
@@ -28,7 +29,7 @@
 
       </mat-step>
 
-      <mat-step [stepControl]="secondFormGroup" *ngIf="firstFormGroup.valid">
+      <mat-step [stepControl]="secondFormGroup" *ngIf="firstFormGroup.valid"  style="max-height: 50vh;">
 
         <ng-template matStepLabel>Seleziona una o più corse</ng-template>
         <div *ngIf="secondStep">
@@ -74,7 +75,7 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-            </form><br><br>
+            </form><!--<br>-->
           </div>
         </div>
         <div>
@@ -114,4 +115,5 @@
       </mat-step>
     </mat-vertical-stepper>
   </mat-card-content>
-</mat-card>
+  </mat-card>
+</div>

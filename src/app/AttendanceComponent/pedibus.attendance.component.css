@@ -1,50 +1,109 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
+.bg {
+  background-image: url("../../sfondo.jpg");
+  background-position: center;
+  background-size: cover;
+  /*overflow: hidden;*/
+  /*width: 100%;*/
+  /*min-height: 100vh;*/
+  /*height: 100vh;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  min-height: 100vh;
+  min-width: 35em;
+}
+
 .selected {
    font-weight: bold;
  }
 
 .bottom {
-  margin-left: 38em;
-  margin-top: 32em;
+  margin-top: 36em;
+  float: bottom;
   align-content: center;
+  border-radius: 14px;
+  background-color: white;
 }
 
+.firstrow {
+  display: inline-block;
+  width: 65em
+}
+.secondrow {
+  display: inline-block;
+}
 .prenotato {
   color: lightseagreen;
 }
 
 .centeredCard {
-  margin-top: 5em;
-  margin-bottom: 5em;
+  border-radius: 14px;
   text-align: center;
+  /*align-items: center;*/
   align-content: center;
-  max-width: 35em;
-  margin-right: 30%;
-  margin-left: 30%;
+  min-width: 35em;
+  width: 40%;
+  margin: 0 18vw;
+  background-color: white;
+  height: 22em;
+  min-height: 22em;
 }
 
 .rightCard {
-  margin-top: 5em;
+  border-radius: 14px;
+  margin-top: 1em;
   max-width: 35em;
-  min-width: 15em;
+  min-width: 35em;
   text-align: center;
+  /*align-items: center;*/
   align-content: center;
   margin-bottom: 20px;
-  margin-right: 10%;
+  width: 40%;
   float: right;
+  background-color: white;
+  height: 22em;
+  min-height: 22em;
 }
 
 .leftCard {
-  margin-top: 5em;
+  border-radius: 14px;
+  margin-top: 1em;
   max-width: 35em;
-  min-width: 15em;
+  min-width: 35em;
   text-align: center;
+  /*align-items: center;*/
   align-content: center;
   margin-bottom: 20px;
-  margin-left: 10%;
+  width: 40%;
   float: left;
+  background-color: white;
+  height: 22em;
+  min-height: 22em;
 }
+
+/*
+
+padding: 30px 42px 10px 42px;
+width: 600px;
+height: 400px;
+
+justify-content: center;
+
+flex-direction: column;
+margin-top: 10vh;
+margin-bottom: 10vh;
+margin-right: 10vh;
+margin-left: 10vh;
+
+-webkit-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+-moz-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+ */
+
+
 
 .highlight {
   font-weight: bold;

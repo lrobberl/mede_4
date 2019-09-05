@@ -1,3 +1,20 @@
+.bg {
+  background-image: url("../../sfondo.jpg");
+  background-position: center;
+  background-size: cover;
+  /*overflow: hidden;*/
+  /*width: 100%;*/
+  /*min-height: 100vh;*/
+  /*height: 100vh;*/
+  display: flex;
+  justify-content: center;
+  float: top;
+  align-items: center;
+  height: auto;
+  min-height: 100vh;
+  min-width: 35em;
+}
+
 .mat-button {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -10,10 +27,7 @@
   width: 50%;
   max-width: 60%;
   min-width: 35em;
-  margin-top: 5em;
-  margin-bottom: 5em;
-  margin-left: 25%;
-  margin-right: 25%;
+  margin: 2em 25%;
 }
 
 .centeredContent {
@@ -42,6 +56,12 @@
 .highlight {
   font-style: italic;
   color: green;
+  width: 30%;
+}
+
+.highlightNOT {
+  font-style: italic;
+  color: darkred;
   width: 30%;
 }
 

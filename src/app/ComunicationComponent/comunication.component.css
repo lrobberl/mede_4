@@ -1,3 +1,20 @@
+.bg {
+  background-image: url("../../sfondo.jpg");
+  background-position: center;
+  background-size: cover;
+  /*overflow: hidden;*/
+  /*width: 100%;*/
+  /*min-height: 100vh;*/
+  /*height: 100vh;*/
+  display: flex;
+  justify-content: center;
+  float: top;
+  align-items: center;
+  height: auto;
+  min-height: 100vh;
+  min-width: 34em;
+}
+
 .selected {
   font-weight: bold;
 }
@@ -52,11 +69,10 @@ table {
 }
 
 .centeredCard {
-  margin-top: 5em;
-  margin-bottom: 5em;
   text-align: center;
   align-content: center;
-  max-width: 90em;
-  margin-right: 10%;
-  margin-left: 10%;
+  width: 70%;
+  min-width: 34em;
+  margin: 0 10vw;
+  height: auto;
 }
