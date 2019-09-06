@@ -12,7 +12,7 @@
   align-items: center;
   height: auto;
   min-height: 100vh;
-  min-width: 34em;
+  min-width: 35em;
 }
 
 .selected {
@@ -72,7 +72,7 @@ table {
   text-align: center;
   align-content: center;
   width: 70%;
-  min-width: 34em;
+  min-width: 35em;
   margin: 0 10vw;
   height: auto;
 }

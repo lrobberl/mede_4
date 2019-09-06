@@ -1,4 +1,6 @@
-<mat-card class="{{classType}} mat-card ng-star-inserted">
+<div class="bg">
+  <div class="firstrow">
+  <mat-card class="{{classType}} mat-card ng-star-inserted">
   <mat-card-title>
     <h3> SYSTEM-ADMIN - TURNI </h3>
   </mat-card-title>
@@ -37,7 +39,7 @@
   </mat-card-title>
 
   <div>
-    <mat-tab-group dynamicHeight>
+    <mat-tab-group dynamicHeight style="text-align: center">
       <mat-tab label="Andata" name="tabAndata">
         <div class="example-large-box mat-elevation-z4">
           <mat-card-content style="text-align: center"><br>
@@ -93,5 +95,7 @@
 
 <div class="bottom">
   <mat-error *ngIf="errorRight" class="mat-error"><strong>{{errorRight}}</strong></mat-error>
+</div>
+  </div>
 </div>
 

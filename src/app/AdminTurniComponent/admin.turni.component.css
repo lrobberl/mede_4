@@ -1,5 +1,21 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
+.bg {
+  background-image: url("../../sfondo.jpg");
+  background-position: center;
+  background-size: cover;
+  /*overflow: hidden;*/
+  /*width: 100%;*/
+  /*min-height: 100vh;*/
+  /*height: 100vh;*/
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  min-height: 100vh;
+  min-width: 35em;
+}
+
 .selected {
   font-weight: bold;
 }
@@ -11,40 +27,59 @@
 }
 
 .bottom {
-  max-width: 30em;
-  margin-left: 38em;
-  margin-top: 32em;
+  width: 25%;
+  position: center;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  border-radius: 14px;
+  background-color: white;
+  margin: 0 22vw;
+  min-width: 22em;
 }
 
 .centeredCard {
-  margin-top: 5em;
-  margin-bottom: 5em;
+  border-radius: 14px;
   text-align: center;
+  /*align-items: center;*/
   align-content: center;
-  max-width: 35em;
-  margin-right: 30%;
-  margin-left: 30%;
+  min-width: 35em;
+  width: 40%;
+  margin: 0 18vw;
+  background-color: white;
+  height: 22em;
+  min-height: 22em;
 }
 
+.firstrow {
+  display: inline-block;
+  width: auto
+}
 
 .rightCard {
-  margin-top: 5em;
-  max-width: 200em;
+  border-radius: 14px;
+  margin-top: 1em;
+  max-width: 35em;
   text-align: center;
+  align-items: center;
   align-content: center;
-  margin-bottom: 15em;
-  margin-right: 10em;
+  width: 30em;
   float: right;
+  background-color: white;
+  height: 22em;
 }
 
 .leftCard {
-  margin-top: 5em;
-  max-width: 200em;
+  border-radius: 14px;
+  margin-top: 1em;
+  max-width: 35em;
   text-align: center;
+  align-items: center;
   align-content: center;
-  margin-bottom: 15em;
-  margin-left: 10em;
+  width: 30em;
   float: left;
+  background-color: white;
+  height: 22em;
 }
 
 .prenotato {

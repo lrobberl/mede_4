@@ -4,7 +4,6 @@
       <mat-card-title>
         <h3> ACCOMPAGNATORE - PRESENZE </h3>
       </mat-card-title>
-
         <mat-card-content style="text-align: center">
           <form [formGroup]="dateLineForm">
             <section>
@@ -34,7 +33,7 @@
           <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
           <span class="highlight">{{message}}</span>
         </div>
-    </mat-card>
+    </mat-card>&nbsp;&nbsp;&nbsp;&nbsp;
 
     <mat-card class="rightCard" *ngIf="data">
       <mat-card-title>
@@ -77,7 +76,7 @@
           </mat-tab>
         </mat-tab-group>
       </mat-card>
-  </div>
+  </div>&nbsp;&nbsp;
 
   <div *ngIf="data" class="secondrow">
     <mat-card *ngIf="data" class="bottom">
@@ -88,7 +87,9 @@
           <option value="json">JSON</option>
         </select>
       </mat-form-field>
-      <button [disabled]="fExport.invalid" mat-raised-button class="toolbar" (click)="esportaFile()">Esporta file</button>
+      <mat-card-footer style="padding-bottom: 1.5em">
+        <button [disabled]="fExport.invalid" mat-raised-button class="toolbar" (click)="esportaFile()">Esporta file</button>
+      </mat-card-footer>
     </mat-card>
   </div>
 </div>
