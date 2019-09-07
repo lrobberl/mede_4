@@ -22,8 +22,8 @@
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </section><br><br>
-            <section>
-              <button [disabled]="dateLineForm.invalid" mat-raised-button class="toolbar" (click)="getCorsa()">
+            <section style="margin-left: 8em; margin-right: 8em">
+              <button [disabled]="dateLineForm.invalid" class="btn btn-lg btn-primary btn-block" (click)="getCorsa()">
                 Mostra Corsa
               </button>
             </section>
@@ -87,8 +87,8 @@
           <option value="json">JSON</option>
         </select>
       </mat-form-field>
-      <mat-card-footer style="padding-bottom: 1.5em">
-        <button [disabled]="fExport.invalid" mat-raised-button class="toolbar" (click)="esportaFile()">Esporta file</button>
+      <mat-card-footer style="padding-bottom: 1.5em; margin-left: 2em; margin-right: 2em">
+        <button [disabled]="fExport.invalid" class="btn btn-lg btn-primary btn-block" (click)="esportaFile()">Esporta file</button>
       </mat-card-footer>
     </mat-card>
   </div>

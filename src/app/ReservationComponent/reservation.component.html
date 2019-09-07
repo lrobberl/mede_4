@@ -21,8 +21,8 @@
               <mat-hint>{{selected}}</mat-hint>
             </mat-form-field>
 
-          <div>
-            <button mat-raised-button matStepperNext class="toolbar" [disabled]="firstFormGroup.invalid"
+          <div style="margin-left: 12em; margin-right: 12em">
+            <button class="btn btn-lg btn-primary btn-block" matStepperNext [disabled]="firstFormGroup.invalid"
                     (click)="getFermateAndPrenotazioni()">Avanti</button>
           </div>
         </form>
@@ -82,9 +82,9 @@
           <mat-error *ngIf="error"><strong>{{error}}</strong></mat-error>
           <span class="highlight">{{message}}</span>
         </div>
-        <div>
-          <button mat-raised-button matStepperPrevious class="toolbar" (click)="eraseFields()">Indietro</button><span>&nbsp;&nbsp;</span>
-          <button mat-raised-button matStepperNext class="toolbar">Riepilogo</button>
+        <div style="margin-left: 12em; margin-right: 12em">
+          <button class="btn btn-lg btn-primary btn-block" matStepperPrevious (click)="eraseFields()">Indietro</button><span>&nbsp;&nbsp;</span>
+          <button class="btn btn-lg btn-primary btn-block" matStepperNext >Riepilogo</button>
         </div>
       </mat-step>
 
@@ -107,10 +107,10 @@
         <div *ngIf="prenotazioniNext5Days.length === 0">
           <h4>Nessuna prenotazione attiva</h4>
         </div>
-        <div>
-          <button mat-raised-button matStepperPrevious class="toolbar">Indietro</button><span>&nbsp;&nbsp;</span>
+        <div style="margin-left: 12em; margin-right: 12em">
+          <button matStepperPrevious class="btn btn-lg btn-primary btn-block">Indietro</button><span>&nbsp;&nbsp;</span>
           <!-- <button mat-button  class="styleColor" (click)="stepper.reset()">Reset</button><span>&nbsp;&nbsp;</span> -->
-          <button mat-raised-button  class="toolbar" (click)="goToHomePage()">Fine</button>
+          <button class="btn btn-lg btn-primary btn-block" (click)="goToHomePage()">Fine</button>
         </div>
       </mat-step>
     </mat-vertical-stepper>

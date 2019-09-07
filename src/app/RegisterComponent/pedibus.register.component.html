@@ -4,7 +4,7 @@
     <mat-card class="form-container">
 
       <mat-card-header>
-        <h1>Pagina di Register</h1>
+        <h1>Registrati.</h1>
       </mat-card-header>
 
       <mat-card-content>
@@ -80,8 +80,8 @@
           </mat-list-item>
           <br><br>
 
-          <div formArrayName="figliArray">
-            <div *ngFor="let item of getFigli.controls; let pointIndex=index" [formGroupName]="pointIndex">
+          <div formArrayName="figliArray" style="margin-right: 12em">
+            <div *ngFor="let item of getFigli.controls; let pointIndex=index" [formGroupName]="pointIndex" >
               <mat-form-field>
               <label>
                 <input matInput placeholder="Nome" formControlName="nome" />
@@ -92,18 +92,20 @@
                   <input matInput placeholder="Cognome" formControlName="cognome" />
                 </label>
               </mat-form-field><br><br>
-              <button type="button" (click)="deleteFiglio(pointIndex)">Rimuovi Figlio</button>
+              <button class="btn btn-lg btn-primary btn-block" type="button" (click)="deleteFiglio(pointIndex)">Rimuovi Figlio</button>
             </div>
-            <button type="button" (click)="addFiglio()">Aggiungi Figlio</button>
+            <button class="btn btn-lg btn-primary btn-block" type="button" (click)="addFiglio()">Aggiungi Figlio</button>
           </div><br><br>
 
           <mat-list-item role="listitem">
           <mat-form-field>
-            <label>
-              <mat-select matInput placeholder="Fermata di Default valida per ogni figlio" formControlName="fermataDefault">
-                <mat-option *ngFor="let fermata of fermate" value="{{fermata.id}}">
-                  {{fermata.nome}} - {{fermata.linea}}</mat-option>
-              </mat-select>
+            <label> Fermata Default
+              <div>
+                <mat-select matInput formControlName="fermataDefault">
+                  <mat-option *ngFor="let fermata of fermate" value="{{fermata.id}}">
+                    {{fermata.nome}} - {{fermata.linea}}</mat-option>
+                </mat-select>
+              </div>
             </label>
           </mat-form-field>
           </mat-list-item><br><br>
@@ -113,8 +115,8 @@
         </mat-list>
 
 
-        <div class="form-group">
-          <button [disabled]="loading || registerForm.invalid" class="toolbar">Register</button>
+        <div class="form-group" style="margin-left: 12em; margin-right: 12em">
+          <button [disabled]="loading || registerForm.invalid"  class="btn btn-lg btn-primary btn-block">Registrati</button>
           <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>
         <mat-error *ngIf="error" class="alert alert-danger"><strong>{{error}}</strong></mat-error>
