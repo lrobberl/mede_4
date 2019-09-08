@@ -1,12 +1,11 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {catchError, map, retry} from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
 import {Message} from '../Models/Message';
 import {BambinoRegistration} from '../Models/BambinoRegistration';
 import {RegisterForm} from '../Models/RegisterForm';
 import {Bambino} from '../Models/Bambino';
-import {numbers} from '@material/list/constants';
 
 const REST_URL = 'http://localhost:8080/';
 

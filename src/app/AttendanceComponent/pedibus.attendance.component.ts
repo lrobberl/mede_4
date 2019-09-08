@@ -1,11 +1,9 @@
-import {Component, Injectable, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {AuthenticationService} from '../Services/authentication.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { saveAs } from 'file-saver';
-import exportFromJSON from 'export-from-json';
-import {User} from '../Models/User';
 import {Bambino} from '../Models/Bambino';
 import {Fermata} from '../Models/Fermata';
 import {CorsaWrapper} from '../Models/CorsaWrapper';
@@ -68,11 +66,9 @@ export class PedibusAttendanceComponent implements OnInit, OnDestroy {
 
     this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
       const username = JSON.parse(localStorage.getItem('currentUser')).username;
-      // console.log(username);
 
       this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
         const messageString = JSON.stringify(message);
-        // console.log('Nuovo messaggio ricevuto ' + messageString);
         this.userService.updateUnreadMessages(message.body);
         this.websocketService.showBanner();
 
@@ -95,7 +91,6 @@ export class PedibusAttendanceComponent implements OnInit, OnDestroy {
           this.error = 'Operazione Fallita';
           this.classType = 'centeredCard';
         });
-        // this.userService.getNumberNewMessages();
       });
     });
   }

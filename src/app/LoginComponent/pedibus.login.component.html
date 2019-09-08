@@ -1,55 +1,5 @@
 <div class="bg">
   <mat-card class="form-container">
-    <!--    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">-->
-    <!--      <mat-card-header>-->
-    <!--        <h1 id="title">Login Page</h1>-->
-    <!--      </mat-card-header>-->
-
-
-    <!--      <mat-card-content>-->
-    <!--        <mat-list role="list">-->
-
-    <!--          <mat-list-item role="listitem">-->
-    <!--            <div class="input-form-container">-->
-    <!--              <mat-form-field>-->
-    <!--                  <input type="text" matInput placeholder="Enter your username" formControlName="username">-->
-    <!--                  <mat-error *ngIf="f.username.invalid"> {{getErrorMessage('username')}}</mat-error>-->
-    <!--                &lt;!&ndash;mat-error *ngIf="email.invalid">{{getErrorMessage('email')}}</mat-error> &ndash;&gt;-->
-    <!--              </mat-form-field>-->
-    <!--            </div>-->
-    <!--          </mat-list-item>-->
-    <!--          <br><br> &lt;!&ndash; todo: da separare col CSS e togliere i <br> &ndash;&gt;-->
-
-    <!--          <mat-list-item role="listitem">-->
-    <!--            <div class="input-form-container">-->
-    <!--              <mat-form-field>-->
-    <!--                  <input type="text" matInput placeholder="Enter your password" [type]="hidepass ? 'password' : 'text'"-->
-    <!--                         formControlName="password">-->
-    <!--                  <button mat-icon-button matSuffix (click)="hidepass = !hidepass" [attr.aria-label]="'Hide password'"-->
-    <!--                        [attr.aria-pressed]="hidepass">-->
-    <!--                  <mat-icon>{{hidepass ? 'visibility_off' : 'visibility'}}</mat-icon>-->
-    <!--                  </button>-->
-    <!--                <mat-error *ngIf="f.password.invalid"> {{getErrorMessage('password')}}</mat-error>-->
-    <!--                  &lt;!&ndash; todo: Da controllare la pwd sul login? Se si, aggiungere cosa non va bene della pwd &ndash;&gt;-->
-    <!--                &lt;!&ndash; <mat-error *ngIf="password.invalid">{{getErrorMessage('password')}}</mat-error> &ndash;&gt;-->
-    <!--              </mat-form-field>-->
-    <!--            </div>-->
-    <!--          </mat-list-item>-->
-    <!--          <br><br>  &lt;!&ndash; todo: da separare col CSS e togliere i <br> &ndash;&gt;-->
-
-    <!--        </mat-list>-->
-    <!--        <div>-->
-    <!--          <a routerLink="/recoverPassword" routerLinkActive="active">Password dimenticata?</a><br>-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--          <button class="btn-primary" [disabled]="loading || loginForm.invalid">Login</button>-->
-    <!--          <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />-->
-    <!--        </div>-->
-    <!--        <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>-->
-    <!--      </mat-card-content>-->
-    <!--    </form>-->
-
-
     <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h2 class="form-signin-heading"><strong>Accedi.</strong></h2>
       <mat-card-content>
@@ -57,23 +7,8 @@
         <label for="inputEmail" class="sr-only">Indirizzo email</label>
         <input type="email" id="inputEmail" class="form-control" matInput placeholder="Indirizzo email" formControlName="username"
                autofocus>
-        <!-- <mat-error *ngIf="f.username.invalid"> {{getErrorMessage('username')}}</mat-error> -->
-
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" matInput placeholder="Password" formControlName="password">
-        <!--      <button mat-icon-button matSuffix (click)="hidepass = !hidepass" [attr.aria-label]="'Hide password'"-->
-        <!--              [attr.aria-pressed]="hidepass">-->
-        <!--        <mat-icon>{{hidepass ? 'visibility_off' : 'visibility'}}</mat-icon>-->
-        <!--      </button>
-        <mat-error *ngIf="f.password.invalid"> {{getErrorMessage('password')}}</mat-error> -->
-        <!-- todo: Da controllare la pwd sul login? Se si, aggiungere cosa non va bene della pwd -->
-        <!-- <mat-error *ngIf="password.invalid">{{getErrorMessage('password')}}</mat-error> -->
-        <!--      <div class="checkbox">-->
-        <!--        <label>-->
-        <!--          <input type="checkbox" value="remember-me"> Remember me-->
-        <!--        </label>-->
-        <!--      </div>-->
-
         <div>
           <label>
             <p>Utilizza la mail fornita dall'amministratore per accedere a Pedibus.</p>

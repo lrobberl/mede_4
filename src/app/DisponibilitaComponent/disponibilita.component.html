@@ -5,14 +5,13 @@
   </mat-card-title>
 
   <mat-card-content>
-    <mat-vertical-stepper [linear]="isLinear" #stepper >
+    <mat-vertical-stepper [linear]="isLinear">
       <mat-step [stepControl]="firstFormGroup" class="styleColor">
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel class="styleColor">Seleziona una linea</ng-template>
           <mat-form-field>
             <mat-label>Nome della linea</mat-label>
             <mat-select formControlName="linee">
-              <!-- <mat-option>--</mat-option> -->
               <mat-option *ngFor="let linea of linee" [value]=linea>
                 {{linea.nome}}
               </mat-option>
@@ -46,9 +45,7 @@
                 <mat-form-field>
                   <mat-label>Fermate</mat-label>
                   <mat-select formControlName="fermateAndata">
-                    <!-- <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option> -->
                       <mat-option *ngFor="let fermata of fermateLinea" [value]="fermata">
-                        <!-- <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label> -->
                         <span>{{fermata.nome}}</span>
                       </mat-option>
                   </mat-select>
@@ -61,9 +58,7 @@
                 <mat-form-field>
                   <mat-label>Fermate</mat-label>
                   <mat-select formControlName="fermateRitorno" >
-                    <!-- <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option> -->
                     <mat-option *ngFor="let fermata of fermateLinea" [value]="fermata">
-                        <!-- <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label> -->
                         <span>{{fermata.nome}}</span>
                       </mat-option>
                   </mat-select>
@@ -106,7 +101,6 @@
         </div>
         <div>
           <button matStepperPrevious class="btn btn-lg btn-primary btn-block">Indietro</button><span>&nbsp;&nbsp;</span>
-          <!-- <button mat-button  class="styleColor" (click)="stepper.reset()">Reset</button><span>&nbsp;&nbsp;</span> -->
           <button class="btn btn-lg btn-primary btn-block" (click)="goToHomePage()">Fine</button>
         </div>
       </mat-step>

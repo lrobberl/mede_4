@@ -12,8 +12,8 @@
   align-items: center;
   height: auto;
   min-height: 100vh;
-  /*min-width: 35em;*/
-  padding-top: 50px;
+  /*min-width: 35em; padding-top: 50px;*/
+
 }
 
 button {
@@ -42,7 +42,7 @@ button:focus {
   text-align: center;
   align-content: center;
   justify-content: center;
-  width: 60%;
+  width: 50%;
   /*max-width: 60%;*/
   /*min-width: 35em;*/
   margin: 2em 2em 2em 2em;

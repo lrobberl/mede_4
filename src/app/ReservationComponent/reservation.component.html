@@ -26,7 +26,6 @@
                     (click)="getFermateAndPrenotazioni()">Avanti</button>
           </div>
         </form>
-
       </mat-step>
 
       <mat-step [stepControl]="secondFormGroup" *ngIf="firstFormGroup.valid"  style="max-height: 50vh;">
@@ -45,30 +44,24 @@
                   <mat-label>Fermate</mat-label>
                   <mat-select formControlName="fermateAndata" >
                     <mat-option>-- None --</mat-option>
-                    <!-- <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option> -->
                     <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
                                   [disabled]="group.disabled">
                       <mat-option *ngFor="let fermata of group.fermate" [value]="fermata">
-                        <!-- <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label> -->
                        {{fermata.nome}}
                       </mat-option>
                     </mat-optgroup>
                   </mat-select>
                 </mat-form-field>
               </div>
-
               <div></div>
-
               <div>
                 <mat-form-field>
                   <mat-label>Fermate</mat-label>
                   <mat-select formControlName="fermateRitorno" >
                     <mat-option>-- None --</mat-option>
-                    <!-- <mat-option *ngIf="fermataDefault" [value]="fermataDefault">[Default] - {{fermataDefault.nome}}</mat-option> -->
                     <mat-optgroup *ngFor="let group of fermateGroups" [label]="group.nome"
                                   [disabled]="group.disabled">
                       <mat-option *ngFor="let fermata of group.fermate" [value]="fermata">
-                        <!-- <label *ngIf="fermata.id === fermataDefault.id">[Default] - {{fermata.nome}}</label> -->
                         <label>{{fermata.nome}}</label>
                       </mat-option>
                     </mat-optgroup>
@@ -109,7 +102,6 @@
         </div>
         <div>
           <button matStepperPrevious class="btn btn-lg btn-primary btn-block">Indietro</button><span>&nbsp;&nbsp;</span>
-          <!-- <button mat-button  class="styleColor" (click)="stepper.reset()">Reset</button><span>&nbsp;&nbsp;</span> -->
           <button class="btn btn-lg btn-primary btn-block" (click)="goToHomePage()">Fine</button>
         </div>
       </mat-step>

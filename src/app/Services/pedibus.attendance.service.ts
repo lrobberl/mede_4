@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of, pipe } from 'rxjs';
-import { map, retry, catchError, tap, first } from 'rxjs/operators';
+import { Observable} from 'rxjs';
+import { map, retry} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
 import {Bambino} from '../Models/Bambino';

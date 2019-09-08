@@ -9,15 +9,11 @@ import {MatCheckboxChange} from '@angular/material';
 import {Prenotazione} from '../Models/Prenotazione';
 import {PrenotazioneService} from '../Services/prenotazione.service';
 import {Router} from '@angular/router';
-import {Message} from '../Models/Message';
 import {WebSocketService} from '../Services/websocket.service';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-/**
- * @title Stepper vertical
- */
 @Component({
   selector: 'app-stepper',
   templateUrl: './reservation.component.html',
@@ -118,11 +114,8 @@ export class ReservationComponent implements OnInit, OnDestroy {
 
       this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
         const messageString = JSON.stringify(message);
-        // console.log('Nuovo messaggio ricevuto ' + messageString);
         this.userService.updateUnreadMessages(message.body);
         this.websocketService.showBanner();
-        // this.userService.getNumberNewMessages();
-        // this.userService.updateUnreadMessages(message.body);
       });
     });
   }
@@ -132,8 +125,6 @@ export class ReservationComponent implements OnInit, OnDestroy {
   }
 
   getFermateAndPrenotazioni() {
-    // console.log(this.firstForm.childrenControl.value);
-
     this.prenotazioneService.getFermateGroupByLinea().subscribe(res => {
       this.fermateGroups = res;
       this.error = undefined;
@@ -339,7 +330,6 @@ export class ReservationComponent implements OnInit, OnDestroy {
           diffDays -= 1;
         }
         // Get del corrispondente form {corsa1, corsa2, ...} in base alla data
-        // this.prenotazioniNext5Days[i].corsaIndex = diffDays;
         const id = prenotazione.fermata.id;
 
         this.fermateGroups.forEach( group => {

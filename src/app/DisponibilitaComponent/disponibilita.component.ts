@@ -110,14 +110,11 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
 
     this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
       const username = JSON.parse(localStorage.getItem('currentUser')).username;
-      // console.log(username);
 
       this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
         const messageString = JSON.stringify(message);
-        // console.log('Nuovo messaggio ricevuto ' + messageString);
         this.userService.updateUnreadMessages(message.body);
         this.websocketService.showBanner();
-        // this.userService.getNumberNewMessages();
       });
     });
   }
@@ -194,7 +191,6 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
 
           this.getGroup(i).controls.checkBoxAndata.setValue(1);
           this.currentEvent.source.checked = true;
-          // this.userService.updateUnreadMessages();
         }, error1 => {
           this.error = 'Operazione fallita';
           this.currentEvent.source.checked = false;
@@ -335,7 +331,6 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
       }
 
       // Get del corrispondente form {corsa1, corsa2, ...} in base alla data
-      // this.prenotazioniNext5Days[i].corsaIndex = diffDays;
       const id = disponibilita.fermata.id;
 
       this.fermateLinea.forEach( fermata => {
@@ -430,14 +425,6 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
   eraseFields() {
     this.fermateLinea = undefined;
     this.fermataAndataDefault = undefined;
-  }
-
-  generateIdAndata(i: number) {
-    return 'checkBoxAndata' + i.toString();
-  }
-
-  generateIdRitorno(i: number) {
-    return 'checkBoxRitorno' + i.toString();
   }
 
   ngOnDestroy(): void {

@@ -24,12 +24,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
 
-    // Se per caso il login non va a buon fine, rimando alla pagina di login prima di mostrare i contenuti della homepage
-    /*if (!this.authenticationService.isLoggedIn()) {
-      this.authenticationService.logout();
-      this.router.navigate(['/login'], );
-    }
-     */
     if (!this.currentUser) {
       this.authenticationService.logout();
       this.router.navigate(['/login']);
@@ -45,11 +39,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.websocketService.stompClient.connect({}, () => { // Callback dopo aver effettuato correttamnete la connessione
       const username = JSON.parse(localStorage.getItem('currentUser')).username;
-      // console.log(username);
 
       this.websocketService.stompClient.subscribe('/user/' + username + '/queue/notifications', message => { // Callback nuovo messaggio
         const messageString = JSON.stringify(message);
-        // console.log('Nuovo messaggio ricevuto ' + messageString);
         this.userService.updateUnreadMessages(message.body);
         this.websocketService.showBanner();
       });

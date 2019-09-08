@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, BehaviorSubject} from 'rxjs';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
-import {TokenData} from './pedibus.user.service';
+import {Observable, BehaviorSubject} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 import {User} from '../Models/User';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {Role} from '../Models/Role';
@@ -44,9 +43,7 @@ export class AuthenticationService {
 
     return this.http.post<User>(REST_URL + 'login', body, httpOptions).pipe(
       map(response => {
-        // console.log(response, response.ok, response.status, response.type, response.headers);
         if (response && response.token) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(response));
             this.currentUserSubject.next(response);
             return response;
@@ -67,7 +64,7 @@ export class AuthenticationService {
     if (!curUser || (!curUser.listaRuoli.includes(Role.Accompagnatore) && !curUser.listaRuoli.includes(Role.User)
           && !curUser.listaRuoli.includes(Role.SystemAdmin))) {
       return false;
-    } else { // return this.checkTokenvalidity(curUser.token);
+    } else {
       return true; }
   }
 
