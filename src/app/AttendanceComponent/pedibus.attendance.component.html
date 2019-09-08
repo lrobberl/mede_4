@@ -6,22 +6,21 @@
       </mat-card-title>
         <mat-card-content style="text-align: center">
           <form [formGroup]="dateLineForm">
-            <section>
+            <section><br>
               <h4>Seleziona una linea</h4>
               <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
                 <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
                   {{linea.nome}} &nbsp;&nbsp;
                 </mat-radio-button>
               </mat-radio-group>
-            </section><br><br>
+            </section><br>
 
             <section>
-              <label><strong>Seleziona una data</strong><br>
+              <h4>Seleziona una data</h4>
               <input matInput [matDatepicker]="picker" formControlName="date">
-              </label>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
-            </section><br><br>
+            </section><br>
             <section style="margin-left: 8em; margin-right: 8em">
               <button [disabled]="dateLineForm.invalid" class="btn btn-lg btn-primary btn-block" (click)="getCorsa()">
                 Mostra Corsa
