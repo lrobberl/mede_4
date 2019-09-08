@@ -6,7 +6,7 @@
   </mat-card-title>
 
   <div>
-      <mat-card-content style="text-align: center; align-content: center">
+      <mat-card-content style="text-align: center; align-content: center"><br>
       <form [formGroup]="dateLineForm">
         <h4>Seleziona una linea</h4>
         <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
@@ -60,7 +60,6 @@
               Riapri Turno
             </button>
           </mat-card-actions>
-
           <div>
             <mat-error *ngIf="errorRight" class="mat-error"><strong>{{errorLeft}}</strong></mat-error>
             <span class="highlight">{{message}}</span>
@@ -80,14 +79,14 @@
             </mat-list>
             <div *ngIf="data.accompagnatoriRitorno.length == 0"><strong>Nessun accompagnatore disponibile</strong></div>
           </mat-card-content>
-          <mat-card-actions style="margin-left: 8em; margin-right: 8em">
+          <div style="margin-left: 8em; margin-right: 8em">
             <button class="btn btn-lg btn-primary btn-block" [disabled]="data.chiusoRitorno || !selectedRitorno" (click)="consolidaTurnoRitorno()">
               Consolida Turno
             </button>
             <button class="btn btn-lg btn-primary btn-block" [disabled]="!data.chiusoRitorno" (click)="riapriTurnoRitorno()">
               Riapri Turno
             </button>
-          </mat-card-actions>
+          </div>
         </div>
       </mat-tab>
     </mat-tab-group><br><br>
