@@ -1,101 +1,110 @@
 <div class="bg">
   <div class="firstrow">
-  <mat-card class="{{classType}} mat-card ng-star-inserted">
-  <mat-card-title>
-    <h3> SYSTEM-ADMIN - TURNI </h3>
-  </mat-card-title>
+    <mat-card class="{{classType}} mat-card ng-star-inserted">
+      <mat-card-title>
+        <h3> SYSTEM-ADMIN - TURNI </h3>
+      </mat-card-title>
 
-  <div>
-      <mat-card-content style="text-align: center; align-content: center"><br>
-      <form [formGroup]="dateLineForm">
-        <h4>Seleziona una linea</h4>
-        <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
-          <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
-            {{linea.nome}} &nbsp;&nbsp;
-          </mat-radio-button>
-        </mat-radio-group><br><br>
+      <div>
+        <mat-card-content><br>
+          <form [formGroup]="dateLineForm">
+            <h4>Seleziona una linea</h4>
+            <mat-radio-group aria-label="Seleziona una linea" formControlName="line">
+              <mat-radio-button *ngFor="let linea of linee" [value]="linea.nome">
+                {{linea.nome}} &nbsp;&nbsp;
+              </mat-radio-button>
+            </mat-radio-group>
+            <br><br>
 
-          <h4>Seleziona una data</h4>
-          <input matInput [matDatepicker]="picker" formControlName="date">
+            <h4>Seleziona una data</h4>
+            <input matInput [matDatepicker]="picker" formControlName="date">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker><br><br>
-      </form>
-      <mat-card-actions style="margin-left: 8em; margin-right: 8em"> <!-- style="width: 15em; margin-left: 30%" -->
-        <button [disabled]="dateLineForm.invalid" class="btn btn-lg btn-primary btn-block"
-                (click)="getDisponibilitaCorsa()">
-          Mostra Corsa
-        </button>
-      </mat-card-actions>
-    </mat-card-content>
-    <div>
-      <mat-error *ngIf="errorLeft" class="mat-error"><strong>{{errorLeft}}</strong></mat-error>
-    </div>
-  </div>
-</mat-card>
-
-<mat-card class="rightCard" *ngIf="data">
-  <mat-card-title>
-    <h3>Dettagli Corsa</h3>
-    <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateNames(data.date)}}</h4>
-  </mat-card-title>
-
-  <div>
-    <mat-tab-group dynamicHeight style="text-align: center; align-content: center">
-      <mat-tab label="Andata" name="tabAndata" style="text-align: center; align-content: center">
-        <div class="example-large-box mat-elevation-z4">
-          <mat-card-content style="text-align: center"><br>
-            <mat-list *ngIf="data.accompagnatoriAndata.length != 0">
-              <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriAndata">
-                <mat-radio-button (change)="segnaAccompagnatoreAndata($event, accompagnatore)">
-                    {{accompagnatore.email}} - {{accompagnatore.nomeFermata}}</mat-radio-button>
-              </mat-list-item>
-            </mat-list>
-            <div *ngIf="data.accompagnatoriAndata.length == 0"><strong>Nessun accompagnatore disponibile</strong></div>
-          </mat-card-content>
-          <mat-card-actions style="margin-left: 8em; margin-right: 8em">
-            <button class="btn btn-lg btn-primary btn-block" [disabled]="data.chiusoAndata || !selectedAndata" (click)="consolidaTurnoAndata()">
-              Consolida Turno
-            </button>
-            <button class="btn btn-lg btn-primary btn-block" [disabled]="!data.chiusoAndata" (click)="riapriTurnoAndata()">
-              Riapri Turno
+            <mat-datepicker #picker></mat-datepicker>
+            <br><br>
+          </form>
+          <mat-card-actions style="margin-left: 8em; margin-right: 8em"> <!-- style="width: 15em; margin-left: 30%" -->
+            <button [disabled]="dateLineForm.invalid" class="btn btn-lg btn-primary btn-block"
+                    (click)="getDisponibilitaCorsa()">
+              Mostra Corsa
             </button>
           </mat-card-actions>
-          <div>
-            <mat-error *ngIf="errorRight" class="mat-error"><strong>{{errorLeft}}</strong></mat-error>
-            <span class="highlight">{{message}}</span>
-          </div>
-
+        </mat-card-content>
+        <div>
+          <mat-error *ngIf="errorLeft" class="mat-error"><strong>{{errorLeft}}</strong></mat-error>
         </div>
-      </mat-tab>
+      </div>
+    </mat-card>
 
-      <mat-tab dynamicHeight label="Ritorno" name="tabRitorno" style="text-align: center; align-content: center">
-        <div class="example-large-box mat-elevation-z4">
-          <mat-card-content style="text-align: center"><br>
-            <mat-list *ngIf="data.accompagnatoriRitorno.length != 0">
-              <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriRitorno">
-                <mat-radio-button (change)="segnaAccompagnatoreRitorno($event, accompagnatore)">
-                  {{accompagnatore.email}} - {{accompagnatore.nomeFermata}}</mat-radio-button>
-              </mat-list-item>
-            </mat-list>
-            <div *ngIf="data.accompagnatoriRitorno.length == 0"><strong>Nessun accompagnatore disponibile</strong></div>
-          </mat-card-content>
-          <div style="margin-left: 8em; margin-right: 8em">
-            <button class="btn btn-lg btn-primary btn-block" [disabled]="data.chiusoRitorno || !selectedRitorno" (click)="consolidaTurnoRitorno()">
-              Consolida Turno
-            </button>
-            <button class="btn btn-lg btn-primary btn-block" [disabled]="!data.chiusoRitorno" (click)="riapriTurnoRitorno()">
-              Riapri Turno
-            </button>
-          </div>
-        </div>
-      </mat-tab>
-    </mat-tab-group><br><br>
-  </div>
-</mat-card>
+    <mat-card class="rightCard" *ngIf="data">
+      <mat-card-title>
+        <h3>Dettagli Corsa</h3>
+        <h4>&nbsp;&nbsp;LINEA:&nbsp;{{data.linea}}&nbsp;&nbsp;DATA:&nbsp;{{formatDateNames(data.date)}}</h4>
+      </mat-card-title>
 
-<div class="bottom">
-  <mat-error *ngIf="errorRight" class="mat-error"><strong>{{errorRight}}</strong></mat-error>
-</div>
+      <div>
+        <mat-tab-group dynamicHeight style="text-align: center; align-content: center">
+          <mat-tab label="Andata" name="tabAndata" style="text-align: center; align-content: center">
+            <div class="example-large-box mat-elevation-z4">
+              <mat-card-content style="text-align: center"><br>
+                <mat-list *ngIf="data.accompagnatoriAndata.length != 0">
+                  <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriAndata">
+                    <mat-radio-button (change)="segnaAccompagnatoreAndata($event, accompagnatore)">
+                      {{accompagnatore.email}} - {{accompagnatore.nomeFermata}}</mat-radio-button>
+                  </mat-list-item>
+                </mat-list>
+                <div *ngIf="data.accompagnatoriAndata.length == 0"><strong>Nessun accompagnatore disponibile</strong>
+                </div>
+              </mat-card-content>
+              <mat-card-actions style="margin-left: 8em; margin-right: 8em">
+                <button class="btn btn-lg btn-primary btn-block" [disabled]="data.chiusoAndata || !selectedAndata"
+                        (click)="consolidaTurnoAndata()">
+                  Consolida Turno
+                </button>
+                <button class="btn btn-lg btn-primary btn-block" [disabled]="!data.chiusoAndata"
+                        (click)="riapriTurnoAndata()">
+                  Riapri Turno
+                </button>
+              </mat-card-actions>
+              <div>
+                <mat-error *ngIf="errorRight" class="mat-error"><strong>{{errorLeft}}</strong></mat-error>
+                <span class="highlight">{{message}}</span>
+              </div>
+
+            </div>
+          </mat-tab>
+
+          <mat-tab dynamicHeight label="Ritorno" name="tabRitorno" style="text-align: center; align-content: center">
+            <div class="example-large-box mat-elevation-z4">
+              <mat-card-content style="text-align: center"><br>
+                <mat-list *ngIf="data.accompagnatoriRitorno.length != 0">
+                  <mat-list-item *ngFor="let accompagnatore of data.accompagnatoriRitorno">
+                    <mat-radio-button (change)="segnaAccompagnatoreRitorno($event, accompagnatore)">
+                      {{accompagnatore.email}} - {{accompagnatore.nomeFermata}}</mat-radio-button>
+                  </mat-list-item>
+                </mat-list>
+                <div *ngIf="data.accompagnatoriRitorno.length == 0"><strong>Nessun accompagnatore disponibile</strong>
+                </div>
+              </mat-card-content>
+              <div style="margin-left: 8em; margin-right: 8em">
+                <button class="btn btn-lg btn-primary btn-block" [disabled]="data.chiusoRitorno || !selectedRitorno"
+                        (click)="consolidaTurnoRitorno()">
+                  Consolida Turno
+                </button>
+                <button class="btn btn-lg btn-primary btn-block" [disabled]="!data.chiusoRitorno"
+                        (click)="riapriTurnoRitorno()">
+                  Riapri Turno
+                </button>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+        <br><br>
+      </div>
+    </mat-card>
+
+    <div class="bottom">
+      <mat-error *ngIf="errorRight" class="mat-error"><strong>{{errorRight}}</strong></mat-error>
+    </div>
   </div>
 </div>
 

@@ -9,6 +9,8 @@ import {User} from '../Models/User';
 import {Linea} from '../Models/Linea';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {MatCheckboxChange} from '@angular/material';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-pedibus-admin-user-list',
@@ -28,13 +30,18 @@ export class ChangeRoleComponent implements OnInit {
   public lineeSelezionate: string[] = [];
   lineeCount = 0;
   checkIfRoleChanged = false;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder,
               private attendanceService: AttendanceService,
               private adminService: AdminService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private breakpointObserver: BreakpointObserver) {
     if (!this.authenticationService.isLoggedIn()) {
       this.authenticationService.logout();
       this.router.navigate(['/login'], );

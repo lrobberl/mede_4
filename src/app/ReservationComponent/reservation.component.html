@@ -1,5 +1,5 @@
-<div class="bg">
-  <mat-card class="centeredCard">
+<div class="bg"  [class.mobilemod]="isHandset$ | async">
+  <mat-card class="centeredCard"  [class.mobilewidth]="isHandset$ | async">
   <mat-card-title>
     <h3> PRENOTAZIONI </h3>
   </mat-card-title>
@@ -21,7 +21,7 @@
               <mat-hint>{{selected}}</mat-hint>
             </mat-form-field>
 
-          <div style="margin-left: 12em; margin-right: 12em">
+          <div>
             <button class="btn btn-lg btn-primary btn-block" matStepperNext [disabled]="firstFormGroup.invalid"
                     (click)="getFermateAndPrenotazioni()">Avanti</button>
           </div>
@@ -34,7 +34,7 @@
         <ng-template matStepLabel>Seleziona una o più corse</ng-template>
         <div *ngIf="secondStep">
           <div vertical layout *ngFor="let giorno of next5Days; let i=index">
-            <form class="wrapper" [formGroup]="getGroup(i)">
+            <form [class.wrapper]="!(isHandset$ | async)" [formGroup]="getGroup(i)">
               <div><mat-checkbox id="{{generateIdAndata(i)}}" (change)="setVersoAndata($event, i)" [checked]="checkAndata(i)"
                                  [disabled]="getGroup(i).controls.fermateAndata.invalid"><strong>ANDATA</strong></mat-checkbox></div>
               <div><strong style="font-size: larger">{{formatDate(giorno)}}</strong></div>
@@ -82,7 +82,7 @@
           <mat-error *ngIf="error"><strong>{{error}}</strong></mat-error>
           <span class="highlight">{{message}}</span>
         </div>
-        <div style="margin-left: 12em; margin-right: 12em">
+        <div>
           <button class="btn btn-lg btn-primary btn-block" matStepperPrevious (click)="eraseFields()">Indietro</button><span>&nbsp;&nbsp;</span>
           <button class="btn btn-lg btn-primary btn-block" matStepperNext >Riepilogo</button>
         </div>
@@ -107,7 +107,7 @@
         <div *ngIf="prenotazioniNext5Days.length === 0">
           <h4>Nessuna prenotazione attiva</h4>
         </div>
-        <div style="margin-left: 12em; margin-right: 12em">
+        <div>
           <button matStepperPrevious class="btn btn-lg btn-primary btn-block">Indietro</button><span>&nbsp;&nbsp;</span>
           <!-- <button mat-button  class="styleColor" (click)="stepper.reset()">Reset</button><span>&nbsp;&nbsp;</span> -->
           <button class="btn btn-lg btn-primary btn-block" (click)="goToHomePage()">Fine</button>

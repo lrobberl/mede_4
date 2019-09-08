@@ -1,63 +1,62 @@
 <div class="bg">
   <mat-card class="centeredCard">
-  <mat-card-title>
-    <h3> Pedibus - UTENTI </h3>
-    <h5> Pagina accedibile solo agli admin </h5>
-  </mat-card-title>
+    <mat-card-title>
+      <h3> Piedibus - UTENTI </h3>
+      <h5> Pagina accedibile solo agli admin </h5>
+    </mat-card-title>
 
     <mat-card-content>
+      <div class="example-container">
+        <table class="centeredCard" mat-table [dataSource]="users" class="mat-elevation-z8">
 
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID</th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+          <!--
+          <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef> FirstName </th>
+            <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+          </ng-container>
 
-  <table style="text-align: center" content="align: center" mat-table [dataSource]="users" class="mat-elevation-z8">
+          <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef> LastName </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+          </ng-container>
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-    <!--
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef> FirstName </th>
-      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-    </ng-container>
+          -->
+          <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef> Username</th>
+            <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+          </ng-container>
 
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef> LastName </th>
-      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-    </ng-container>
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef> Ruolo</th>
+            <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+          </ng-container>
 
-    -->
-    <ng-container matColumnDef="username">
-      <th mat-header-cell *matHeaderCellDef> Username </th>
-      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-    </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status</th>
+            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+          </ng-container>
 
-    <ng-container matColumnDef="role">
-      <th mat-header-cell *matHeaderCellDef> Ruolo </th>
-      <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <div>
-    <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
-  </div>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <div>
+        <mat-error *ngIf="error" class="mat-error"><strong>{{error}}</strong></mat-error>
+      </div>
     </mat-card-content>
-  <!-- todo: vedere se gestire il paginator in caso di molti utenti
-  <mat-paginator (page)="cambiaGiorno($event)"
-                 [length]= 365
-                 [pageSize]=1
-                 [pageSizeOptions]="[5, 10, 25, 100]"
-                 style="align-content: center">
-  </mat-paginator>
-  -->
-</mat-card>
+    <!-- todo: vedere se gestire il paginator in caso di molti utenti
+    <mat-paginator (page)="cambiaGiorno($event)"
+                   [length]= 365
+                   [pageSize]=1
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   style="align-content: center">
+    </mat-paginator>
+    -->
+  </mat-card>
 </div>
 <!--
 <mat-card-content>

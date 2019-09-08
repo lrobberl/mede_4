@@ -1,5 +1,5 @@
-<div class="bg">
-  <mat-card class="centeredCard">
+<div class="bg"  [class.mobilemod]="isHandset$ | async">
+  <mat-card class="centeredCard" [class.mobilewidth]="isHandset$ | async">
   <mat-card-title>
     <h3> MESSAGGI </h3>
   </mat-card-title>

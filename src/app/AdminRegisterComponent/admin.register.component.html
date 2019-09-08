@@ -15,7 +15,7 @@
           <mat-list-item role="listitem">
             <div class="input-form-container">
               <mat-form-field>
-                <input type="text" matInput placeholder="Inserisci username" formControlName="username">
+                <input matInput placeholder="Inserisci username" formControlName="username">
                 <mat-error *ngIf="f.username.invalid"> {{getErrorMessage('username')}}</mat-error>
               </mat-form-field>
             </div>

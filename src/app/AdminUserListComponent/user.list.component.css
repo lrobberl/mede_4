@@ -12,7 +12,8 @@
   align-items: center;
   height: auto;
   min-height: 100vh;
-  min-width: 55em;
+  /*min-width: 35em;*/
+  padding-top: 50px;
 }
 
 .selected {
@@ -22,16 +23,24 @@
 .centeredCard {
   text-align: center;
   align-content: center;
-  width: 70%;
-  min-width: 55em;
-  margin: 0 15vw;
-  height: auto;
+  justify-content: center;
+  width: 90%;
+  /*max-width: 60%;*/
+  /*min-width: 35em;*/
+  margin: 2em 2em 2em 2em;
+
+  border-radius: 14px;
+
+  -webkit-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Structure */
 .example-container {
   position: relative;
   min-height: 200px;
+  overflow: auto;
 }
 
 .mat-header-cell {
@@ -73,5 +82,8 @@ table {
 .mat-column-id,
 .mat-column-username,
 .mat-column-role {
-  max-width: 124px;
+  min-width: 280px;
+  /*width: auto;*/
+  /*margin-left: 100px;*/
+  /*margin-right: 100px;*/
 }

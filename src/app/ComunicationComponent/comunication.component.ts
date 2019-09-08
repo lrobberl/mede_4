@@ -7,6 +7,9 @@ import {UserService} from '../Services/pedibus.user.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {WebSocketService} from '../Services/websocket.service';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: 'comunication.component.html',
@@ -20,12 +23,17 @@ export class ComunicationComponent implements OnInit, OnDestroy {
   table = true;
   resultsLength: 10;
   private stompClient: any;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private router: Router,
-    private websocketService: WebSocketService
+    private websocketService: WebSocketService,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
 

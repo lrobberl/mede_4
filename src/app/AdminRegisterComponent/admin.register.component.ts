@@ -10,6 +10,8 @@ import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {MatCheckboxChange, PageEvent} from '@angular/material';
 import {Linea} from '../Models/Linea';
 import {WebSocketService} from '../Services/websocket.service';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-pedibus-admin-registraton',
@@ -28,6 +30,10 @@ export class AdminRegisterComponent implements OnInit, OnDestroy {
   public lineeSelezionate: string[] = [];
   checkIfUserCreated = false;
   lineeCount = 0;
+  // isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  //   .pipe(
+  //     map(result => result.matches)
+  //   );
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -36,7 +42,9 @@ export class AdminRegisterComponent implements OnInit, OnDestroy {
               private authenticationService: AuthenticationService,
               private attendanceService: AttendanceService,
               private websocketService: WebSocketService,
-              private userService: UserService) {
+              private userService: UserService,
+              // private breakpointObserver: BreakpointObserver
+  ) {
     if (!this.authenticationService.isLoggedIn()) {
       this.authenticationService.logout();
       this.router.navigate(['/login'], );

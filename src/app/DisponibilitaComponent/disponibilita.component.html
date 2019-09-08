@@ -31,7 +31,7 @@
 
       </mat-step>
 
-      <mat-step [stepControl]="secondFormGroup" *ngIf="firstFormGroup.valid" style="max-height: 50vh;">
+      <mat-step [stepControl]="secondFormGroup" *ngIf="firstFormGroup.valid" >
 
         <ng-template matStepLabel>Seleziona una o più corse</ng-template>
         <div *ngIf="secondStep">

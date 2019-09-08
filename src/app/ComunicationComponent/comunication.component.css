@@ -12,7 +12,30 @@
   align-items: center;
   height: auto;
   min-height: 100vh;
-  min-width: 35em;
+  /*min-width: 35em;*/
+  padding-top: 50px;
+}
+
+button {
+  margin: 10px auto;
+  width: 15em;
+  position: center;
+}
+
+button:hover,
+button:focus {
+  /*background-image: -moz-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: -ms-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: -o-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: -webkit-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: linear-gradient(to left, #74ebd5, #9face6);*/
+  /*#AC686B*/
+
+  background-image: -moz-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: -ms-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: -o-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: -webkit-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: linear-gradient(to left, #6184A2, #AC686B);
 }
 
 .selected {
@@ -71,8 +94,55 @@ table {
 .centeredCard {
   text-align: center;
   align-content: center;
-  width: 70%;
-  min-width: 35em;
-  margin: 0 10vw;
-  height: auto;
+  justify-content: center;
+  width: 80%;
+  /*max-width: 60%;*/
+  /*min-width: 35em;*/
+  margin: 2em 2em 2em 2em;
+
+  border-radius: 14px;
+  /*background-color: white;*/
+  /*padding: 30px 42px 10px 42px;*/
+  /*width: 600px;*/
+  /*height: 400px;*/
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+  /*flex-direction: column;*/
+  /*margin-top: 10vh;*/
+  /*margin-bottom: 10vh;*/
+  /*margin-right: 10vh;*/
+  /*margin-left: 10vh;*/
+  /*!*-webkit-box-shadow: 6px 6px 26px 10px rgba(0,0,0,0.75);*!*/
+  /*!*-moz-box-shadow: 6px 6px 26px 10px rgba(0,0,0,0.75);*!*/
+  /*!*box-shadow: 6px 6px 26px 10px rgba(0,0,0,0.75);*!*/
+
+  /*!*-webkit-box-shadow: 0px 0px 32px -1px rgba(0,0,0,0.3);*!*/
+  /*!*-moz-box-shadow: 0px 0px 32px -1px rgba(0,0,0,0.3);*!*/
+  /*!*box-shadow: 0px 0px 32px -1px rgba(0,0,0,0.3);*!*/
+
+  /*!*-webkit-box-shadow: 0px 0px 114px -1px rgba(0,0,0,0.3);*!*/
+  /*!*-moz-box-shadow: 0px 0px 114px -1px rgba(0,0,0,0.3);*!*/
+  /*!*box-shadow: 0px 0px 114px -1px rgba(0,0,0,0.3);*!*/
+
+  -webkit-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+}
+
+.mobilemod {
+  display: block;
+}
+
+.mobilewidth {
+  width: unset;
+  margin: 0 3px;
+}
+
+.mobilewidth button {
+
+  margin: 10px auto;
+  width: 6em;
+  position: center;
+
 }

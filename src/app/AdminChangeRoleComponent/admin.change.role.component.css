@@ -16,7 +16,7 @@
 .form-container {
   border-radius: 14px;
   background-color: white;
-  padding: 30px 42px 10px 42px;
+  padding: 40px 42px 30px 42px;
   width: 600px;
   height: 400px;
   display: flex;
@@ -25,8 +25,8 @@
   flex-direction: column;
   margin-top: 10vh;
   margin-bottom: 10vh;
-  margin-right: 10vh;
-  margin-left: 10vh;
+  margin-right: 1vh;
+  margin-left: 1vh;
   /*-webkit-box-shadow: 6px 6px 26px 10px rgba(0,0,0,0.75);*/
   /*-moz-box-shadow: 6px 6px 26px 10px rgba(0,0,0,0.75);*/
   /*box-shadow: 6px 6px 26px 10px rgba(0,0,0,0.75);*/
@@ -47,14 +47,7 @@
 .input-form-container {
   display: flex;
   flex-direction: column;
-
-
-}
-
-.input-form-container > * {
-  width: 400px;
-  /*width: auto;*/
-  justify-content: space-around;
+  width: 100%;
 }
 
 

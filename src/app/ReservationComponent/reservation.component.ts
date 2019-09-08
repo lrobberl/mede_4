@@ -11,6 +11,9 @@ import {PrenotazioneService} from '../Services/prenotazione.service';
 import {Router} from '@angular/router';
 import {Message} from '../Models/Message';
 import {WebSocketService} from '../Services/websocket.service';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 /**
  * @title Stepper vertical
@@ -46,12 +49,17 @@ export class ReservationComponent implements OnInit, OnDestroy {
   fermata: FermataShort;
   message: string;
   currentEvent: MatCheckboxChange;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private prenotazioneService: PrenotazioneService,
               private router: Router,
-              private websocketService: WebSocketService) {
+              private websocketService: WebSocketService,
+              private breakpointObserver: BreakpointObserver) {
 
   }
 

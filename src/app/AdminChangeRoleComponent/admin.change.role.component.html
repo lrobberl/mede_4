@@ -1,9 +1,10 @@
 <div class="bg">
 
-  <mat-card class="form-container" style="text-align: center" content="align: center">
+  <mat-card class="form-container">
     <form [formGroup]="changeRoleForm" (ngSubmit)="onSubmit()">
-      <mat-card-header><h1>Cambia Ruolo Utente</h1></mat-card-header>
-      <mat-card-subtitle><h3>Pagina accedibile solo al System-Admin</h3></mat-card-subtitle>
+      <h3 *ngIf="isHandset$"><strong>Cambia Ruolo Utente</strong></h3>
+      <h2 *ngIf="!isHandset$"><strong>Cambia Ruolo Utente</strong></h2>
+      <mat-card-subtitle><h5>Pagina accedibile solo al System-Admin</h5></mat-card-subtitle>
 
       <mat-card-content>
         <mat-list role="list">
@@ -33,14 +34,17 @@
           </mat-list-item>
           <mat-list-item role="listitem">
             <section *ngIf="f.role.value === 'SYSTEM_ADMIN'" class="example-section">
-              <mat-checkbox *ngFor="let linea of linee$ | async" class="example-margin" (change)="onChangeCategory($event, linea.nome)"
-                            value="{{linea.nome}}"> {{linea.nome}}&nbsp;&nbsp;&nbsp;</mat-checkbox>
+              <mat-checkbox *ngFor="let linea of linee$ | async" class="example-margin"
+                            (change)="onChangeCategory($event, linea.nome)"
+                            value="{{linea.nome}}"> {{linea.nome}}&nbsp;&nbsp;&nbsp;
+              </mat-checkbox>
             </section>
           </mat-list-item>
         </mat-list>
         <div class="form-group">
           <button [disabled]="loading || changeRoleForm.invalid" class="btn btn-primary">Cambia Ruolo</button>
-          <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          <img *ngIf="loading" class="pl-2"
+               src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
         </div>
         <div *ngIf="error" class="alert alert-danger">{{error}}</div>
         <span *ngIf="checkIfRoleChanged" class="highlight">Ruolo cambiato correttamente</span>

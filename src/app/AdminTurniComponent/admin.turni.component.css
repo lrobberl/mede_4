@@ -97,3 +97,25 @@
   background-color: darkslategrey;
   color: white;
 }
+
+button {
+  margin: 10px auto;
+  width: 15em;
+  position: center;
+}
+
+button:hover,
+button:focus {
+  /*background-image: -moz-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: -ms-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: -o-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: -webkit-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: linear-gradient(to left, #74ebd5, #9face6);*/
+  /*#AC686B*/
+
+  background-image: -moz-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: -ms-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: -o-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: -webkit-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: linear-gradient(to left, #6184A2, #AC686B);
+}

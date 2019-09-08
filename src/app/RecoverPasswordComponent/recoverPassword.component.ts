@@ -3,6 +3,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../Services/pedibus.user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../Services/authentication.service';
+import {Observable} from 'rxjs';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-recover-password',
@@ -18,12 +21,17 @@ export class RecoverPasswordComponent implements OnInit {
   loading = false;
   returnUrl: string;
   message = '';
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(private userService: UserService,
               private router: Router,
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private breakpointObserver: BreakpointObserver) {
     /* redirect to home if already logged in
     if (this.authenticationService.isLoggedIn()) {
       this.router.navigate(['/']);
