@@ -70,6 +70,14 @@ button {
   margin: 0 0;
 }
 
+.mobilewidth button {
+
+  margin: 10px auto;
+  width: 6em;
+  position: center;
+
+}
+
 .centeredContent {
   margin-top: 3em;
   align-content: center;
