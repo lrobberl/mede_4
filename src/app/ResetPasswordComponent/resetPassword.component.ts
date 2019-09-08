@@ -25,11 +25,6 @@ export class ResetPasswordComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder) {
-    /* redirect to home if already logged in
-    if (this.authenticationService.isLoggedIn()) {
-      this.router.navigate(['/']);
-    }
-     */
   }
 
   ngOnInit(): void {
@@ -54,8 +49,6 @@ export class ResetPasswordComponent implements OnInit {
   get f() { return this.resetPasswordForm.controls; }
 
   onSubmit() {
-    // this.submitted = true;
-
     // stop here if form is invalid
     if (this.resetPasswordForm.invalid) {
       return;
@@ -71,13 +64,6 @@ export class ResetPasswordComponent implements OnInit {
         this.loading = false;
       });
   }
-  /*
-  ,
-        error => {
-          this.error = 'Bad Request';
-          this.loading = false;
-        }
-   */
 
   getErrorMessage(campo: string) {
     if (campo === 'password') {

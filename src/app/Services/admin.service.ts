@@ -1,7 +1,7 @@
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Injectable, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {catchError, map, retry} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {User} from '../Models/User';
 
 const REST_URL = 'http://localhost:8080/';
@@ -9,9 +9,6 @@ const REST_URL = 'http://localhost:8080/';
 
 @Injectable()
 export class AdminService {
-
-  // newUser: NewUser;
-
   constructor(private http: HttpClient) {
   }
 

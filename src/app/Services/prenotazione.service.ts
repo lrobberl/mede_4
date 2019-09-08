@@ -1,25 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of, pipe } from 'rxjs';
-import { map, retry, catchError, tap, first } from 'rxjs/operators';
+import { Observable} from 'rxjs';
+import { map, retry} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {DisponibilitaCorsa} from '../Models/DisponibilitaCorsa';
-import {Bambino} from '../Models/Bambino';
-import {CorsaWrapper} from '../Models/CorsaWrapper';
 import {Linea} from '../Models/Linea';
-import {Fermata} from '../Models/Fermata';
 import {FermataShort} from '../Models/FermataShort';
 import {FermataGroup} from '../Models/FermataGroup';
 import {Prenotazione} from '../Models/Prenotazione';
-import {RegisterForm} from '../Models/RegisterForm';
 import {NewPrenotazione} from '../Models/NewPrenotazione';
 import {IdPrenotazione} from '../Models/IdPrenotazione';
 import {Disponibilita} from '../Models/Disponibilita';
 import {NewDisponibilita} from '../Models/NewDisponibilita';
-
-
-
-
-
 
 const REST_URL = 'http://localhost:8080/';
 
@@ -93,12 +83,7 @@ export class PrenotazioneService {
 
     return this.http.get<Disponibilita[]>(REST_URL + 'disponibilita-accompagnatore/' + linea);
   }
-  /*
-  .pipe(
-      map(arr => arr.map(x => ({verso: x.verso, fermata: x.fermata,
-        data: new Date(x.data.getTime() + 7200001), confermata: false}) as Disponibilita))
-    )
-   */
+
   prenotaCorsa(idFerm: string, d: Date, idBamb: string, direction: string, linea: string) {
     console.log('PrenotazioneService.prenotaCorsa');
 

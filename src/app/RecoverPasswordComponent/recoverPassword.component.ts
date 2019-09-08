@@ -14,7 +14,6 @@ export class RecoverPasswordComponent implements OnInit {
   recoverPasswordForm: FormGroup;
   hidepass = true;
   error: string;
-  // submitted = false;
   loading = false;
   returnUrl: string;
   message = '';
@@ -24,11 +23,6 @@ export class RecoverPasswordComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder) {
-    /* redirect to home if already logged in
-    if (this.authenticationService.isLoggedIn()) {
-      this.router.navigate(['/']);
-    }
-     */
   }
 
   ngOnInit(): void {
@@ -44,8 +38,6 @@ export class RecoverPasswordComponent implements OnInit {
   get f() { return this.recoverPasswordForm.controls; }
 
   onSubmit() {
-    // this.submitted = true;
-
     // stop here if form is invalid
     if (this.recoverPasswordForm.invalid) {
       return;
@@ -57,8 +49,6 @@ export class RecoverPasswordComponent implements OnInit {
         this.error = undefined;
         this.message = 'E\' stata inviata una email all\'indirizzo specificato';
         this.loading = false;
-          // Upon success, navigate to homepage
-          // this.router.navigate(['/'], { queryParams: { logged: true }});
         }, error1 => {
         this.error = 'Invalid Username/email';
         this.loading = false;

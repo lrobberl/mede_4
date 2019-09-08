@@ -7,8 +7,6 @@ import {UserService} from './pedibus.user.service';
 
 const REST_URL = 'http://localhost:8080/';
 
-
-
 @Injectable()
 export class WebSocketService {
   public stompClient: any;

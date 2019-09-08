@@ -1,14 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../Services/pedibus.user.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HttpResponse} from '@angular/common/http';
-import {AuthenticationService} from '../Services/authentication.service';
 import {MustMatch} from '../Utils/must-match.validator';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
-import {User} from '../Models/User';
-import {Observable} from 'rxjs';
-import {error} from 'selenium-webdriver';
 import {FermataShort} from '../Models/FermataShort';
 
 
@@ -27,11 +22,9 @@ export class PedibusRegisterComponent implements OnInit {
   emailPresent = false;
   loading = false;
   urlParam: string;
-  emailPresenceMessage: 'Email inserita è già presente nel sistema';
   formFigli = false;
   numFigli = 0;
   fermate: FermataShort[];
-  // fer = ['pippo', 'pluto'];
 
   constructor(private userService: UserService,
               private router: Router,
@@ -64,8 +57,6 @@ export class PedibusRegisterComponent implements OnInit {
     // Get random UUID from URL because it is needed to contact the correct registration endpoint on the server
     this.urlParam = this.route.snapshot.paramMap.get('uuid');
     console.log(this.urlParam);
-    // get return url from route parameters or default to '/'
-    // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     this.attendanceService.getFermate().subscribe(
       res => {
         this.fermate = res as FermataShort[];
@@ -141,33 +132,6 @@ export class PedibusRegisterComponent implements OnInit {
           this.loading = false;
           this.error = 'Operazione fallita';
         });
-  }
-
-  // TODO: check delle funzionalità
-  getIsEmailPresent() {
-    return this.emailPresent;
-  }
-
-  isEmailPresent() {
-    if (!this.f.username.invalid) {
-      this.userService.checkEmailPresent(this.f.username.value).subscribe(res => {
-        console.log('Il valore attuale di email present è' + this.emailPresent);
-        console.log('Sono entrato nel register ts isEmailPresent');
-
-        if (res.presente === 'true') {
-          this.emailPresent = true;
-        } else {
-          this.emailPresent = false;
-        }
-        console.log('Il valore cambiato di email present è' + this.emailPresent);
-      });
-    }
-  }
-
-
-  showFigliForm() {
-    this.formFigli = true;
-    this.numFigli = this.f.numFigli.value;
   }
 }
 

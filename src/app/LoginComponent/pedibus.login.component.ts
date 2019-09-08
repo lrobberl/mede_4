@@ -15,7 +15,6 @@ export class PedibusLoginComponent implements OnInit {
   loginForm: FormGroup;
   hidepass = true;
   error: string;
-  // submitted = false;
   loading = false;
   returnUrl: string;
 
@@ -46,8 +45,6 @@ export class PedibusLoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
-    // this.submitted = true;
-
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
@@ -75,26 +72,3 @@ export class PedibusLoginComponent implements OnInit {
     }
   }
 }
-
-/*
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('',
-  [Validators.required,
-  Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]);
-
-
-
-  checkForInputs() {
-    return !(this.password.invalid || this.email.invalid);
-  }
-  */
-
-
-/*
-loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('',
-    [Validators.required,
-      Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_£?".:,;ùèéòì=à!@#\\+\\$%\\^&\\*])(?!.*\\s).{8,30}$')]),
-  });
- */

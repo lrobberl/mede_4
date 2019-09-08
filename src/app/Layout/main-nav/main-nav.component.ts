@@ -7,8 +7,6 @@ import {Router} from '@angular/router';
 import {User} from '../../Models/User';
 import {Role} from '../../Models/Role';
 import {UserService} from '../../Services/pedibus.user.service';
-import {WebSocketService} from '../../Services/websocket.service';
-import {Message} from '../../Models/Message';
 
 @Component({
   // tslint:disable-next-line:component-selector
