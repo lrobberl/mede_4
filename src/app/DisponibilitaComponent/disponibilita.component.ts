@@ -9,6 +9,9 @@ import {Router} from '@angular/router';
 import {Disponibilita} from '../Models/Disponibilita';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {WebSocketService} from '../Services/websocket.service';
+import {Observable} from 'rxjs';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-stepper',
@@ -41,13 +44,18 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
   currentEvent: MatCheckboxChange;
   linee: Linea[] = [];
   secondStep = false;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(private formBuilder: FormBuilder,
               private prenotazioneService: PrenotazioneService,
               private attendanceService: AttendanceService,
               private router: Router,
               private websocketService: WebSocketService,
-              private userService: UserService) {
+              private userService: UserService,
+              private breakpointObserver: BreakpointObserver) {
 
   }
 

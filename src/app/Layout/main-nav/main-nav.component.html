@@ -6,13 +6,13 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"> <!-- && isLogged -->
+        *ngIf="(isLogged && isHandset$) | async"> <!-- && isLogged -->
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span [ngClass]="{spacer: (isHandset$ | async)}"></span>
       <div class="toolbar-m">
         <h1 style="font-size: larger">{{ title }}</h1>
-        <h5 *ngIf="isLogged" style="font-size: small">{{currentUser.username}}</h5>
+<!--        <h5 *ngIf="isLogged" style="font-size: small">{{currentUser.username}}</h5>-->
       </div>
       <span class="spacer"></span>
       <a *ngIf="!(isHandset$ | async) && isLogged" mat-button routerLink="/" routerLinkActive="active">Home</a><br>

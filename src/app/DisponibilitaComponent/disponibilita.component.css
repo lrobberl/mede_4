@@ -12,24 +12,26 @@
   align-items: center;
   height: auto;
   min-height: 100vh;
-  min-width: 35em;
+  /*min-width: 35em;*/
+  padding-top: 50px;
 }
 
-.mat-button {
-  margin-top: 10px;
-  margin-bottom: 10px;
+button {
+  margin: 10px auto;
+  width: 15em;
+  position: center;
 }
 
 .centeredCard {
   text-align: center;
   align-content: center;
   justify-content: center;
-  width: 50%;
-  max-width: 60%;
-  min-width: 35em;
-  margin: 2em 25%;
+  width: 60%;
+  /*max-width: 60%;*/
+  /*min-width: 35em;*/
+  margin: 2em 2em 2em 2em;
 
-  /*border-radius: 14px;*/
+  border-radius: 14px;
   /*background-color: white;*/
   /*padding: 30px 42px 10px 42px;*/
   /*width: 600px;*/
@@ -54,9 +56,18 @@
   /*!*-moz-box-shadow: 0px 0px 114px -1px rgba(0,0,0,0.3);*!*/
   /*!*box-shadow: 0px 0px 114px -1px rgba(0,0,0,0.3);*!*/
 
-  /*-webkit-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);*/
-  /*-moz-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);*/
-  /*box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);*/
+  -webkit-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+}
+
+.mobilemod {
+  display: block;
+}
+
+.mobilewidth {
+  width: unset;
+  margin: 0 0;
 }
 
 .centeredContent {

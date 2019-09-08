@@ -19,3 +19,23 @@
   margin-right: 30%;
   margin-left: 30%;
 }
+.bg {
+  background-image: url("../../sfondo.jpg");
+  background-position: center;
+  background-size: cover;
+  /*overflow: hidden;*/
+  /*width: 100%;*/
+  /*min-height: 100vh;*/
+  /*height: 100vh;*/
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*float: top;*/
+  /*align-items: center;*/
+  /*height: auto;*/
+  /*min-height: 100vh;*/
+  /*min-width: 35em;*/
+}
+
+#st {
+ color: white;
+}
