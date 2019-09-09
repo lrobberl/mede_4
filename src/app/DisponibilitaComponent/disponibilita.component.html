@@ -43,7 +43,7 @@
                                  [disabled]="getGroup(i).controls.fermateRitorno.invalid"><strong>RITORNO</strong></mat-checkbox></div>
               <div>
                 <mat-form-field>
-                  <mat-label>Fermate</mat-label>
+                  <mat-label>Fermata Andata</mat-label>
                   <mat-select formControlName="fermateAndata">
                       <mat-option *ngFor="let fermata of fermateLinea" [value]="fermata">
                         <span>{{fermata.nome}}</span>
@@ -56,7 +56,7 @@
 
               <div>
                 <mat-form-field>
-                  <mat-label>Fermate</mat-label>
+                  <mat-label>Fermata Ritorno</mat-label>
                   <mat-select formControlName="fermateRitorno" >
                     <mat-option *ngFor="let fermata of fermateLinea" [value]="fermata">
                         <span>{{fermata.nome}}</span>
