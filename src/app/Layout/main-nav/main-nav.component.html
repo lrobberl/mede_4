@@ -53,9 +53,12 @@
     <mat-nav-list>
       <a *ngIf="isLogged" mat-list-item routerLink="/" routerLinkActive="active">Home</a>
       <a *ngIf="isLogged" mat-list-item routerLink="/prenotazioni" routerLinkActive="active">Prenotazioni</a>
-      <a *ngIf="isLogged && isSystemAdminOrAccompagnatore" mat-list-item routerLink="/disponibilita" routerLinkActive="active">Disponibilita</a><br>
+      <a *ngIf="isLogged && isSystemAdminOrAccompagnatore" mat-list-item routerLink="/disponibilita" routerLinkActive="active">Disponibilita</a>
       <a *ngIf="isLogged && isSystemAdminOrAccompagnatore" mat-list-item routerLink="/attendance" routerLinkActive="active">Corse</a>
-      <a *ngIf="isLogged" mat-list-item routerLink="/comunications" routerLinkActive="active">Comunicazioni</a>
+      <a mat-list-item *ngIf="isLogged && newMessages !== 0" matBadge="{{newMessages}}" matBadgeColor="warn"
+              (click)="goTo('comunicazioni')">Comunicazioni</a>
+      <a mat-list-item *ngIf="isLogged && newMessages === 0"
+              style="font-size: large" (click)="goTo('comunicazioni')">Comunicazioni</a>
       <a *ngIf="isSystemAdmin" mat-list-item [matMenuTriggerFor]="menu">Admin</a>
       <mat-menu #menu="matMenu" xPosition="after"> <!-- <button mat-menu-item>Item 2</button> -->
         <button class="matM" mat-menu-item routerLink="/adminRegister" routerLinkActive="active">Nuovo Utente</button>
