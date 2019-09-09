@@ -10,10 +10,11 @@
   /*height: 100vh;*/
   display: grid;
   justify-content: center;
+  float: top;
   align-items: center;
   height: auto;
   min-height: 100vh;
-  min-width: 35em;
+  /*min-width: 35em; padding-top: 50px;*/
 }
 
 .selected {
@@ -21,7 +22,6 @@
  }
 
 .bottom {
-  width: 25%;
   position: center;
   justify-content: center;
   align-content: center;
@@ -30,6 +30,10 @@
   background-color: white;
   margin: 0 22vw;
   min-width: 22em;
+
+  -webkit-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
 }
 
 .firstrow {
@@ -45,72 +49,82 @@
 }
 
 .centeredCard {
-  border-radius: 14px;
-  text-align: center;
-  /*align-items: center;*/
+  position: center;
+  justify-content: center;
   align-content: center;
-  min-width: 35em;
-  width: 40%;
-  margin: 0 18vw;
+  text-align: center;
+  border-radius: 14px;
   background-color: white;
-  height: 22em;
-  min-height: 22em;
+  margin: 0 22vw;
+  min-width: 22em;
+
+
+  -webkit-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
 }
 
 .rightCard {
-  border-radius: 14px;
-  margin-top: 1em;
-  max-width: 35em;
-  text-align: center;
-  align-items: center;
+  position: center;
+  justify-content: center;
   align-content: center;
-  width: 30em;
-  float: right;
+  text-align: center;
+  border-radius: 14px;
   background-color: white;
-  height: 22em;
+  margin: 0 22vw;
+  min-width: 22em;
+
+  -webkit-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
 }
 
 .leftCard {
-  border-radius: 14px;
-  margin-top: 1em;
-  max-width: 35em;
-  text-align: center;
-  align-items: center;
+  position: center;
+  justify-content: center;
   align-content: center;
-  width: 30em;
-  float: left;
+  text-align: center;
+  border-radius: 14px;
   background-color: white;
-  height: 22em;
+  margin: 0 22vw;
+  min-width: 22em;
+
+  -webkit-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
 }
 
+/*.mobile {*/
+/*  width: 25%;*/
+/*}*/
 /* Smartphones (portrait) ----------- */
-@media only screen
-and (min-device-width : 400px) {
-  /* Styles */
-  .rightCard {
-    border-radius: 14px;
-    margin-top: 1em;
-    max-width: 35em;
-    text-align: center;
-    align-items: center;
-    align-content: center;
-    width: 30em;
-    background-color: white;
-    height: 22em;
-  }
+/*@media only screen*/
+/*and (min-device-width : 400px) {*/
+/*  !* Styles *!*/
+/*  .rightCard {*/
+/*    border-radius: 14px;*/
+/*    margin-top: 1em;*/
+/*    max-width: 35em;*/
+/*    text-align: center;*/
+/*    align-items: center;*/
+/*    align-content: center;*/
+/*    width: 30em;*/
+/*    background-color: white;*/
+/*    height: auto;*/
+/*  }*/
 
-  .leftCard {
-    border-radius: 14px;
-    margin-top: 1em;
-    max-width: 35em;
-    text-align: center;
-    align-items: center;
-    align-content: center;
-    width: 30em;
-    background-color: white;
-    height: 22em;
-  }
-}
+/*  .leftCard {*/
+/*    border-radius: 14px;*/
+/*    margin-top: 1em;*/
+/*    max-width: 35em;*/
+/*    text-align: center;*/
+/*    align-items: center;*/
+/*    align-content: center;*/
+/*    width: 30em;*/
+/*    background-color: white;*/
+/*    height: auto;*/
+/*  }*/
+/*}*/
 /*
 
 padding: 30px 42px 10px 42px;
@@ -130,7 +144,27 @@ margin-left: 10vh;
 box-shadow: 0px 0px 60px 2px rgba(0, 0, 0, 0.3);
  */
 
+/*button {*/
+/*  margin: 10px auto;*/
+/*  width: 15em;*/
+/*  position: center;*/
+/*}*/
 
+button:hover,
+button:focus {
+  /*background-image: -moz-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: -ms-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: -o-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: -webkit-linear-gradient(to left, #74ebd5, #9face6);*/
+  /*background-image: linear-gradient(to left, #74ebd5, #9face6);*/
+  /*#AC686B*/
+
+  background-image: -moz-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: -ms-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: -o-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: -webkit-linear-gradient(to left, #6184A2, #AC686B);
+  background-image: linear-gradient(to left, #6184A2, #AC686B);
+}
 
 .highlight {
   font-weight: bold;
