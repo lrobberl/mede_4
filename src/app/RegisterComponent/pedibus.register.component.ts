@@ -82,10 +82,8 @@ export class PedibusRegisterComponent implements OnInit {
 
   addFiglio() {
     this.getFigli.push(this.formBuilder.group({
-      nome: ['', [Validators.required,
-        Validators.pattern('^[a-zA-Z]{2,40}$')]],
-      cognome: ['', [Validators.required,
-        Validators.pattern('^[a-zA-Z]{2,40}$')]]
+      nome: ['', [Validators.pattern('^[a-zA-Z]{2,40}$')]],
+      cognome: ['', [Validators.pattern('^[a-zA-Z]{2,40}$')]]
     }));
   }
 

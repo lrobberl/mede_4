@@ -65,11 +65,10 @@
                   Riapri Turno
                 </button>
               </mat-card-actions>
-              <div>
-                <mat-error *ngIf="errorRight" class="mat-error"><strong>{{errorLeft}}</strong></mat-error>
-                <span class="highlight">{{message}}</span>
-              </div>
-
+            </div>
+            <div>
+              <mat-error *ngIf="errorRight" class="mat-error"><strong>{{errorLeft}}</strong></mat-error>
+              <span class="highlight">{{message}}</span>
             </div>
           </mat-tab>
 
@@ -85,7 +84,7 @@
                 <div *ngIf="data.accompagnatoriRitorno.length == 0"><strong>Nessun accompagnatore disponibile</strong>
                 </div>
               </mat-card-content>
-              <div style="margin-left: 8em; margin-right: 8em">
+              <mat-card-actions style="margin-left: 8em; margin-right: 8em">
                 <button class="btn btn-lg btn-primary btn-block" [disabled]="data.chiusoRitorno || !selectedRitorno"
                         (click)="consolidaTurnoRitorno()">
                   Consolida Turno
@@ -94,7 +93,11 @@
                         (click)="riapriTurnoRitorno()">
                   Riapri Turno
                 </button>
-              </div>
+                </mat-card-actions>
+            </div>
+            <div>
+              <mat-error *ngIf="errorRight" class="mat-error"><strong>{{errorLeft}}</strong></mat-error>
+              <span class="highlight">{{message}}</span>
             </div>
           </mat-tab>
         </mat-tab-group>

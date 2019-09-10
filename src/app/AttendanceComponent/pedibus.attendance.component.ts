@@ -153,7 +153,7 @@ export class PedibusAttendanceComponent implements OnInit, OnDestroy {
     const dd = String(data.getDate()).padStart(2, '0');
     const mm = String(data.getMonth() + 1).padStart(2, '0'); // January is 0!
     const yyyy = data.getFullYear();
-    return dd + '-' + mm + '-' + yyyy;
+    return mm + '-' + dd + '-' + yyyy;
   }
 
   esportaFile() {
