@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {Message} from '../Models/Message';
 import {UserService} from '../Services/pedibus.user.service';
 import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client'; // TODO: verificare comunicazione in tempo reale se è abilitata qua
+import * as SockJS from 'sockjs-client';
 import {WebSocketService} from '../Services/websocket.service';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';

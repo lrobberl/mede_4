@@ -132,7 +132,7 @@ export class PedibusAttendanceComponent implements OnInit, OnDestroy {
       feramata).subscribe((response) => {
         // do something with the response
         console.log('Response is: ', response);
-        // todo: avvisare il rispettivo genitore
+
       },
       (error) => {
         // catch the error

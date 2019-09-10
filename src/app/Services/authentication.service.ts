@@ -68,7 +68,7 @@ export class AuthenticationService {
       return true; }
   }
 
-  // todo: NON VA - da controllare!
+
   checkTokenvalidity(token: string): boolean {
     const helper = new JwtHelperService();
     return helper.isTokenExpired(token);

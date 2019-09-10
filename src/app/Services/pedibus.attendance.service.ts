@@ -20,7 +20,7 @@ const httpOptions = {
   })
 };
 
-// TODO: var date = new Date(UNIX_Timestamp * 1000); conversione da epoca UNIX a oggetto Date. Poi da convertire al formato 'dd-mm-aaaa'
+// var date = new Date(UNIX_Timestamp * 1000); conversione da epoca UNIX a oggetto Date. Poi da convertire al formato 'dd-mm-aaaa'
 @Injectable()
 export class AttendanceService {
   constructor(private http: HttpClient) {
@@ -63,7 +63,7 @@ export class AttendanceService {
   getFermate(): Observable<FermataShort []> {
     console.log('AttendanceService.getFermate:');
     return this.http.get<FermataShort []>(REST_URL + 'fermate').pipe(
-      // todo tenere fermate? Il server non le passa
+
       map(arr => arr.map(x => ({nome: x.nome, id: x.id, linea: x.linea}) as FermataShort))
     );
   }

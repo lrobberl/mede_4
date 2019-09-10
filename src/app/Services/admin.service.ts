@@ -63,7 +63,7 @@ export class AdminService {
 
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(REST_URL + 'users').pipe(
-      // todo tenere fermate? Il server non le passa
+
       map(arr => arr.map(x => ({id: x.id, username: x.username,
       firstName: x.firstName, lastName: x.lastName, role: x.role, listaRuoli: x.listaRuoli, status: x.status}) as User)),
     );
@@ -71,7 +71,7 @@ export class AdminService {
 
   getAllAdminsAndAccompagnatori(): Observable<User[]> {
     return this.http.get<User[]>(REST_URL + 'accompagnatori-admins').pipe(
-      // todo tenere fermate? Il server non le passa
+
       map(arr => arr.map(x => ({id: x.id, username: x.username,
         firstName: x.firstName, lastName: x.lastName, role: x.role, listaRuoli: x.listaRuoli, status: x.status}) as User)),
     );
