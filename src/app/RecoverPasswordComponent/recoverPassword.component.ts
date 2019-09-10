@@ -58,7 +58,7 @@ export class RecoverPasswordComponent implements OnInit {
         this.message = 'E\' stata inviata una email all\'indirizzo specificato';
         this.loading = false;
         }, error1 => {
-        this.error = 'Invalid Username/email';
+        this.error = 'Operazione fallita';
         this.loading = false;
         this.message = '';
       });

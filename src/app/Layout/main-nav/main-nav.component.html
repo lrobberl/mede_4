@@ -12,7 +12,7 @@
       <span [ngClass]="{spacer: (isHandset$ | async)}"></span>
       <div class="toolbar-m">
         <h1 style="font-size: larger">{{ title }}</h1>
-<!--        <h5 *ngIf="isLogged" style="font-size: small">{{currentUser.username}}</h5>-->
+        <h6 *ngIf="isLogged && !(isHandset$ | async)" style="font-size: small">{{currentUser.username}}</h6>
       </div>
       <span class="spacer"></span>
       <a *ngIf="!(isHandset$ | async) && isLogged" mat-button routerLink="/" routerLinkActive="active">Home</a><br>
