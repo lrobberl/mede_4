@@ -180,7 +180,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
             + ' \ninserita con successo';
 
           const newDisponibilita: Disponibilita = {
-            id: '',  // todo: Occorre dare un ID alle disponibilita??
+            id: '',
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateAndata.value,
@@ -247,7 +247,7 @@ export class DisponibiltaComponent implements OnInit, OnDestroy {
           '  VERSO: ' + verso + ' FERMATA: ' + this.getGroup(i).controls.fermateRitorno.value.nome as string + ' \ninserita con successo';
 
           const newDisponibilita: Disponibilita = {
-            id: '',  // todo: Occorre dare un ID alle disponibilita??
+            id: '',
             data,
             verso,
             fermata: this.getGroup(i).controls.fermateRitorno.value,

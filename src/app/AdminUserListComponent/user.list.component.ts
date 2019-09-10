@@ -20,7 +20,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['id', 'username', 'role', 'status'];
   error = '';
 
-  // todo: valutare se è potenzialmente non sicuro ritornare al componente oggetti con USER con dentro la pwd in chiaro
+
 
   constructor(private router: Router,
               private adminService: AdminService,

@@ -166,7 +166,7 @@ export class PedibusRegisterComponent implements OnInit {
         'xEC\x27]{6,12}/'), Validators.maxLength(30)],
       password2: [Validators.required, Validators.pattern('/^[a-zA-Z0-9\\_\\*\\-\\+\\!\\?\\,\\:\\;\\.\\xE0\\xE8\\xE9\\xF9\\xF2\\' +
         'xEC\x27]{6,12}/'), Validators.maxLength(30)],
-      // todo: accettazione pricacy mancante
+
     }, {
       validator: passwordValidator,
       // updateOn: 'blur'

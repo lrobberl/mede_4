@@ -25,7 +25,7 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  // Todo: verificare cosa ritorna il Server dopo aver effettuato la registrazione
+
   register(firstName: string, lastName: string, mail: string, password: string, password2: string,
            fermataDef: string, figliArray: BambinoRegistration[], uuid: string): Observable<RegisterForm> {
     console.log('UserService.register');
@@ -82,7 +82,7 @@ export class UserService {
   resetPassword(p1: string, p2: string, uuid: string) {
     console.log('UserService.resetPassword');
 
-    // todo: Controllo se c'è il token nel localstorage?
+
     const httpOptions = { headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
