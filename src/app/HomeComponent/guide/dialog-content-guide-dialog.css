@@ -1,0 +1,13 @@
+img {
+  width: 40%;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+mat-card {
+  margin-bottom: 10px;
+}

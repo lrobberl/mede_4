@@ -5,6 +5,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MustMatch} from '../Utils/must-match.validator';
 import {AttendanceService} from '../Services/pedibus.attendance.service';
 import {FermataShort} from '../Models/FermataShort';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 
 @Component({
@@ -25,12 +28,17 @@ export class PedibusRegisterComponent implements OnInit {
   formFigli = false;
   numFigli = 0;
   fermate: FermataShort[];
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(private userService: UserService,
               private router: Router,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder,
-              private attendanceService: AttendanceService) {
+              private attendanceService: AttendanceService,
+              private breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit(): void {

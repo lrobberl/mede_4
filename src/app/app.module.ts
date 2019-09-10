@@ -6,7 +6,7 @@ import {
   MatBadgeModule,
   MatButtonModule,
   MatCardModule,
-  MatCheckboxModule, MatDatepickerModule,
+  MatCheckboxModule, MatDatepickerModule, MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -50,6 +50,10 @@ import {PrenotazioneService} from './Services/prenotazione.service';
 import {DisponibiltaComponent} from './DisponibilitaComponent/disponibilita.component';
 import {WebSocketService} from './Services/websocket.service';
 import { FooterComponent } from './Layout/footer/footer.component';
+import {DialogContentGuideDialog, GuideComponent} from './HomeComponent/guide/guide.component';
+import { ProfileDetailsComponent } from './HomeComponent/profile-details/profile-details.component';
+import { GeneralInfoComponent } from './HomeComponent/general-info/general-info.component';
+import { ReservationInfoComponent } from './HomeComponent/reservation-info/reservation-info.component';
 // import {WebSocketService} from './Services/websocket.service';
 
 const appRoutes: Routes = [
@@ -89,7 +93,12 @@ const appRoutes: Routes = [
     NotFoundComponent,
     ReservationComponent,
     DisponibiltaComponent,
-    FooterComponent
+    FooterComponent,
+    GuideComponent,
+    DialogContentGuideDialog,
+    ProfileDetailsComponent,
+    GeneralInfoComponent,
+    ReservationInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +127,12 @@ const appRoutes: Routes = [
     MatNativeDateModule,
     MatStepperModule,
     MatBadgeModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
+  ],
+
+  entryComponents: [
+    DialogContentGuideDialog
   ],
   providers: [UserService, AttendanceService, AdminService, MatDatepickerModule, PrenotazioneService, WebSocketService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],

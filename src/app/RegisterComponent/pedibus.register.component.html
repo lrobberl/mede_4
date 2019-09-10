@@ -1,7 +1,7 @@
-<div class="bg">
+<div class="bg" [class.mobilemod]="isHandset$ | async">
 
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <mat-card class="form-container">
+    <mat-card class="form-container" [class.mobilewidth]="isHandset$ | async">
 
       <mat-card-header>
         <h1>Registrati.</h1>
@@ -44,7 +44,8 @@
 
               </mat-form-field>
             </div>
-          </mat-list-item><br><br>
+          </mat-list-item>
+          <br><br>
 
           <mat-list-item role="listitem">
             <div class="input-form-container">
@@ -80,41 +81,54 @@
           </mat-list-item>
           <br><br>
 
-          <div formArrayName="figliArray" style="margin-right: 12em">
-            <div *ngFor="let item of getFigli.controls; let pointIndex=index" [formGroupName]="pointIndex" >
-              <mat-form-field>
-              <label>
-                <input matInput placeholder="Nome" formControlName="nome" />
-              </label>
-              </mat-form-field><br><br>
+          <div formArrayName="figliArray">
+            <div *ngFor="let item of getFigli.controls; let pointIndex=index" [formGroupName]="pointIndex">
               <mat-form-field>
                 <label>
-                  <input matInput placeholder="Cognome" formControlName="cognome" />
+                  <input matInput placeholder="Nome" formControlName="nome"/>
                 </label>
-              </mat-form-field><br><br>
-              <button class="btn btn-lg btn-primary btn-block" type="button" (click)="deleteFiglio(pointIndex)">Rimuovi Figlio</button>
+              </mat-form-field>
+              <br><br>
+              <mat-form-field>
+                <label>
+                  <input matInput placeholder="Cognome" formControlName="cognome"/>
+                </label>
+              </mat-form-field>
+              <br><br>
+              <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block" type="button" (click)="deleteFiglio(pointIndex)">
+                  Rimuovi Figlio
+                </button>
+              </div>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="button" (click)="addFiglio()">Aggiungi Figlio</button>
-          </div><br><br>
+            <div class="form-group">
+              <button class="btn btn-lg btn-primary btn-block" type="button" (click)="addFiglio()">Aggiungi Figlio
+              </button>
+            </div>
+          </div>
+          <br><br>
 
           <mat-list-item role="listitem">
-          <mat-form-field>
-            <label> Fermata Default
-              <div>
-                <mat-select matInput formControlName="fermataDefault">
-                  <mat-option *ngFor="let fermata of fermate" value="{{fermata.id}}">
-                    {{fermata.nome}} - {{fermata.linea}}</mat-option>
-                </mat-select>
-              </div>
-            </label>
-          </mat-form-field>
-          </mat-list-item><br><br>
+            <mat-form-field>
+              <label> Fermata Default
+                <div>
+                  <mat-select matInput formControlName="fermataDefault">
+                    <mat-option *ngFor="let fermata of fermate" value="{{fermata.id}}">
+                      {{fermata.nome}} - {{fermata.linea}}</mat-option>
+                  </mat-select>
+                </div>
+              </label>
+            </mat-form-field>
+          </mat-list-item>
+          <br><br>
         </mat-list>
 
 
-        <div class="form-group" style="margin-left: 12em; margin-right: 12em">
-          <button [disabled]="loading || registerForm.invalid"  class="btn btn-lg btn-primary btn-block">Registrati</button>
-          <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        <div class="form-group">
+          <button [disabled]="loading || registerForm.invalid" class="btn btn-lg btn-primary btn-block">Registrati
+          </button>
+          <img *ngIf="loading" class="pl-2"
+               src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
         </div>
         <mat-error *ngIf="error" class="alert alert-danger"><strong>{{error}}</strong></mat-error>
       </mat-card-content>
