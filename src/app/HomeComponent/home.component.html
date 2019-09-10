@@ -20,10 +20,12 @@
          è venuta in mente
         ---
         -->
-        <mat-radio-group  *ngFor="let figlio of figli" [value]="figlio.nome">
+        <div *ngIf="figli.length !== 0 ">
+          Figli:
+        <mat-radio-group *ngFor="let figlio of figli" [value]="figlio.nome">
           {{figlio.nome}} &nbsp;&nbsp;
         </mat-radio-group >
-
+        </div>
 
         <p><a class="btn btn-secondary" href="#" role="button">Dettagli &raquo;</a></p>
       </div>
