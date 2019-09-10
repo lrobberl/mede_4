@@ -7,6 +7,7 @@ import {Message} from '../Models/Message';
 import {UserService} from '../Services/pedibus.user.service';
 import {WebSocketService} from '../Services/websocket.service';
 import {MatSnackBar} from '@angular/material';
+import {Bambino} from '../Models/Bambino';
 
 @Component({
       templateUrl: 'home.component.html',
@@ -15,6 +16,7 @@ import {MatSnackBar} from '@angular/material';
 export class HomeComponent implements OnInit, OnDestroy {
   currentUser: User;
   error: string;
+  figli: Bambino[] = [];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -46,6 +48,16 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.websocketService.showBanner();
       });
     });
+
+    this.userService.getFigli().subscribe(
+      x => {
+        this.figli = x;
+        this.error = undefined;
+      },
+      error1 => {
+        this.error = 'Operazione Fallita';
+      }
+    );
   }
 
   get isLogged() {

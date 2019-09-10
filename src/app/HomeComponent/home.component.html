@@ -13,6 +13,18 @@
       <div class="col-md-4">
         <h2>Il tuo profilo</h2>
         <p>Verifica velocemente le informazioni riguardanti la tua autenticazione ed il tuo ruolo.</p>
+
+        <!-- todo
+        -----
+         PER MICK: qui c'è la chiamata ai figli, eventualmente cambia il mat-radio-group che è la prima cosa che mi
+         è venuta in mente
+        ---
+        -->
+        <mat-radio-group  *ngFor="let figlio of figli" [value]="figlio.nome">
+          {{figlio.nome}} &nbsp;&nbsp;
+        </mat-radio-group >
+
+
         <p><a class="btn btn-secondary" href="#" role="button">Dettagli &raquo;</a></p>
       </div>
       <div class="col-md-4">
