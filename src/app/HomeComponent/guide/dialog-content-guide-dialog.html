@@ -1,12 +1,10 @@
 <h1 mat-dialog-title><strong>Come usare Piedibus</strong></h1>
-
 <mat-dialog-content>
-  <!--  class="mat-typography"-->
 
   <mat-card class="example-card">
     <div style="text-align: center">
       <h2><strong>Home</strong></h2>
-      <img src="home.png">
+      <img class="home" mat-card-image src="./home.jpg">
       <br>
     </div>
     <mat-card-content>
@@ -20,8 +18,25 @@
 
   <mat-card class="example-card">
     <div style="text-align: center">
+      <h2><strong>Corse</strong></h2>
+      <img class="corse" src="corse.png">
+    </div>
+    <mat-card-content>
+      <p>
+        Se sei un accompagnatore potrai verificare le corse prenotate ed i bambini presenti durante la corsa.
+        Ricorda che lo stato dei bambini viene segnalato tramite diversi colori: Azzurro - Bambino prenotato;
+        Nero - bambino non prenotato ma segnalato come possibile presenza; Grassetto - bambino presente.
+        Se serve ricorda che puoi scaricare un file JSON con il resoconto delle presenze nella corsa.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+
+
+<!--  <mat-card class="example-card">
+    <div style="text-align: center">
       <h2><strong>Prenotazioni</strong></h2>
-      <img src="prenotazione.png">
+      <img class="pren" mat-card-image src="prenotazione.png">
       <br>
     </div>
     <mat-card-content>
@@ -36,7 +51,7 @@
   <mat-card class="example-card">
     <div style="text-align: center">
       <h2><strong>Disponibilità</strong></h2>
-      <img src="disponibilita.png">
+      <img class="disp" src="disponibilita.png">
       <br>
     </div>
     <mat-card-content>
@@ -47,25 +62,11 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="example-card">
-    <div style="text-align: center">
-      <h2><strong>Corse</strong></h2>
-      <img src="corse.png">
-    </div>
-    <mat-card-content>
-      <p>
-        Se sei un accompagnatore potrai verificare le corse prenotate ed i bambini presenti durante la corsa.
-        Ricorda che lo stato dei bambini viene segnalato tramite diversi colori: Azzurro - Bambino prenotato;
-        Nero - bambino non prenotato ma segnalato come possibile presenza; Grassetto - bambino presente.
-        Se serve ricorda che puoi scaricare un file JSON con il resoconto delle presenze nella corsa.
-      </p>
-    </mat-card-content>
-  </mat-card>
 
-  <mat-card class="example-card">
+<mat-card class="example-card">
     <div style="text-align: center">
       <h2><strong>Comunicazioni</strong></h2>
-      <img src="Comunicazioni.png" alt="prova">
+      <img class="com" mat-card-image src="Comunicazioni.png">
       <br>
     </div>
     <mat-card-content>
@@ -80,7 +81,7 @@
   <mat-card class="example-card">
     <div style="text-align: center">
       <h2><strong>Mobile</strong></h2>
-      <img src="mobile.png">
+      <img class="mob" src="mobile.png">
       <br>
     </div>
     <mat-card-content>
@@ -91,7 +92,8 @@
     </mat-card-content>
   </mat-card>
 
-<!--  <h2>Prenotazioni</h2>-->
+
+<h2>Prenotazioni</h2>-->
 <!--  <p>Achieve the maximum speed possible on the Web Platform today, and take it further, via Web-->
 <!--    Workers and server-side rendering. Angular puts you in control over scalability. Meet huge-->
 <!--    data requirements by building data models on RxJS, Immutable.js or another push-model.</p>-->

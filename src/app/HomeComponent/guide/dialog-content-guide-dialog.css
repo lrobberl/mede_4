@@ -1,7 +1,49 @@
-img {
-  width: 40%;
+.home {
+  width: 682px;
+  height: 332px;
   margin-bottom: 16px;
   text-align: center;
+  background-image: url("home.png");
+}
+
+.pren {
+  width: 1256px;
+  height: 1240px;
+  margin-bottom: 16px;
+  text-align: center;
+  background-image: url("prenotazioni.png");
+}
+
+.disp {
+  width: 1052px;
+  height: 1240px;
+  margin-bottom: 16px;
+  text-align: center;
+  background-image: url("disponibilita.png");
+}
+
+.corse {
+  width: 348px;
+  height: 504px;
+  margin-bottom: 16px;
+  text-align: center;
+  background-image: url("corse.png");
+}
+
+.com {
+  width: 2336px;
+  height: 590px;
+  margin-bottom: 16px;
+  text-align: center;
+  background-image: url("com.png");
+}
+
+.mob {
+  width: 576px;
+  height: 1002px;
+  margin-bottom: 16px;
+  text-align: center;
+  background-image: url("mob.png");
 }
 
 h2 {
