@@ -51,9 +51,9 @@ import {DisponibiltaComponent} from './DisponibilitaComponent/disponibilita.comp
 import {WebSocketService} from './Services/websocket.service';
 import { FooterComponent } from './Layout/footer/footer.component';
 import {DialogContentGuideDialog, GuideComponent} from './HomeComponent/guide/guide.component';
-import { ProfileDetailsComponent } from './HomeComponent/profile-details/profile-details.component';
-import { GeneralInfoComponent } from './HomeComponent/general-info/general-info.component';
-import { ReservationInfoComponent } from './HomeComponent/reservation-info/reservation-info.component';
+import {DialogDataUserDialog, ProfileDetailsComponent} from './HomeComponent/profile-details/profile-details.component';
+import {DialogDataInfoDialog, GeneralInfoComponent} from './HomeComponent/general-info/general-info.component';
+import {DialogDataNewsDialog, NewsComponent} from './HomeComponent/news/news.component';
 // import {WebSocketService} from './Services/websocket.service';
 
 const appRoutes: Routes = [
@@ -98,7 +98,10 @@ const appRoutes: Routes = [
     DialogContentGuideDialog,
     ProfileDetailsComponent,
     GeneralInfoComponent,
-    ReservationInfoComponent
+    NewsComponent,
+    DialogDataInfoDialog,
+    DialogDataNewsDialog,
+    DialogDataUserDialog
   ],
   imports: [
     BrowserModule,
@@ -132,7 +135,7 @@ const appRoutes: Routes = [
   ],
 
   entryComponents: [
-    DialogContentGuideDialog
+    DialogContentGuideDialog, DialogDataInfoDialog, DialogDataNewsDialog, DialogDataUserDialog
   ],
   providers: [UserService, AttendanceService, AdminService, MatDatepickerModule, PrenotazioneService, WebSocketService,
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],

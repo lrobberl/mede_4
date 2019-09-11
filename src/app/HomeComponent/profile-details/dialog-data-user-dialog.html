@@ -1,0 +1,18 @@
+<h1 mat-dialog-title><strong>Informazioni sul tuo profilo</strong></h1>
+<div mat-dialog-content>
+  <ul>
+
+    <li><p><strong>Username:</strong> {{data.dialogUser.username}}</p></li>
+    <li><p><strong>Nome:</strong> {{data.dialogUser.firstName}}</p></li>
+    <li><p><strong>Cognome:</strong> {{data.dialogUser.lastName}}</p></li>
+    <li><p><strong>Ruolo:</strong> {{data.dialogUser.role}}</p></li>
+    <li><p><strong>Status:</strong> {{data.dialogUser.status}}</p></li>
+
+    <div *ngIf="data.dialogFigli.length !== 0 ">
+      <li><strong>Figli:</strong>
+      <mat-radio-group *ngFor="let figlio of data.dialogFigli" [value]="figlio.nome">
+        {{figlio.nome}} &nbsp;&nbsp;
+      </mat-radio-group></li>
+    </div>
+  </ul>
+</div>
